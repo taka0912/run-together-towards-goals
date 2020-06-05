@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+    <link href="../assets/css/table.css" rel="stylesheet">
+    <link href="../assets/css/btn.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="cp_navi">
+    <ul>
+        <li><a href="http://localhost:8080/index">Home</a></li>
+        <li>
+            <a href="http://localhost:8080/books">Books <span class="caret"></span></a>
+            <div>
+                <ul>
+                    <li><a href="http://localhost:8080/book/add">Add</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="http://localhost:8080/users">Users <span class="caret"></span></a>
+            <div>
+                <ul>
+                    <li><a href="http://localhost:8080/books">Add</a></li>
+                </ul>
+            </div>
+        </li>
+        <li><a href="http://localhost:8080/rental_histories">Rental Histories</a></li>
+        <li><a href="#">Help</a></li>
+    </ul>
+</div>
+
+<form action="/user/add" method="post">
+    <div class="form-inner">
+        <h2>Add User</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="nickname" id="nickname" placeholder="Nickname"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="password" tabindex="1" name="password" id="password" placeholder="Password"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="age" id="age" placeholder="Age"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="role" id="role" placeholder="Role"/>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <div>
+                <button type="button" name="clear" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table>
+    <tr>
+        <th>Nickname</th>
+        <th>Age</th>
+        <th>Role</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {{ range .users }}
+        <tr>
+            <td>{{ .Nickname }}</td>
+            <td>{{ .Age }}</td>
+            <td>{{ .Role }}</td>
+            <td>
+                <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>
+            </td>
+            <td>
+                <button type="submit"formmethod="delete" formaction="/user/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+            </td>
+        </tr>
+    {{end}}
+</table>
+
+</body>
+</html>
+
