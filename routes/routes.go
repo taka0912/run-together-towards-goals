@@ -28,7 +28,7 @@ func Handler(dbConn *gorm.DB) {
 		rUser.DELETE("/delete/:id", handler.DeleteUser)
 	}
 
-	r.GET("/genre", handler.GetAllGenres)
+	r.GET("/genres", handler.GetAllGenres)
 	rGenre := r.Group("/genre")
 	{
 		rGenre.POST("/add", handler.AddGenre)
@@ -37,6 +37,9 @@ func Handler(dbConn *gorm.DB) {
 		rGenre.GET("/delete/:id", handler.DeleteGenre)
 		rGenre.DELETE("/delete/:id", handler.DeleteGenre)
 	}
+
+	r.GET("/daily_kpts", handler.GetAllDailyKpts)
+	r.DELETE("/daily_kpts/delete/:id", handler.DeleteGenre)
 
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "welcome.html", gin.H{

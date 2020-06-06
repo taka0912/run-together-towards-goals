@@ -11,8 +11,13 @@ type DailyKpt struct {
 	Problem   string  `gorm:"not null"`
 	Try       string  `gorm:"not null"`
 	Good      int
-	Figh      int
+	Fight     int
 	IgnoreMe  string  `gorm:"-"`
+}
+
+// NewUser ...
+func NewDailyKptRepository() DailyKpt {
+	return DailyKpt{}
 }
 
 // DB追加

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit GenreName</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+</head>
+<body>
+
+{{ template "header" }}
+
+<form method="post" action="/user/edit_ok/{{.genre.ID}}">
+    <div class="form-inner">
+        <h2>Edit Genre</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="genre_name" id="genre_name" value="{{.genre.GenreName}}" placeholder="GenreName"/>
+            </div>
+        </div>
+        <p><input type="submit" value="Edit"></p>
+    </div>
+</form>
+
+
+</body>
+</html>

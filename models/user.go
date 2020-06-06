@@ -9,7 +9,7 @@ type User struct {
 	Nickname     string  `gorm:"not null"`
 	Password     string  `gorm:"not null"`
 	Age          int
-	Role         string  `gorm:"size:255"`
+	Role         int     `gorm:"not null"`
 	IgnoreMe     string  `gorm:"-"`
 }
 

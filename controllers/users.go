@@ -24,11 +24,12 @@ func (h *Handler) AddUser(c *gin.Context) {
 	nickname, _ := c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
 	hashPassword,_ := bcrypt.GenerateFromPassword([]byte(password),12)
-	_age, _     := c.GetPostForm("age")
-	age, _      := strconv.Atoi(_age)
+	age, _     := c.GetPostForm("age")
+	ageFmt, _      := strconv.Atoi(age)
 	role, _     := c.GetPostForm("role")
+	roleFmt, _      := strconv.Atoi(role)
 
-	r.Add(&models.User{Nickname: nickname, Password:  string(hashPassword), Age: age, Role: role})
+	r.Add(&models.User{Nickname: nickname, Password:  string(hashPassword), Age: ageFmt, Role: roleFmt})
 
 	c.Redirect(http.StatusMovedPermanently, "/users")
 }
@@ -52,7 +53,8 @@ func (h *Handler) EditUser(c *gin.Context) {
 	user.Password, _ = c.GetPostForm("password")
 	age, _           := c.GetPostForm("age")
 	user.Age, _      = strconv.Atoi(age)
-	user.Role, _     = c.GetPostForm("role")
+	role, _          := c.GetPostForm("role")
+	user.Age, _      = strconv.Atoi(role)
 	r.Edit(user)
 	c.Redirect(http.StatusMovedPermanently, "/users")
 }
@@ -64,4 +66,3 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 	r.Delete(id)
 	c.Redirect(http.StatusMovedPermanently, "/users")
 }
-

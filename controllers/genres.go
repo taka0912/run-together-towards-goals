@@ -20,7 +20,7 @@ func (h *Handler) GetAllGenres(c *gin.Context) {
 // AddGenres ...
 func (h *Handler) AddGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
-	genreName, _ := c.GetPostForm("genreName")
+	genreName, _ := c.GetPostForm("genre_name")
 
 	r.Add(&models.Genre{GenreName: genreName})
 

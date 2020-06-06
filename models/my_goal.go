@@ -20,21 +20,21 @@ func NewMyGoalRepository() MyGoal {
 }
 
 // DB追加
-func (r *MyGoal) Add(myGoal *MyGoal) {
+func (o *MyGoal) Add(myGoal *MyGoal) {
 	db := Open()
 	db.Create(myGoal)
 	defer db.Close()
 }
 
 // DB更新
-func (r *MyGoal) Edit(myGoal MyGoal) {
+func (o *MyGoal) Edit(myGoal MyGoal) {
 	db := Open()
 	db.Save(myGoal)
 	db.Close()
 }
 
 // DB全取得
-func (r *MyGoal) GetAll() []MyGoal {
+func (o *MyGoal) GetAll() []MyGoal {
 	db := Open()
 	var myGoals []MyGoal
 	db.Find(&myGoals)
@@ -43,7 +43,7 @@ func (r *MyGoal) GetAll() []MyGoal {
 }
 
 // DB一つ取得
-func (r *MyGoal) GetOne(id int) MyGoal {
+func (o *MyGoal) GetOne(id int) MyGoal {
 	db := Open()
 	var myGoal MyGoal
 	db.First(&myGoal, id)
@@ -52,7 +52,7 @@ func (r *MyGoal) GetOne(id int) MyGoal {
 }
 
 // DB削除
-func (r *MyGoal) Delete(id int) {
+func (o *MyGoal) Delete(id int) {
 	db := Open()
 	var myGoal MyGoal
 	db.First(&myGoal, id)

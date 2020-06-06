@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genres</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+    <link href="../assets/css/table.css" rel="stylesheet">
+    <link href="../assets/css/btn.css" rel="stylesheet">
+</head>
+<body>
+
+{{ template "header" }}
+
+<form action="/genre/add" method="post">
+    <div class="form-inner">
+        <h2>Add genre</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="genre_name" id="genre_name" placeholder="GenreName"/>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <div>
+                <button type="button" name="clear" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{/*<table>*/}}
+{{/*    <tr>*/}}
+{{/*        <th>GenreName</th>*/}}
+{{/*        <th>Edit</th>*/}}
+{{/*        <th>Delete</th>*/}}
+{{/*    </tr>*/}}
+{{/*    {{ range .genres }}*/}}
+{{/*        <tr>*/}}
+{{/*            <td>{{ .genreName }}</td>*/}}
+{{/*            <td>*/}}
+{{/*                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>*/}}
+{{/*            </td>*/}}
+{{/*            <td>*/}}
+{{/*                <button type="submit"formmethod="delete" formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>*/}}
+{{/*            </td>*/}}
+{{/*        </tr>*/}}
+{{/*    {{end}}*/}}
+{{/*</table>*/}}
+
+</body>
+</html>
+
