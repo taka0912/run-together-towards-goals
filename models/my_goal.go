@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/daisuzuki829/run_together_towards_goals/db"
 	"github.com/jinzhu/gorm"
 	"time"
 )
@@ -15,50 +14,46 @@ type MyGoal struct {
 	IgnoreMe    string     `gorm:"-"`
 }
 
-// MyGoalRepository is
-type MyGoalRepository struct {
-}
-
 // NewMyGoalRepository ...
-func NewMyGoalRepository() MyGoalRepository {
-	return MyGoalRepository{}
+func NewMyGoalRepository() MyGoal {
+	return MyGoal{}
 }
 
-//DB追加
-func (r *MyGoalRepository) Add(myGoal *MyGoal) {
-	db := db.Open()
+// DB追加
+func (r *MyGoal) Add(myGoal *MyGoal) {
+	db := Open()
 	db.Create(myGoal)
 	defer db.Close()
 }
 
-//DB更新
-func (r *MyGoalRepository) Edit(myGoal MyGoal) {
-	db := db.Open()
+// DB更新
+func (r *MyGoal) Edit(myGoal MyGoal) {
+	db := Open()
 	db.Save(myGoal)
 	db.Close()
 }
 
-//DB全取得
-func (r *MyGoalRepository) GetAll() []MyGoal {
-	db := db.Open()
+// DB全取得
+func (r *MyGoal) GetAll() []MyGoal {
+	db := Open()
 	var myGoals []MyGoal
 	db.Find(&myGoals)
 	db.Close()
 	return myGoals
 }
 
-//DB一つ取得
-func (r *MyGoalRepository) GetOne(id int) MyGoal {
-	db := db.Open()
+// DB一つ取得
+func (r *MyGoal) GetOne(id int) MyGoal {
+	db := Open()
 	var myGoal MyGoal
 	db.First(&myGoal, id)
 	db.Close()
 	return myGoal
 }
 
-//DB削除
-func (r *MyGoalRepository) Delete(id int) {
-	db := db.Open()
+// DB削除
+func (r *MyGoal) Delete(id int) {
+	db := Open()
 	var myGoal MyGoal
 	db.First(&myGoal, id)
 	db.Delete(&myGoal)

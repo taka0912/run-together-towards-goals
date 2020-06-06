@@ -6,14 +6,9 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const (
-	Driver = "sqlite3"
-	DbName  = "my_goal.db"
-)
-
 // dbInit...
 func Init() *gorm.DB {
-	db, err := gorm.Open(Driver, DbName)
+	db, err := gorm.Open(models.Driver, models.DbName)
 	if err != nil {
 		panic(err)
 	}
@@ -22,13 +17,5 @@ func Init() *gorm.DB {
 	db.AutoMigrate(&models.User{}, &models.DailyKpt{}, &models.MyGoal{}, &models.Genre{})
 
 	defer db.Close()
-	return db
-}
-
-func Open() *gorm.DB {
-	db, err := gorm.Open(Driver, DbName)
-	if err != nil {
-		panic(err)
-	}
 	return db
 }
