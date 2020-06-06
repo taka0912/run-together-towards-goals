@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"github.com/daisuzuki829/run_together_towards_goals/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -22,11 +23,12 @@ func (h *Handler) AddUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	nickname, _ := c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
+	hashPassword,_ := bcrypt.GenerateFromPassword([]byte(password),12)
 	_age, _     := c.GetPostForm("age")
 	age, _      := strconv.Atoi(_age)
 	role, _     := c.GetPostForm("role")
 
-	r.Add(&models.User{Nickname: nickname, Password: password, Age: age, Role: role})
+	r.Add(&models.User{Nickname: nickname, Password:  string(hashPassword), Age: age, Role: role})
 
 	c.Redirect(http.StatusMovedPermanently, "/users")
 }

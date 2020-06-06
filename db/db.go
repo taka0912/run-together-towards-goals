@@ -8,10 +8,7 @@ import (
 
 // dbInit...
 func Init() *gorm.DB {
-	db, err := gorm.Open(models.Driver, models.DbName)
-	if err != nil {
-		panic(err)
-	}
+	db := models.Open()
 
 	db.LogMode(true)
 	db.AutoMigrate(&models.User{}, &models.DailyKpt{}, &models.MyGoal{}, &models.Genre{})

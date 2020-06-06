@@ -54,4 +54,3 @@ func Handler(dbConn *gorm.DB) {
 		panic(err)
 	}
 }
-
