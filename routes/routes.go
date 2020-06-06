@@ -2,9 +2,11 @@ package routes
 
 import (
 	"github.com/daisuzuki829/run_together_towards_goals/controllers"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"
+	"time"
 )
 
 func Handler(dbConn *gorm.DB) {
@@ -14,32 +16,44 @@ func Handler(dbConn *gorm.DB) {
 	}
 
 	r := gin.Default()
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH", "DELETE", "POST", "GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "*"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
 	r.LoadHTMLGlob("templates/*.html")
 	r.Static("/assets", "./assets")
 
-	r.GET("/users", handler.GetAllUsers)
+	r.GET("/_users", handler.GetAllUsers)
 	rUser := r.Group("/user")
 	{
-		rUser.POST("/add", handler.AddUser)
-		rUser.GET("/edit/:id", handler.GetUser)
-		rUser.POST("/edit_ok/:id", handler.EditUser)
-		rUser.GET("/delete/:id", handler.DeleteUser)
-		rUser.DELETE("/delete/:id", handler.DeleteUser)
+		//rUser.POST("", handler.GetAllUsers)
+		rUser.POST("add", handler.AddUser)
+		rUser.GET("edit/:id", handler.GetUser)
+		rUser.POST("edit_ok/:id", handler.EditUser)
+		rUser.GET("delete/:id", handler.DeleteUser)
+		rUser.DELETE("delete/:id", handler.DeleteUser)
 	}
 
-	r.GET("/genres", handler.GetAllGenres)
+	r.GET("/_genres", handler.GetAllGenres)
 	rGenre := r.Group("/genre")
 	{
-		rGenre.POST("/add", handler.AddGenre)
-		rGenre.GET("/edit/:id", handler.GetGenre)
-		rGenre.POST("/edit_ok/:id", handler.EditGenre)
-		rGenre.GET("/delete/:id", handler.DeleteGenre)
-		rGenre.DELETE("/delete/:id", handler.DeleteGenre)
+		rGenre.POST("add", handler.AddGenre)
+		rGenre.GET("edit/:id", handler.GetGenre)
+		rGenre.POST("edit_ok/:id", handler.EditGenre)
+		rGenre.GET("delete/:id", handler.DeleteGenre)
+		rGenre.DELETE("delete/:id", handler.DeleteGenre)
 	}
 
-	r.GET("/daily_kpts", handler.GetAllDailyKpts)
-	r.DELETE("/daily_kpts/delete/:id", handler.DeleteGenre)
+	r.GET("/_daily_kpts", handler.GetAllDailyKpts)
+	r.DELETE("/daily_kpt/delete/:id", handler.DeleteDailyKpt)
 
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "welcome.html", gin.H{

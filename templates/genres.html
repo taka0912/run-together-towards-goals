@@ -31,24 +31,24 @@
     </div>
 </form>
 
-{{/*<table>*/}}
-{{/*    <tr>*/}}
-{{/*        <th>GenreName</th>*/}}
-{{/*        <th>Edit</th>*/}}
-{{/*        <th>Delete</th>*/}}
-{{/*    </tr>*/}}
-{{/*    {{ range .genres }}*/}}
-{{/*        <tr>*/}}
-{{/*            <td>{{ .genreName }}</td>*/}}
-{{/*            <td>*/}}
-{{/*                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>*/}}
-{{/*            </td>*/}}
-{{/*            <td>*/}}
-{{/*                <button type="submit"formmethod="delete" formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>*/}}
-{{/*            </td>*/}}
-{{/*        </tr>*/}}
-{{/*    {{end}}*/}}
-{{/*</table>*/}}
+<table>
+    <tr>
+        <th>GenreName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {{ range .genres }}
+        <tr>
+            <td>{{ .genreName }}</td>
+            <td>
+                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>
+            </td>
+            <td>
+                <button type="submit"formmethod="delete" formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+            </td>
+        </tr>
+    {{end}}
+</table>
 
 </body>
 </html>
