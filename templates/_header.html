@@ -2,25 +2,30 @@
     <link href="../assets/css/menu.css" rel="stylesheet">
     <div class="cp_navi">
         <ul>
-            <li><a href="http://localhost:8080/index">Home</a></li>
+            <li><a href="/index">Home</a></li>
             <li>
-                <a href="http://localhost:8080/_users">Users <span class="caret"></span></a>
-{{/*                <div>*/}}
-{{/*                    <ul>*/}}
-{{/*                        <li><a href="http://localhost:8080/user/add">Add</a></li>*/}}
-{{/*                    </ul>*/}}
-{{/*                </div>*/}}
+                <a href="/_users">Users <span class="caret"></span></a>
+                {{/*                    <div>*/}}
+                {{/*                        <ul>*/}}
+                {{/*                            <li><a href="/user/add">Add</a></li>*/}}
+                {{/*                        </ul>*/}}
+                {{/*                    </div>*/}}
             </li>
             <li>
-                <a href="http://localhost:8080/_genres">Genre <span class="caret"></span></a>
-{{/*                <div>*/}}
-{{/*                    <ul>*/}}
-{{/*                        <li><a href="http://localhost:8080/genre/add">Add</a></li>*/}}
-{{/*                    </ul>*/}}
-{{/*                </div>*/}}
+                <a href="/_genres">Genre <span class="caret"></span></a>
+                {{/*                    <div>*/}}
+                {{/*                        <ul>*/}}
+                {{/*                            <li><a href="/genre/add">Add</a></li>*/}}
+                {{/*                        </ul>*/}}
+                {{/*                    </div>*/}}
             </li>
-            <li><a href="http://localhost:8080/_daily_kpts">Daily Kpts</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="/_daily_kpts">Daily Kpts</a></li>
+            {{/*            <li><a href="/logout">Logout</a></li>*/}}
+            <li>
+                <form method="get" action="/logout">
+                    <button>Logout</button>
+                </form>
+            </li>
         </ul>
     </div>
 {{ end }}

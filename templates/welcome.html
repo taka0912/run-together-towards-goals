@@ -6,7 +6,15 @@
 </head>
 <body>
 {{ template "header" }}
-welcome!
+
+welcome,
+{{if .user }}
+    {{.user.Nickname}}
+{{else}}
+    Guest
+{{end}}
+!
+
 {{ template "footer" }}
 </body>
 </html>

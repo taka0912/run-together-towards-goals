@@ -24,7 +24,7 @@ func (h *Handler) AddGenre(c *gin.Context) {
 
 	r.Add(&models.Genre{GenreName: genreName})
 
-	c.Redirect(http.StatusMovedPermanently, "/genres")
+	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
 
 // GetGenres ...
@@ -44,7 +44,7 @@ func (h *Handler) EditGenre(c *gin.Context) {
 	genre := r.GetOne(id)
 	genre.GenreName, _ = c.GetPostForm("genreName")
 	r.Edit(genre)
-	c.Redirect(http.StatusMovedPermanently, "/genres")
+	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
 
 // DeleteGenres ...
@@ -52,6 +52,6 @@ func (h *Handler) DeleteGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	r.Delete(id)
-	c.Redirect(http.StatusMovedPermanently, "/genres")
+	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
 

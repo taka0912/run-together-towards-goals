@@ -22,6 +22,6 @@ func (h *Handler) DeleteDailyKpt(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	r.Delete(id)
-	c.Redirect(http.StatusMovedPermanently, "/daily_kpts")
+	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 

@@ -4,6 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+const (
+	PublicUser = iota
+	AdminUser
+)
+
 type User struct {
 	gorm.Model
 	Nickname     string  `gorm:"not null"`
@@ -50,6 +55,15 @@ func (o *User) GetOne(id int) User {
 	return user
 }
 
+// GetByName...
+func (o *User) GetByName(nickname string) User {
+	db := Open()
+	var user User
+	db.Where("nickname = ?", nickname).First(&user)
+	db.Close()
+	return user
+}
+
 // DB削除
 func (o *User) Delete(id int) {
 	db := Open()
@@ -58,4 +72,3 @@ func (o *User) Delete(id int) {
 	db.Delete(&user)
 	db.Close()
 }
-
