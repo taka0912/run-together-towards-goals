@@ -1,10 +1,13 @@
 package controllers
 
 import (
+	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type SessionInfo struct {
@@ -59,12 +62,17 @@ func SessionCheck(c *gin.Context) {
 	session := sessions.Default(c)
 	LoginInfo.UserId = session.Get("UserId")
 
-	if LoginInfo.UserId == nil {
-		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
-			"err": "Unauthorized",
-		})
-		c.Abort()
+	if strings.HasPrefix(c.Request.RequestURI, "/api") {
+		c.Next()
 		return
+	} else {
+		if LoginInfo.UserId == nil {
+			c.HTML(http.StatusUnauthorized, "login.html", gin.H{
+				"err": "Unauthorized",
+			})
+			c.Abort()
+			return
+		}
+		c.Next()
 	}
-	c.Next()
 }

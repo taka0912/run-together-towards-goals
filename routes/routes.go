@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/daisuzuki829/run_together_towards_goals/controllers"
+	"github.com/daisuzuki829/run_together_towards_goals/api"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -14,6 +15,9 @@ import (
 func Handler(dbConn *gorm.DB) {
 
 	handler := controllers.Handler{
+		Db: dbConn,
+	}
+	apiHandler := api.Handler{
 		Db: dbConn,
 	}
 
@@ -70,17 +74,26 @@ func Handler(dbConn *gorm.DB) {
 		// daily kpt info
 		r.GET("/_daily_kpts", handler.GetAllDailyKpts)
 		r.DELETE("/daily_kpt/delete/:id", handler.DeleteDailyKpt)
+
+		r.GET("/index", func(c *gin.Context) {
+			c.HTML(http.StatusOK, "welcome.html", gin.H{
+				"title": "title",
+			})
+		})
+
+		r.NoRoute(func(c *gin.Context) {
+			c.Redirect(http.StatusMovedPermanently, "/index")
+		})
 	}
 
-	r.GET("/index", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "welcome.html", gin.H{
-			"title": "TITLE",
-		})
-	})
-
-	r.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/index")
-	})
+	rApi := r.Group("/api")
+	{
+		rApiUser := rApi.Group("/user")
+		{
+			rApiUser.GET("", apiHandler.GetUser)
+			rApiUser.POST("add", apiHandler.AddUser)
+		}
+	}
 
 	//spew.Dump(r)
 

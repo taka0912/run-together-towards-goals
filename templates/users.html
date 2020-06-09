@@ -26,14 +26,14 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="age" id="age" placeholder="Age"/>
+                <input type="number" tabindex="1" name="age" id="age" placeholder="Age"/>
             </div>
         </div>
         <div>
             <div class="underline">
                 <select name="role" id="role" placeholder="Role"/>
-                    <option value="0">一般ユーザー</option>
-                    <option value="1">管理者</option>
+                <option value="0">一般ユーザー</option>
+                <option value="1">管理者</option>
                 </select>
             </div>
         </div>
@@ -49,34 +49,37 @@
     </div>
 </form>
 
-<table>
-    <tr>
-        <th>Nickname</th>
-        <th>Age</th>
-        <th>Role</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    {{ range .users }}
+<form>
+
+    <table>
         <tr>
-            <td>{{ .Nickname }}</td>
-            <td>{{ .Age }}</td>
+            <th>Nickname</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {{ range .users }}
+            <tr>
+                <td>{{ .Nickname }}</td>
+                <td>{{ .Age }}</td>
                 {{if eq .Role 0 }}
                     <td>一般ユーザー</td>
                 {{ else }}
                     <td>管理者</td>
                 {{ end }}
-            <td>
-                <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>
-            </td>
-            <td>
-                <button type="submit" formmethod="delete" formaction="/user/delete/{{.ID}}" class="btn-blue"
-                        onClick="alert('本当に削除してよろしいですか？');">Delete
-                </button>
-            </td>
-        </tr>
-    {{end}}
-</table>
+                <td>
+                    <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>
+                </td>
+                <td>
+                    <button formmethod="delete" formaction="/user/delete/{{.ID}}" class="btn-blue"
+                            onClick="alert('本当に削除してよろしいですか？');">Delete
+                    </button>
+                </td>
+            </tr>
+        {{end}}
+    </table>
+</form>
 
 </body>
 </html>

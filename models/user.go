@@ -72,3 +72,12 @@ func (o *User) Delete(id int) {
 	db.Delete(&user)
 	db.Close()
 }
+
+// Count...
+func (o *User) Count() int {
+	db := Open()
+	var count = 0
+	db.Table("users").Count(&count)
+	db.Close()
+	return count
+}
