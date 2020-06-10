@@ -93,6 +93,10 @@ func Handler(dbConn *gorm.DB) {
 			rApiUser.GET("", apiHandler.GetUser)
 			rApiUser.POST("add", apiHandler.AddUser)
 		}
+		rApiDailyKpt := rApi.Group("/daily_kpt")
+		{
+			rApiDailyKpt.POST("add", apiHandler.PostDailyKpt)
+		}
 	}
 
 	//spew.Dump(r)

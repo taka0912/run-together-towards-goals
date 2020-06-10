@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"

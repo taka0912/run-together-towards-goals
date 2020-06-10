@@ -7,6 +7,7 @@ import (
 // DailyKpt is
 type DailyKpt struct {
 	gorm.Model
+	UserID    int     `gorm:"not null"`
 	Keep      string  `gorm:"not null"`
 	Problem   string  `gorm:"not null"`
 	Try       string  `gorm:"not null"`
@@ -59,4 +60,13 @@ func (o *DailyKpt) Delete(id int) {
 	db.First(&dailyKpt, id)
 	db.Delete(&dailyKpt)
 	db.Close()
+}
+
+// Count...
+func (o *DailyKpt) Count() int {
+	db := Open()
+	var count = 0
+	db.Table("daily_kpts").Count(&count)
+	db.Close()
+	return count
 }
