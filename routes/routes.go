@@ -100,6 +100,7 @@ func Handler(dbConn *gorm.DB) {
 		rApiMyGoal := rApi.Group("/my_goals")
 		{
 			rApiMyGoal.POST("add", apiHandler.SetMyGoal)
+			rApiMyGoal.PUT("edit", apiHandler.EditMyGoal)
 		}
 	}
 

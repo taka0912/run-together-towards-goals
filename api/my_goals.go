@@ -40,3 +40,35 @@ func (h *Handler) SetMyGoal(c *gin.Context) {
 		"id"  : r.Count(),
 	})
 }
+
+// EditMyGoal...
+func (h *Handler) EditMyGoal(c *gin.Context) {
+	r := models.NewMyGoalRepository()
+
+	id := c.DefaultQuery("id", "0")
+	myGoalid, _ := strconv.Atoi(id)
+	newMyGoal := r.GetOne(myGoalid)
+
+	if newMyGoal.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"code": http.StatusNotFound,
+			"msg" : "Not Found",
+		})
+		return
+	}
+
+	var myGoal MyGoal
+	c.BindJSON(&myGoal)
+
+	newMyGoal.Goal         = myGoal.Goal
+	newMyGoal.GenreID, _   = strconv.Atoi(myGoal.GenreID)
+	newMyGoal.LimitDate, _ = time.Parse("2006/01/02", myGoal.LimitDate)
+
+	r.Edit(newMyGoal)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg" : "Created",
+		"id"  : newMyGoal.ID,
+	})
+}
