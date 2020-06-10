@@ -60,3 +60,12 @@ func (o *MyGoal) Delete(id int) {
 	db.Close()
 }
 
+// Count...
+func (o *MyGoal) Count() int {
+	db := Open()
+	var count = 0
+	db.Table("my_goals").Count(&count)
+	db.Close()
+	return count
+}
+

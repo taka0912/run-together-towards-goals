@@ -97,6 +97,10 @@ func Handler(dbConn *gorm.DB) {
 		{
 			rApiDailyKpt.POST("add", apiHandler.PostDailyKpt)
 		}
+		rApiMyGoal := rApi.Group("/my_goals")
+		{
+			rApiMyGoal.POST("add", apiHandler.SetMyGoal)
+		}
 	}
 
 	//spew.Dump(r)

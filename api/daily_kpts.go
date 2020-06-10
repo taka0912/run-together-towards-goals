@@ -35,5 +35,3 @@ func (h *Handler) PostDailyKpt(c *gin.Context) {
 		"id"  : r.Count(),
 	})
 }
-
-
