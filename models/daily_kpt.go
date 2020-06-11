@@ -39,7 +39,8 @@ func (o *DailyKpt) Edit(dailyKpt DailyKpt) {
 func (o *DailyKpt) GetAll() []DailyKpt {
 	db := Open()
 	var dailyKpts []DailyKpt
-	db.Find(&dailyKpts)
+	db.Table("daily_kpts").Joins("left JOIN users ON daily_kpts.user_id = users.id").Find(&dailyKpts)
+
 	db.Close()
 	return dailyKpts
 }

@@ -35,3 +35,13 @@ func (h *Handler) PostDailyKpt(c *gin.Context) {
 		"id"  : r.Count(),
 	})
 }
+
+// GetDailyKpts...
+func (h *Handler) GetDailyKpts(c *gin.Context) {
+	r := models.NewDailyKptRepository()
+
+	c.JSON(http.StatusOK, gin.H{
+		"daily_kpts"  : r.GetAll(),
+	})
+}
+
