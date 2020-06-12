@@ -46,8 +46,8 @@ func (h *Handler) EditMyGoal(c *gin.Context) {
 	r := models.NewMyGoalRepository()
 
 	id := c.DefaultQuery("id", "0")
-	myGoalid, _ := strconv.Atoi(id)
-	newMyGoal := r.GetOne(myGoalid)
+	myGoalId, _ := strconv.Atoi(id)
+	newMyGoal := r.GetOne(myGoalId)
 
 	if newMyGoal.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{

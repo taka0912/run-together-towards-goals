@@ -17,6 +17,7 @@ type DailyKpt struct {
 }
 
 type Results struct {
+	ID        int
 	UserID    int
 	Nickname  string
 	Keep      string
