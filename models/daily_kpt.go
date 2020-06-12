@@ -16,6 +16,16 @@ type DailyKpt struct {
 	IgnoreMe  string  `gorm:"-"`
 }
 
+type Results struct {
+	UserID    int
+	Nickname  string
+	Keep      string
+	Problem   string
+	Try       string
+	Good      int
+	Fight     int
+}
+
 // NewUser ...
 func NewDailyKptRepository() DailyKpt {
 	return DailyKpt{}
@@ -36,13 +46,16 @@ func (o *DailyKpt) Edit(dailyKpt DailyKpt) {
 }
 
 // DB全取得
-func (o *DailyKpt) GetAll() []DailyKpt {
+func (o *DailyKpt) GetAll() []Results {
 	db := Open()
-	var dailyKpts []DailyKpt
-	db.Table("daily_kpts").Joins("left JOIN users ON daily_kpts.user_id = users.id").Find(&dailyKpts)
+	var results []Results
+	db.Table("daily_kpts").
+		Select("daily_kpts.*, users.nickname").
+		Joins("inner JOIN users ON daily_kpts.user_id = users.id").
+		Find(&results)
 
 	db.Close()
-	return dailyKpts
+	return results
 }
 
 // DB一つ取得
