@@ -70,3 +70,28 @@ func (h *Handler) IncreaseGood(c *gin.Context) {
 		"id"  : dailyKpt.ID,
 	})
 }
+
+// IncreaseFight...
+func (h *Handler) IncreaseFight(c *gin.Context) {
+	id, _ := strconv.Atoi(c.DefaultQuery("id", "0"))
+	r := models.NewDailyKptRepository()
+	dailyKpt := r.GetOne(id)
+
+	if id == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"msg" : "Bad Request",
+		})
+		return
+	}
+
+	dailyKpt.Fight += 1
+
+	r.Edit(dailyKpt)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg" : "Update",
+		"id"  : dailyKpt.ID,
+	})
+}
