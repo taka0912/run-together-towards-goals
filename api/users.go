@@ -54,3 +54,27 @@ func (h *Handler) AddUser(c *gin.Context) {
 	})
 }
 
+// EditUser...
+func (h *Handler) EditUser(c *gin.Context) {
+	var beforeUser User
+	c.BindJSON(&beforeUser)
+
+	id, _ := strconv.Atoi(beforeUser.Id)
+	r := models.NewUserRepository()
+	user  := r.GetOne(id)
+
+	user.Nickname = beforeUser.Nickname
+	if beforeUser.Password == "" {
+		password, _ := bcrypt.GenerateFromPassword([]byte(beforeUser.Password), bcrypt.DefaultCost)
+		user.Password = string(password)
+	}
+	user.Age, _ = strconv.Atoi(beforeUser.Age)
+
+	r.Edit(user)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg" : "Created",
+		"id"  : user.ID,
+	})
+}
