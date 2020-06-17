@@ -22,16 +22,15 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 // AddUsers ...
 func (h *Handler) AddUser(c *gin.Context) {
 	r := models.NewUserRepository()
-	nickname,     _ := c.GetPostForm("nickname")
-	password, _     := c.GetPostForm("password")
-	hashPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	age, _          := c.GetPostForm("age")
-	ageFmt, _       := strconv.Atoi(age)
-	role, _         := c.GetPostForm("role")
-	roleFmt, _      := strconv.Atoi(role)
 
-	r.Add(&models.User{Nickname: nickname, Password: string(hashPassword), Age: ageFmt, Role: roleFmt})
+	nickname, _ := c.GetPostForm("nickname")
+	password, _ := c.GetPostForm("password")
+	age, _      := c.GetPostForm("age")
+	ageFmt, _   := strconv.Atoi(age)
+	role, _     := c.GetPostForm("role")
+	roleFmt, _  := strconv.Atoi(role)
 
+	r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 

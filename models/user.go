@@ -1,7 +1,12 @@
 package models
 
 import (
+	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
+	"golang.org/x/crypto/bcrypt"
+	v "gopkg.in/go-playground/validator.v9"
+	"log"
 )
 
 const (
@@ -11,10 +16,10 @@ const (
 
 type User struct {
 	gorm.Model
-	Nickname     string  `gorm:"not null"`
-	Password     string  `gorm:"not null"`
-	Age          int
-	Role         int     `gorm:"not null"`
+	Nickname     string  `validate:"required,gt=1"`
+	Password     string  `validate:"required,gt=4"`
+	Age          int     `validate:"numeric"`
+	Role         int     `validate:"numeric,oneof=1 3 5"`
 	IgnoreMe     string  `gorm:"-"`
 }
 
@@ -26,6 +31,22 @@ func NewUserRepository() User {
 // DB追加
 func (o *User) Add(user *User) {
 	db := Open()
+
+	validate := v.New()
+	err := validate.Struct(user)
+	if err != nil {
+		log.Println(err)
+
+		fmt.Printf("err : ")
+		spew.Dump(err.Error())
+		fmt.Printf("\n")
+
+		return
+	}
+
+	password, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	user.Password = string(password)
+
 	db.Create(user)
 	defer db.Close()
 }

@@ -18,7 +18,7 @@ type User struct {
 
 // GetUser...
 func (h *Handler) GetUser(c *gin.Context) {
-	userId := c.DefaultQuery("id", "1")
+	userId := c.DefaultQuery("id", "0")
 
 	r := models.NewUserRepository()
 	userIdFmt, _ := strconv.Atoi(userId)
@@ -34,15 +34,13 @@ func (h *Handler) AddUser(c *gin.Context) {
 	var user User
 	c.BindJSON(&user)
 
-	password, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	passwordFmt := string(password)
 	age, _      := strconv.Atoi(user.Age)
 	role, _     := strconv.Atoi(user.Role)
 
 	r := models.NewUserRepository()
 	r.Add(&models.User{
 		Nickname: user.Nickname,
-		Password: passwordFmt,
+		Password: user.Password,
 		Age:      age,
 		Role:     role,
 	})
