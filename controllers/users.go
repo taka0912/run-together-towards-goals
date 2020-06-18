@@ -6,7 +6,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 // GetUsers ...
@@ -30,7 +29,14 @@ func (h *Handler) AddUser(c *gin.Context) {
 	role, _     := c.GetPostForm("role")
 	roleFmt, _  := strconv.Atoi(role)
 
-	r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
+	err := r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
+	users := r.GetAll()
+	if err != "" {
+		c.HTML(http.StatusOK, "users.html", gin.H{
+			"err": err,
+			"users": users,
+		})
+	}
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
@@ -60,8 +66,14 @@ func (h *Handler) EditUser(c *gin.Context) {
 	user.Age, _ = strconv.Atoi(age)
 	role,     _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
-	user.UpdatedAt = time.Now()
-	r.Edit(user)
+
+	err := r.Edit(user)
+	if err != "" {
+		c.HTML(http.StatusOK, "user_edit.html", gin.H{
+			"err": err,
+		})
+		return
+	}
 
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }

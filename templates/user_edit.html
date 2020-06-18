@@ -33,6 +33,11 @@
             </div>
         </div>
         <p><input type="submit" value="Edit"></p>
+        {{if .err}}
+            <div class="form-footer">
+                <p>{{.err}}</p>
+            </div>
+        {{end}}
     </div>
 </form>
 

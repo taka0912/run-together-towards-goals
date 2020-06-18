@@ -46,6 +46,11 @@
                 <button type="submit" tabindex="14">Add</button>
             </div>
         </div>
+        <div class="form-footer">
+            {{if .err}}
+                    <p>{{.err}}</p>
+            {{end}}
+        </div>
     </div>
 </form>
 

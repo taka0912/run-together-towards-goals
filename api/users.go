@@ -38,12 +38,20 @@ func (h *Handler) AddUser(c *gin.Context) {
 	role, _     := strconv.Atoi(user.Role)
 
 	r := models.NewUserRepository()
-	r.Add(&models.User{
+	err := r.Add(&models.User{
 		Nickname: user.Nickname,
 		Password: user.Password,
 		Age:      age,
 		Role:     role,
 	})
+	if err != "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusBadRequest,
+			"msg" : err,
+			"id"  : r.Count(),
+		})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
@@ -68,7 +76,15 @@ func (h *Handler) EditUser(c *gin.Context) {
 	}
 	user.Age, _ = strconv.Atoi(beforeUser.Age)
 
-	r.Edit(user)
+	err := r.Edit(user)
+	if err != "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusBadRequest,
+			"msg" : err,
+			"id"  : user.ID,
+		})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,

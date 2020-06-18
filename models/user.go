@@ -1,12 +1,10 @@
 package models
 
 import (
-	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 	v "gopkg.in/go-playground/validator.v9"
-	"log"
+	"time"
 )
 
 const (
@@ -19,7 +17,7 @@ type User struct {
 	Nickname     string  `validate:"required,gt=1"`
 	Password     string  `validate:"required,gt=4"`
 	Age          int     `validate:"numeric"`
-	Role         int     `validate:"numeric,oneof=1 3 5"`
+	Role         int     `validate:"numeric,oneof=0 1"`
 	IgnoreMe     string  `gorm:"-"`
 }
 
@@ -29,19 +27,13 @@ func NewUserRepository() User {
 }
 
 // DB追加
-func (o *User) Add(user *User) {
+func (o *User) Add(user *User) string {
 	db := Open()
 
 	validate := v.New()
 	err := validate.Struct(user)
 	if err != nil {
-		log.Println(err)
-
-		fmt.Printf("err : ")
-		spew.Dump(err.Error())
-		fmt.Printf("\n")
-
-		return
+		return err.Error()
 	}
 
 	password, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
@@ -49,13 +41,23 @@ func (o *User) Add(user *User) {
 
 	db.Create(user)
 	defer db.Close()
+	return ""
 }
 
 // DB更新
-func (o *User) Edit(user User) {
+func (o *User) Edit(user User) string {
 	db := Open()
+
+	validate := v.New()
+	err := validate.Struct(user)
+	if err != nil {
+		return err.Error()
+	}
+	user.UpdatedAt = time.Now()
+
 	db.Save(user)
 	db.Close()
+	return ""
 }
 
 // DB全取得
