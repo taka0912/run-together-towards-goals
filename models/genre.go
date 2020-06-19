@@ -55,3 +55,18 @@ func (o *Genre) Delete(id int) {
 	db.Delete(&genre)
 	db.Close()
 }
+
+// Migration
+func (o *Genre) GenreMigration() {
+	db := Open()
+	r := NewGenreRepository()
+	r.Add(&Genre{GenreName: "ダイエット"})
+	r.Add(&Genre{GenreName: "筋トレ"})
+	r.Add(&Genre{GenreName: "健康"})
+	r.Add(&Genre{GenreName: "プログラミング"})
+	r.Add(&Genre{GenreName: "資格勉強"})
+	r.Add(&Genre{GenreName: "副業"})
+	r.Add(&Genre{GenreName: "語学"})
+	r.Add(&Genre{GenreName: "その他"})
+	db.Close()
+}
