@@ -1,0 +1,5 @@
+{
+    "ImportPath": "github.com/daisuzuki829/run-together-towards-goals",
+    "GoVersion": "go1.6",
+    "Deps": []
+}
