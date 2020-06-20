@@ -1,1 +1,1 @@
-web: run_together_towards_goals
+web: run-together-towards-goals
