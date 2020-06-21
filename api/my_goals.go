@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/daisuzuki829/run_together_towards_goals/models"
+	"github.com/daisuzuki829/run-together-towards-goals/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"

@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/daisuzuki829/run_together_towards_goals/controllers"
-	"github.com/daisuzuki829/run_together_towards_goals/api"
+	"github.com/daisuzuki829/run-together-towards-goals/controllers"
+	"github.com/daisuzuki829/run-together-towards-goals/api"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
