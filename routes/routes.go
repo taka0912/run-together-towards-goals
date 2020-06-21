@@ -1,14 +1,15 @@
 package routes
 
 import (
-	"github.com/daisuzuki829/run-together-towards-goals/controllers"
 	"github.com/daisuzuki829/run-together-towards-goals/api"
+	"github.com/daisuzuki829/run-together-towards-goals/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -36,7 +37,6 @@ func Handler(dbConn *gorm.DB) {
 
 	r.LoadHTMLGlob("templates/*.html")
 	r.Static("/assets", "./assets")
-
 
 	// セッションの設定
 	store := cookie.NewStore([]byte("secret"))
@@ -110,7 +110,11 @@ func Handler(dbConn *gorm.DB) {
 
 	//spew.Dump(r)
 
-	if err := r.Run(":8080"); err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	if err := r.Run(":" + port); err != nil {
 		panic(err)
 	}
 }
