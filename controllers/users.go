@@ -95,9 +95,9 @@ func LoginUser(c *gin.Context) (models.User, string) {
 	r := models.NewUserRepository()
 	user := r.GetByName(nickname)
 
-	if user.Role == models.PublicUser {
-		return user, "You do not have authority"
-	}
+	//if user.Role == models.PublicUser {
+	//	return user, "You do not have authority"
+	//}
 
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
@@ -134,7 +134,7 @@ func NewRegistration(c *gin.Context) {
 			"user": r.GetOne(r.Count()),
 		})
 	}
-	c.HTML(http.StatusOK, "welcome.html", gin.H{
+	c.HTML(http.StatusOK, "login.html", gin.H{
 		"user": r.GetOne(r.Count()),
 	})
 }
