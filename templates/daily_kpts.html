@@ -9,6 +9,42 @@
 </head>
 <body>
 
+<form action="/daily_kpt/add" method="post">
+    <div class="form-inner">
+        <h2>Post daily KPT</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="keep" id="keep" placeholder="Keep"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="problem" id="problem" placeholder="Problem"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="try" id="try" placeholder="Try"/>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+        <div class="form-footer">
+            {{if .err}}
+                <p>{{.err}}</p>
+            {{end}}
+        </div>
+    </div>
+</form>
+
+
 {{ template "header" }}
 
 <table>

@@ -83,8 +83,11 @@ func Handler(dbConn *gorm.DB) {
 
 		// daily kpt info
 		r.GET("/_daily_kpts", handler.GetAllDailyKpts)
-		r.DELETE("/daily_kpt/delete/:id", handler.DeleteDailyKpt)
-
+		rDailyKpt := r.Group("/daily_kpt")
+		{
+			rDailyKpt.POST("add", handler.AddDailyKpt)
+			rDailyKpt.DELETE("delete/:id", handler.DeleteDailyKpt)
+		}
 		r.GET("/index", func(c *gin.Context) {
 			c.HTML(http.StatusOK, "welcome.html", gin.H{
 				"title": "title",
