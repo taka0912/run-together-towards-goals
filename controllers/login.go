@@ -51,11 +51,11 @@ func Logout(c *gin.Context) {
 	log.Println("ログアウト")
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"err": "Bye!",
+		"logout": "Bye!",
 	})
 }
 
-// sessionCheck...
+// SessionCheck...
 func SessionCheck(c *gin.Context) {
 	session := sessions.Default(c)
 	LoginInfo.UserId = session.Get("UserId")

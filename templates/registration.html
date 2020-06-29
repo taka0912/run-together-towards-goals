@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+</head>
+<body>
+
+<form action="/registration" method="post">
+    <div class="form-inner">
+        <h2>Add User</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="nickname" id="nickname" placeholder="Nickname"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="password" tabindex="1" name="password" id="password" placeholder="Password"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="number" tabindex="1" name="age" id="age" placeholder="Age"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="age" id="age" placeholder="Your goal"/>
+            </div>
+        </div>
+
+        <div>
+            <div class="underline">
+                <select name="role" id="role" placeholder="Role"/>
+                    {{if .genre}}
+                        {{ range .genre }}
+                            <option value="0">{{.GenreName}}</option>
+                        {{end}}
+                    {{end}}
+
+
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="age" id="age" placeholder="expire date"/>
+            </div>
+        </div>
+
+
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+        <div class="form-footer">
+            {{if .err}}
+                <p>{{.err}}</p>
+            {{end}}
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

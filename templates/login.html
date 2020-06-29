@@ -28,9 +28,13 @@
             <p>{{.err}}</p>
         </div>
     {{end}}
+    {{if .logout}}
+        <div class="form-footer">
+            <p>{{.logout}}</p>
+        </div>
+    {{end}}
     <div class="form-footer">
-        <p><a href="#">Create an account</a></p>
-        <p><a href="#">Forgot password?</a></p>
+        <p><a href="reissue">Forgot password?</a></p>
     </div>
 </div>
 </body>
