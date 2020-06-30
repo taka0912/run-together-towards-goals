@@ -9,6 +9,8 @@
 </head>
 <body>
 
+{{ template "header" }}
+
 <form action="/daily_kpt/add" method="post">
     <div class="form-inner">
         <h2>Post daily KPT</h2>
@@ -44,11 +46,10 @@
     </div>
 </form>
 
-
-{{ template "header" }}
-
 <table>
     <tr>
+        <th>UserID</th>
+        <th>Nickname</th>
         <th>Keep</th>
         <th>Problem</th>
         <th>Try</th>
@@ -58,6 +59,8 @@
     </tr>
     {{ range .dailyKpts }}
         <tr>
+            <td>{{ .UserID }}</td>
+            <td>{{ .Nickname }}</td>
             <td>{{ .Keep }}</td>
             <td>{{ .Problem }}</td>
             <td>{{ .Try }}</td>
