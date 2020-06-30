@@ -104,3 +104,13 @@ func (o *User) Count() int {
 	db.Close()
 	return count
 }
+
+// GetLoginUser
+func (o *User) GetLoginUser(id interface{}) User {
+	db := Open()
+	var user User
+	db.First(&user, id)
+	db.Close()
+	return user
+}
+
