@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-// GetUsers ...
+// GetAllDailyKpts...
 func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	dailyKpts := r.GetAll()
@@ -18,7 +18,7 @@ func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 	})
 }
 
-// AddGenres ...
+// AddDailyKpt...
 func (h *Handler) AddDailyKpt(c *gin.Context) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
@@ -37,11 +37,30 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
-// DeleteUsers ...
+// IncreaseGood...
+func (h *Handler) IncreaseGood(c *gin.Context) {
+	r := models.NewDailyKptRepository()
+	id, _ := strconv.Atoi(c.Param("id"))
+	dailyKpt := r.GetOne(id)
+	dailyKpt.Good += 1
+	r.Edit(dailyKpt)
+	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
+}
+
+// IncreaseFight...
+func (h *Handler) IncreaseFight(c *gin.Context) {
+	r := models.NewDailyKptRepository()
+	id, _ := strconv.Atoi(c.Param("id"))
+	dailyKpt := r.GetOne(id)
+	dailyKpt.Fight += 1
+	r.Edit(dailyKpt)
+	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
+}
+
+// DeleteDailyKpt...
 func (h *Handler) DeleteDailyKpt(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	r.Delete(id)
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
-

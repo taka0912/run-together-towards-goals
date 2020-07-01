@@ -46,33 +46,45 @@
     </div>
 </form>
 
-<table>
-    <tr>
-        <th>UserID</th>
-        <th>Nickname</th>
-        <th>Keep</th>
-        <th>Problem</th>
-        <th>Try</th>
-        <th>Good</th>
-        <th>Fight</th>
-        <th>Delete</th>
-    </tr>
-    {{ range .dailyKpts }}
+<form method="post">
+    <table>
         <tr>
-            <td>{{ .UserID }}</td>
-            <td>{{ .Nickname }}</td>
-            <td>{{ .Keep }}</td>
-            <td>{{ .Problem }}</td>
-            <td>{{ .Try }}</td>
-            <td>{{ .Good }}</td>
-            <td>{{ .Fight }}</td>
-            <td>
-                <button type="submit"formmethod="delete" formaction="/daily_kpt/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
-            </td>
+            <th>UserID</th>
+            <th>Nickname</th>
+            <th>Keep</th>
+            <th>Problem</th>
+            <th>Try</th>
+            <th>Good</th>
+            <th>Fight</th>
+            <th>Delete</th>
         </tr>
-    {{end}}
-</table>
+        {{ range .dailyKpts }}
+            <tr>
+                <td>{{ .UserID }}</td>
+                <td>{{ .Nickname }}</td>
+                <td>{{ .Keep }}</td>
+                <td>{{ .Problem }}</td>
+                <td>{{ .Try }}</td>
+                <td>
+                    {{ .Good }}
+                    <button type="submit" formaction="/daily_kpt/good/{{.ID}}" class="btn-red">Good
+                    </button>
+                </td>
+                <td>
+                    {{ .Fight }}
+                    <button type="submit" formaction="/daily_kpt/fight/{{.ID}}" class="btn-yellow">
+                        Fight
+                    </button>
+                </td>
+                <td>
+                    <button type="submit" formmethod="delete" formaction="/daily_kpt/delete/{{.ID}}" class="btn-blue"
+                            onClick="alert('本当に削除してよろしいですか？');">Delete
+                    </button>
+                </td>
+            </tr>
+        {{end}}
+    </table>
+</form>
 
 </body>
 </html>
-

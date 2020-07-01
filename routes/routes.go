@@ -26,7 +26,7 @@ func Handler(dbConn *gorm.DB) {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH", "DELETE", "POST", "GET"},
+		AllowMethods:     []string{"PUT", "DELETE", "POST", "GET"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -66,8 +66,7 @@ func Handler(dbConn *gorm.DB) {
 			rUser.POST("add", handler.AddUser)
 			rUser.GET("edit/:id", handler.GetUser)
 			rUser.POST("edit_ok/:id", handler.EditUser)
-			rUser.GET("delete/:id", handler.DeleteUser)
-			rUser.DELETE("delete/:id", handler.DeleteUser)
+			rUser.POST("delete/:id", handler.DeleteUser)
 		}
 
 		// genre info
@@ -86,7 +85,9 @@ func Handler(dbConn *gorm.DB) {
 		rDailyKpt := r.Group("/daily_kpt")
 		{
 			rDailyKpt.POST("add", handler.AddDailyKpt)
-			rDailyKpt.DELETE("delete/:id", handler.DeleteDailyKpt)
+			rDailyKpt.POST("good/:id", handler.IncreaseGood)
+			rDailyKpt.POST("fight/:id", handler.IncreaseFight)
+			rDailyKpt.POST("delete/:id", handler.DeleteDailyKpt)
 		}
 		r.GET("/index", func(c *gin.Context) {
 			c.HTML(http.StatusOK, "welcome.html", gin.H{
