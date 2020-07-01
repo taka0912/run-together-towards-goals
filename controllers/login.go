@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"errors"
+	"github.com/daisuzuki829/run-together-towards-goals/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -73,4 +75,16 @@ func SessionCheck(c *gin.Context) {
 		}
 		c.Next()
 	}
+}
+
+// GetLoginUser...
+func GetLoginUser(c *gin.Context) (int, error) {
+	ru := models.NewUserRepository()
+	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
+	if user == (interface{})(nil) {
+		return 0, errors.New("cannot get Login User")
+	}
+	userId := int(user.ID)
+
+	return userId, nil
 }

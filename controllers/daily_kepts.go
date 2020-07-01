@@ -44,6 +44,15 @@ func (h *Handler) IncreaseGood(c *gin.Context) {
 	dailyKpt := r.GetOne(id)
 	dailyKpt.Good += 1
 	r.Edit(dailyKpt)
+
+	loginUserId, err := GetLoginUser(c)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/logout")
+	}
+
+	rah := models.NewKptReactionHistoryRepository()
+	rah.AddReaction(int(dailyKpt.ID), loginUserId, models.ReactionGood)
+
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
@@ -54,6 +63,15 @@ func (h *Handler) IncreaseFight(c *gin.Context) {
 	dailyKpt := r.GetOne(id)
 	dailyKpt.Fight += 1
 	r.Edit(dailyKpt)
+
+	loginUserId, err := GetLoginUser(c)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/logout")
+	}
+
+	rah := models.NewKptReactionHistoryRepository()
+	rah.AddReaction(int(dailyKpt.ID), loginUserId, models.ReactionFight)
+
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 

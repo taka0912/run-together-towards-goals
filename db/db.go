@@ -12,8 +12,14 @@ func Init() *gorm.DB {
 
 	db.LogMode(true)
 
-	db.Exec("DROP TABLE genres")
-	db.AutoMigrate(&models.User{}, &models.DailyKpt{}, &models.MyGoal{}, &models.Genre{})
+	//db.Exec("DROP TABLE genres")
+	db.AutoMigrate(
+		&models.User{},
+		&models.DailyKpt{},
+		&models.MyGoal{},
+		&models.Genre{},
+		&models.KptReactionHistory{},
+	)
 
 	r := models.NewGenreRepository()
 	r.GenreMigration()
