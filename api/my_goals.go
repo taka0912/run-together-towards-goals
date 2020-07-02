@@ -6,7 +6,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 type MyGoal struct {
@@ -24,14 +23,12 @@ func (h *Handler) SetMyGoal(c *gin.Context) {
 
 	userID, _ := strconv.Atoi(myGoal.UserID)
 	genreID, _ := strconv.Atoi(myGoal.GenreID)
-	limitDate, _ := time.Parse("2006/01/02", myGoal.LimitDate)
 
 	r := models.NewMyGoalRepository()
 	r.Add(&models.MyGoal{
 		UserID:  userID,
 		Goal:    myGoal.Goal,
 		GenreID:    genreID,
-		LimitDate:    limitDate,
 	})
 
 	c.JSON(http.StatusOK, gin.H{
@@ -62,7 +59,6 @@ func (h *Handler) EditMyGoal(c *gin.Context) {
 
 	newMyGoal.Goal         = myGoal.Goal
 	newMyGoal.GenreID, _   = strconv.Atoi(myGoal.GenreID)
-	newMyGoal.LimitDate, _ = time.Parse("2006/01/02", myGoal.LimitDate)
 
 	r.Edit(newMyGoal)
 

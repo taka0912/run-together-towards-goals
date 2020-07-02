@@ -2,15 +2,13 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type MyGoal struct {
 	gorm.Model
 	UserID      int        `gorm:"not null"`
-	Goal        string     `gorm:"not null"`
 	GenreID     int        `gorm:"not null"`
-	LimitDate   time.Time  `sql:"not null;type:date"`
+	Goal        string     `gorm:"not null"`
 	IgnoreMe    string     `gorm:"-"`
 }
 

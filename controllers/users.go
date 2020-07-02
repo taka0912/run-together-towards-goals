@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -110,31 +112,36 @@ func LoginUser(c *gin.Context) (models.User, string) {
 // NewRegistration...
 func NewRegistration(c *gin.Context) {
 	r := models.NewUserRepository()
-
-	nickname, _ := c.GetPostForm("nickname")
-	password, _ := c.GetPostForm("password")
-	age, _      := c.GetPostForm("age")
-	ageFmt, _   := strconv.Atoi(age)
-	role, _     := c.GetPostForm("role")
-	roleFmt, _  := strconv.Atoi(role)
-
-	rg := models.NewMyGoalRepository()
-	goal, _ := c.GetPostForm("goal")
-	genreID, _      := c.GetPostForm("genre_id")
-	genreIDFmt, _   := strconv.Atoi(genreID)
-	limitDate,    _ := c.GetPostForm("limit_date")
-	limitDateFmt, _ := time.Parse("2006/01/02", limitDate)
-
-	err := r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
-	rg.Add(&models.MyGoal{Goal: goal, GenreID:genreIDFmt, LimitDate:limitDateFmt})
-
+	r.Nickname, _ = c.GetPostForm("nickname")
+	r.Password, _ = c.GetPostForm("password")
+	age, _       := c.GetPostForm("age")
+	r.Age, _      = strconv.Atoi(age)
+	role, _      := c.GetPostForm("role")
+	r.Role, _     = strconv.Atoi(role)
+	err := r.Add(&r)
 	if err != "" {
 		c.HTML(http.StatusMovedPermanently, "registration.html", gin.H{
 			"err": err,
-			"user": r.GetOne(r.Count()),
 		})
+		return
 	}
+
+	rg := models.NewMyGoalRepository()
+	rg.UserID     = int(r.ID)
+	genreID, _   := c.GetPostForm("genre_id")
+	rg.GenreID, _ = strconv.Atoi(genreID)
+	rg.Goal, _    = c.GetPostForm("goal")
+	rg.Add(&rg)
+
+	rt := models.NewTodoRepository()
+	rt.GoalId = int(rg.ID)
+	rt.RequiredElements, _ = c.GetPostForm("required_elements")
+	rt.SpecificGoal, _     = c.GetPostForm("specific_goal")
+	limitDate,    _       := c.GetPostForm("limit_date")
+	rt.LimitDate, _        = time.Parse("2006/01/02", limitDate)
+	rt.Add(&rt)
+
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"user": r.GetOne(r.Count()),
+		"msg": "Welcome! Lets Login.",
 	})
 }

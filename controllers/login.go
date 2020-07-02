@@ -53,7 +53,7 @@ func Logout(c *gin.Context) {
 	log.Println("ログアウト")
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"logout": "Bye!",
+		"msg": "Bye!",
 	})
 }
 

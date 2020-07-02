@@ -12,12 +12,12 @@
         <h2>Add User</h2>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="nickname" id="nickname" placeholder="Nickname"/>
+                <input type="text" tabindex="1" name="nickname" id="nickname" placeholder="Nickname" required="required" />
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="password" tabindex="1" name="password" id="password" placeholder="Password"/>
+                <input type="password" tabindex="1" name="password" id="password" placeholder="Password" required="required" />
             </div>
         </div>
         <div>
@@ -27,27 +27,53 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="age" id="age" placeholder="Your goal"/>
-            </div>
-        </div>
-
-        <div>
-            <div class="underline">
-                <select name="role" id="role" placeholder="Role"/>
-                    {{if .genre}}
-                        {{ range .genre }}
-                            <option value="0">{{.GenreName}}</option>
-                        {{end}}
+                <select name="genre_id" id="genre_id" required="required" />
+                {{if .genre}}
+                    {{ range .genre }}
+                        <option value="{{.ID}}">{{.GenreName}}</option>
                     {{end}}
-
-
+                {{end}}
                 </select>
             </div>
         </div>
-
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="age" id="age" placeholder="expire date"/>
+                <input type="text" tabindex="1" name="goal" id="goal" placeholder="Your Goal" required="required" />
+            </div>
+            <div align="right" class="example_text">
+                ex)痩せてキレイになる
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="required_elements" id="required_elements" placeholder="Required Elements" required="required" />
+            </div>
+            <div align="right">
+                ex)継続的な有酸素運動
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="todo" id="todo" placeholder="Todo" required="required" />
+            </div>
+            <div align="right">
+                ex)毎日4キロ走る
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="specific_goal" id="specific_goal" placeholder="Specific Goal" required="required" />
+            </div>
+            <div align="right">
+                ex)今より3キロ痩せる
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="date" tabindex="1" name="age" id="age" placeholder="Expire Date" required="required" />
+            </div>
+            <div align="right">
+                ex)2024/12/31
             </div>
         </div>
 

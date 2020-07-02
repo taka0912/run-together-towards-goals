@@ -739,3 +739,7 @@ input::-moz-focus-inner {
     -webkit-transition: opacity 0.08s ease-out, background 0.08s ease-out, color 0.08s ease-out, border 0.08s ease-out, max-height 0.08s ease-out, height 0.08s ease-out, width 0.08s ease-out;
     transition: opacity 0.08s ease-out, background 0.08s ease-out, color 0.08s ease-out, border 0.08s ease-out, max-height 0.08s ease-out, height 0.08s ease-out, width 0.08s ease-out;
 }
+
+.form-inner > div > div.example_text {
+    color: #777;
+}
