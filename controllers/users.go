@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -142,6 +140,6 @@ func NewRegistration(c *gin.Context) {
 	rt.Add(&rt)
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"msg": "Welcome! Lets Login.",
+		"msg": "Welcome! Let's Login.",
 	})
 }
