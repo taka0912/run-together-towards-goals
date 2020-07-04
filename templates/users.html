@@ -60,8 +60,7 @@
             <th>Nickname</th>
             <th>Age</th>
             <th>Role</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>View</th>
         </tr>
         {{ range .users }}
             <tr>
@@ -73,13 +72,16 @@
                     <td>管理者</td>
                 {{ end }}
                 <td>
-                    <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>
+                    <a href="/user/view/{{.ID}}" class="btn-yellow">View</a>
                 </td>
-                <td>
-                    <button type="submit" formmethod="post" formaction="/user/delete/{{.ID}}" class="btn-blue"
-                            onClick="alert('本当に削除してよろしいですか？');">Delete
-                    </button>
-                </td>
+{{/*                <td>*/}}
+{{/*                    <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>*/}}
+{{/*                </td>*/}}
+{{/*                <td>*/}}
+{{/*                    <button type="submit" formmethod="post" formaction="/user/delete/{{.ID}}" class="btn-blue"*/}}
+{{/*                            onClick="alert('本当に削除してよろしいですか？');">Delete*/}}
+{{/*                    </button>*/}}
+{{/*                </td>*/}}
             </tr>
         {{end}}
     </table>

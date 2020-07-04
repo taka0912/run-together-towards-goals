@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View User</title>
+    <style type="text/css" media="screen">
+        @import url("/assets/css/menu.css");
+        @import url("/assets/css/from.css");
+    </style>
+</head>
+</head>
+<body>
+
+{{ template "header" }}
+
+<form method="post" action="/user/edit_ok/{{.user.ID}}">
+    <div class="form-inner">
+        <h2>Edit User</h2>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="nickname" id="nickname" value="{{.user.Nickname}}"
+                       placeholder="Nickname"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="password" tabindex="1" name="password" id="password" value="" placeholder="Password"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="number" tabindex="1" name="age" id="age" value="{{.user.Age}}" placeholder="Age"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="role" id="role" value="{{.user.Role}}" placeholder="Role"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="goal" id="goal" value="{{.user.Goal}}" placeholder="Goal"/>
+            </div>
+        </div>
+
+        <div>
+            <div class="underline">
+                <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
+                {{range $i, $v := .genres}}
+                    <option value="{{.ID}}" {{ if eq $v.ID $.user.GenreID }} selected {{ end }}> {{ .GenreName }} </option>
+                {{ end }}
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="goal" id="goal" value="{{.user.Goal}}" placeholder="Goal"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="required_elements" id="required_elements"
+                       value="{{.user.RequiredElements}}" placeholder="RequiredElements"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="specific_goal" id="specific_goal" value="{{.user.SpecificGoal}}"
+                       placeholder="SpecificGoal"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="date" tabindex="1" name="limit_date" id="limit_date" value="{{.user.IgnoreMe}}"
+                       placeholder="LimitDate"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" tabindex="1" name="limit_date" id="limit_date" value="{{.user.IgnoreMe}}"
+                       placeholder="LimitDate"/>
+            </div>
+        </div>
+
+        {{/*        GenreID: (int) 7,*/}}
+
+        <p><input type="submit" value="Edit"></p>
+        {{if .err}}
+            <div class="form-footer">
+                <p>{{.err}}</p>
+            </div>
+        {{end}}
+    </div>
+</form>
+
+</body>
+</html>

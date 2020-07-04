@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -25,16 +27,16 @@ func (h *Handler) AddUser(c *gin.Context) {
 
 	nickname, _ := c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
-	age, _      := c.GetPostForm("age")
-	ageFmt, _   := strconv.Atoi(age)
-	role, _     := c.GetPostForm("role")
-	roleFmt, _  := strconv.Atoi(role)
+	age, _ := c.GetPostForm("age")
+	ageFmt, _ := strconv.Atoi(age)
+	role, _ := c.GetPostForm("role")
+	roleFmt, _ := strconv.Atoi(role)
 
 	err := r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
 	users := r.GetAll()
 	if err != "" {
 		c.HTML(http.StatusOK, "users.html", gin.H{
-			"err": err,
+			"err":   err,
 			"users": users,
 		})
 	}
@@ -45,27 +47,42 @@ func (h *Handler) AddUser(c *gin.Context) {
 func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
-	user := r.GetOne(id)
-	c.HTML(http.StatusOK, "user_edit.html", gin.H{
-		"user": user,
+	user := r.GetAllInfo(id)
+	user.IgnoreMe = time.Now().Format("2006/01/02")
+
+	//user.LimitDate
+	//time.Now().Format("2006/01/02")
+	//t.Format("2006/01/02")
+	// time.Parse("2006/01/02", limitDate)
+
+	rg := models.NewGenreRepository()
+	genres := rg.GetAll()
+
+	fmt.Printf("user : ")
+	spew.Dump(user)
+	fmt.Printf("\n")
+
+	c.HTML(http.StatusOK, "user_view.html", gin.H{
+		"user":   user,
+		"genres": genres,
 	})
 }
 
 // EditUsers ...
 func (h *Handler) EditUser(c *gin.Context) {
-	r     := models.NewUserRepository()
+	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
-	user  := r.GetOne(id)
+	user := r.GetOne(id)
 
 	user.Nickname, _ = c.GetPostForm("nickname")
-	password, _      := c.GetPostForm("password")
+	password, _ := c.GetPostForm("password")
 	if password != "" {
 		hashPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		user.Password = string(hashPassword)
 	}
-	age,      _ := c.GetPostForm("age")
+	age, _ := c.GetPostForm("age")
 	user.Age, _ = strconv.Atoi(age)
-	role,     _ := c.GetPostForm("role")
+	role, _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
 
 	err := r.Edit(user)
@@ -112,10 +129,10 @@ func NewRegistration(c *gin.Context) {
 	r := models.NewUserRepository()
 	r.Nickname, _ = c.GetPostForm("nickname")
 	r.Password, _ = c.GetPostForm("password")
-	age, _       := c.GetPostForm("age")
-	r.Age, _      = strconv.Atoi(age)
-	role, _      := c.GetPostForm("role")
-	r.Role, _     = strconv.Atoi(role)
+	age, _ := c.GetPostForm("age")
+	r.Age, _ = strconv.Atoi(age)
+	role, _ := c.GetPostForm("role")
+	r.Role, _ = strconv.Atoi(role)
 	err := r.Add(&r)
 	if err != "" {
 		c.HTML(http.StatusMovedPermanently, "registration.html", gin.H{
@@ -125,19 +142,23 @@ func NewRegistration(c *gin.Context) {
 	}
 
 	rg := models.NewMyGoalRepository()
-	rg.UserID     = int(r.ID)
-	genreID, _   := c.GetPostForm("genre_id")
+	rg.UserID = int(r.ID)
+	genreID, _ := c.GetPostForm("genre_id")
 	rg.GenreID, _ = strconv.Atoi(genreID)
-	rg.Goal, _    = c.GetPostForm("goal")
+	rg.Goal, _ = c.GetPostForm("goal")
 	rg.Add(&rg)
 
 	rt := models.NewTodoRepository()
 	rt.GoalId = int(rg.ID)
 	rt.RequiredElements, _ = c.GetPostForm("required_elements")
-	rt.SpecificGoal, _     = c.GetPostForm("specific_goal")
-	limitDate,    _       := c.GetPostForm("limit_date")
-	rt.LimitDate, _        = time.Parse("2006/01/02", limitDate)
+	rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
+	limitDate, _ := c.GetPostForm("limit_date")
+	rt.LimitDate, _ = time.Parse("2006/01/02", limitDate)
 	rt.Add(&rt)
+
+	fmt.Printf("c.GetPostForm(\"limit_date\") : ")
+	spew.Dump(c.GetPostForm("limit_date"))
+	fmt.Printf("\n")
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"msg": "Welcome! Let's Login.",

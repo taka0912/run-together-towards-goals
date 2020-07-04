@@ -64,7 +64,7 @@ func Handler(dbConn *gorm.DB) {
 		rUser := r.Group("/user")
 		{
 			rUser.POST("add", handler.AddUser)
-			rUser.GET("edit/:id", handler.GetUser)
+			rUser.GET("view/:id", handler.GetUser)
 			rUser.POST("edit_ok/:id", handler.EditUser)
 			rUser.POST("delete/:id", handler.DeleteUser)
 		}

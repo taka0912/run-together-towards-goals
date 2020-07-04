@@ -14,11 +14,25 @@ const (
 
 type User struct {
 	gorm.Model
-	Nickname     string  `validate:"required,gt=1"`
-	Password     string  `validate:"required,gt=4"`
-	Age          int     `validate:"numeric"`
-	Role         int     `validate:"numeric,oneof=0 1"`
-	IgnoreMe     string  `gorm:"-"`
+	Nickname string `validate:"required,gt=1"`
+	Password string `validate:"required,gt=4"`
+	Age      int    `validate:"numeric"`
+	Role     int    `validate:"numeric,oneof=0 1"`
+	IgnoreMe string `gorm:"-"`
+}
+
+type UserView struct {
+	ID               int
+	Nickname         string
+	Password         string
+	Age              int
+	Role             int
+	GenreID          int
+	Goal             string
+	RequiredElements string
+	SpecificGoal     string
+	LimitDate        time.Ticker
+	IgnoreMe         string
 }
 
 // NewUser ...
@@ -78,6 +92,22 @@ func (o *User) GetOne(id int) User {
 	return user
 }
 
+// DB一つ取得
+func (o *User) GetAllInfo(id int) UserView {
+	db := Open()
+	var userView UserView
+
+	db.Table("users").
+		Select("users.*, my_goals.*, todos.*").
+		Joins("left JOIN my_goals ON users.id = my_goals.user_id").
+		Joins("left JOIN todos ON my_goals.id = todos.goal_id").
+		Where("users.id = ?", id).
+		Find(&userView)
+
+	db.Close()
+	return userView
+}
+
 // GetByName...
 func (o *User) GetByName(nickname string) User {
 	db := Open()
@@ -113,4 +143,3 @@ func (o *User) GetLoginUser(id interface{}) User {
 	db.Close()
 	return user
 }
-
