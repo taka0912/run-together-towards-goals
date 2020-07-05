@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -48,19 +46,10 @@ func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
-	user.IgnoreMe = time.Now().Format("2006/01/02")
-
-	//user.LimitDate
-	//time.Now().Format("2006/01/02")
-	//t.Format("2006/01/02")
-	// time.Parse("2006/01/02", limitDate)
+	user.IgnoreMe = time.Now().Format("2006-01-02")
 
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()
-
-	fmt.Printf("user : ")
-	spew.Dump(user)
-	fmt.Printf("\n")
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":   user,
@@ -153,12 +142,8 @@ func NewRegistration(c *gin.Context) {
 	rt.RequiredElements, _ = c.GetPostForm("required_elements")
 	rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
 	limitDate, _ := c.GetPostForm("limit_date")
-	rt.LimitDate, _ = time.Parse("2006/01/02", limitDate)
+	rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
 	rt.Add(&rt)
-
-	fmt.Printf("c.GetPostForm(\"limit_date\") : ")
-	spew.Dump(c.GetPostForm("limit_date"))
-	fmt.Printf("\n")
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"msg": "Welcome! Let's Login.",
