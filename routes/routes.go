@@ -65,6 +65,7 @@ func Handler(dbConn *gorm.DB) {
 		{
 			rUser.POST("add", handler.AddUser)
 			rUser.GET("view/:id", handler.GetUser)
+			rUser.GET("my_page", handler.GetMyPage)
 			rUser.POST("edit_ok/:id", handler.EditUser)
 			rUser.POST("delete/:id", handler.DeleteUser)
 		}

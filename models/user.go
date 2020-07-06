@@ -31,7 +31,7 @@ type UserView struct {
 	Goal             string
 	RequiredElements string
 	SpecificGoal     string
-	LimitDate        time.Ticker
+	LimitDate        time.Time
 	IgnoreMe         string
 }
 

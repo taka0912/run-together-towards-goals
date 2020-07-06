@@ -46,14 +46,21 @@ func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
-	user.IgnoreMe = time.Now().Format("2006-01-02")
+	user.IgnoreMe = user.LimitDate.Format("2006-01-02")
 
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()
 
+	loginUser := r.GetLoginUser(c)
+	adminFlag := false
+	if loginUser.Role == models.AdminUser {
+		adminFlag = true
+	}
+
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":   user,
 		"genres": genres,
+		"adminFlag": adminFlag,
 	})
 }
 
@@ -62,6 +69,15 @@ func (h *Handler) EditUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetOne(id)
+
+	loginUser := r.GetLoginUser(c)
+	// 「ログインユーザが管理者、もしくは編集ページのユーザー本人」でない場合
+	if !(loginUser.Role == models.AdminUser || loginUser.ID == user.ID) {
+		c.HTML(http.StatusOK, "user_view.html", gin.H{
+			"err": "Unauthorized",
+		})
+		return
+	}
 
 	user.Nickname, _ = c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
@@ -100,10 +116,6 @@ func LoginUser(c *gin.Context) (models.User, string) {
 
 	r := models.NewUserRepository()
 	user := r.GetByName(nickname)
-
-	//if user.Role == models.PublicUser {
-	//	return user, "You do not have authority"
-	//}
 
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
@@ -147,5 +159,22 @@ func NewRegistration(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"msg": "Welcome! Let's Login.",
+	})
+}
+
+// GetUsers ...
+func (h *Handler) GetMyPage(c *gin.Context) {
+	r := models.NewUserRepository()
+
+	loginUser := r.GetLoginUser(c)
+	user := r.GetAllInfo(int(loginUser.ID))
+	user.IgnoreMe = user.LimitDate.Format("2006-01-02")
+	
+	rg := models.NewGenreRepository()
+	genres := rg.GetAll()
+
+	c.HTML(http.StatusOK, "my_page.html", gin.H{
+		"user":   user,
+		"genres": genres,
 	})
 }

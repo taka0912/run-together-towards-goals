@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View User</title>
+    <title>My Page</title>
     <style type="text/css" media="screen">
         @import url("/assets/css/menu.css");
         @import url("/assets/css/from.css");
@@ -15,7 +15,7 @@
 
 <form method="post" action="/user/edit_ok/{{.user.ID}}">
     <div class="form-inner">
-        <h2>View User</h2>
+        <h2>My Page</h2>
         <div>
             <div class="underline">
                 <input type="text" tabindex="1" name="nickname" id="nickname" value="{{.user.Nickname}}"
@@ -74,13 +74,18 @@
             </div>
         </div>
 
-        {{if .adminFlag }}
-            <div class="buttons">
-                <div>
-                    <button type="submit" tabindex="14">Edit</button>
-                </div>
+        <div class="buttons">
+            <div>
+                <button type="submit" tabindex="14">Edit</button>
+            </div>
+        </div>
+
+        {{if .err}}
+            <div class="form-footer">
+                <p>{{.err}}</p>
             </div>
         {{end}}
+
     </div>
 </form>
 
