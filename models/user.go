@@ -19,6 +19,8 @@ type User struct {
 	Age      int    `validate:"numeric"`
 	Role     int    `validate:"numeric,oneof=0 1"`
 	IgnoreMe string `gorm:"-"`
+	MyGoal MyGoal `gorm:"foreignkey:ID;association_foreignkey:UserID"`
+	//MyGoal MyGoal   `gorm:"ForeignKey:UserID"`
 }
 
 type UserView struct {
@@ -33,6 +35,16 @@ type UserView struct {
 	SpecificGoal     string
 	LimitDate        time.Time
 	IgnoreMe         string
+}
+
+type UserInfo struct {
+	ID       int
+	Nickname string
+	Password string
+	Age      int
+	Role     int
+	//MyGoals  []MyGoals
+	MyGoals MyGoals `gorm:"foreignkey:ID;association_foreignkey:UserID"`
 }
 
 // NewUser ...
@@ -93,19 +105,25 @@ func (o *User) GetOne(id int) User {
 }
 
 // DB一つ取得
-func (o *User) GetAllInfo(id int) UserView {
+func (o *User) GetAllInfo(id int) User {
 	db := Open()
-	var userView UserView
+	var user User
 
-	db.Table("users").
-		Select("users.*, my_goals.*, todos.*").
-		Joins("left JOIN my_goals ON users.id = my_goals.user_id").
-		Joins("left JOIN todos ON my_goals.id = todos.goal_id").
-		Where("users.id = ?", id).
-		Find(&userView)
+	//db.Table("users").
+	//	Select("users.*, my_goals.*, todos.*").
+	//	Joins("left JOIN my_goals ON users.id = my_goals.user_id").
+	//	Joins("left JOIN todos ON my_goals.id = todos.goal_id").
+	//	Where("users.id = ?", id).
+	//	Find(&userInfo)
+	// Where("users.id = ?", id).
+	// .Related(&user.MyGoal, "UserID")
+	// First(&user, id)
+
+	//db.Debug().Table("users").First(&user, id).Related(&user.MyGoal, "UserID")
+	db.Debug().Table("users").First(&user, id).Association("MyGoal").Find(&user.MyGoal)
 
 	db.Close()
-	return userView
+	return user
 }
 
 // GetByName...

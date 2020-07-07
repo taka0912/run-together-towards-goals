@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -46,21 +48,30 @@ func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
-	user.IgnoreMe = user.LimitDate.Format("2006-01-02")
 
-	rg := models.NewGenreRepository()
-	genres := rg.GetAll()
+	//rg := models.NewMyGoalRepository()
+	//myGoals := rg.GetByUserId(user.ID)
+	//user.MyGoals = rg.GetByUserId(user.ID)
 
-	loginUser := r.GetLoginUser(c)
-	adminFlag := false
-	if loginUser.Role == models.AdminUser {
-		adminFlag = true
-	}
+	fmt.Printf("r.GetAllInfo(id) : ")
+	spew.Dump(user)
+	fmt.Printf("\n")
+
+	//user.IgnoreMe = user.LimitDate.Format("2006-01-02")
+	//
+	//rg := models.NewGenreRepository()
+	//genres := rg.GetAll()
+	//
+	//loginUser := r.GetLoginUser(c)
+	//adminFlag := false
+	//if loginUser.Role == models.AdminUser {
+	//	adminFlag = true
+	//}
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":   user,
-		"genres": genres,
-		"adminFlag": adminFlag,
+		//"genres": genres,
+		//"adminFlag": adminFlag,
 	})
 }
 
@@ -167,9 +178,14 @@ func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
 	loginUser := r.GetLoginUser(c)
+
+	fmt.Printf("loginUser : ")
+	spew.Dump(loginUser)
+	fmt.Printf("\n")
+
 	user := r.GetAllInfo(int(loginUser.ID))
-	user.IgnoreMe = user.LimitDate.Format("2006-01-02")
-	
+	//user.IgnoreMe = user.LimitDate.Format("2006-01-02")
+
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()
 
