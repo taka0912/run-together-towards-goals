@@ -44,7 +44,7 @@
         <div>
             <div class="underline">
                 <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
-                {{range $i, $v := .genres}}
+                {{ range $i, $v := .genres }}
                     <option value="{{.ID}}" {{ if eq $v.ID $.user.GenreID }} selected {{ end }}> {{ .GenreName }} </option>
                 {{ end }}
                 </select>
