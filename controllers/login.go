@@ -81,7 +81,7 @@ func SessionCheck(c *gin.Context) {
 func GetLoginUser(c *gin.Context) (int, error) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	if user == (interface{})(nil) {
+	if user.ID == 0 {
 		return 0, errors.New("cannot get Login User")
 	}
 	userId := int(user.ID)

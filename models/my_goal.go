@@ -10,7 +10,7 @@ type MyGoal struct {
 	GenreID  int    `gorm:"not null"`
 	Goal     string `gorm:"not null"`
 	IgnoreMe string `gorm:"-"`
-	Todo Todo `gorm:"foreignkey:ID;association_foreignkey:GoalId"`
+	Todo     []Todo
 }
 
 type MyGoals struct {
@@ -18,7 +18,7 @@ type MyGoals struct {
 	UserID int
 	Goal   string
 	//Todo   []Todo
-	Todo Todo `gorm:"foreignkey:ID;association_foreignkey:GoalId"`
+	//Todo Todo `gorm:"foreignkey:ID;association_foreignkey:GoalId"`
 }
 
 // NewMyGoalRepository ...
@@ -56,20 +56,6 @@ func (o *MyGoal) GetOne(id int) MyGoal {
 	db.First(&myGoal, id)
 	db.Close()
 	return myGoal
-}
-
-// GetByUserId
-func (o *MyGoal) GetByUserId(userId int) MyGoals {
-	db := Open()
-	var myGoals MyGoals
-	//db.Table("my_goals").
-	//	Select("my_goals.*, todos.*").
-	//	Joins("left JOIN todos ON my_goals.id = todos.goal_id").
-	//	Where("user_id = ?", userId).
-	//	Find(&myGoals)
-	db.Where(&myGoals, userId).Related(&myGoals.Todo, "Todo")
-	db.Close()
-	return myGoals
 }
 
 // DB削除

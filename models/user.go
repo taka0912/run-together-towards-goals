@@ -15,12 +15,12 @@ const (
 type User struct {
 	gorm.Model
 	Nickname string `validate:"required,gt=1"`
+	//`json:"id" gorm:"column:id"`
 	Password string `validate:"required,gt=4"`
 	Age      int    `validate:"numeric"`
 	Role     int    `validate:"numeric,oneof=0 1"`
 	IgnoreMe string `gorm:"-"`
-	MyGoal MyGoal `gorm:"foreignkey:ID;association_foreignkey:UserID"`
-	//MyGoal MyGoal   `gorm:"ForeignKey:UserID"`
+	MyGoals  []MyGoal
 }
 
 type UserView struct {
@@ -43,8 +43,9 @@ type UserInfo struct {
 	Password string
 	Age      int
 	Role     int
-	//MyGoals  []MyGoals
-	MyGoals MyGoals `gorm:"foreignkey:ID;association_foreignkey:UserID"`
+	MyGoals  MyGoal
+	//MyGoal []MyGoal
+	//MyGoal MyGoal   `gorm:"ForeignKey:ID"`
 }
 
 // NewUser ...
@@ -108,20 +109,10 @@ func (o *User) GetOne(id int) User {
 func (o *User) GetAllInfo(id int) User {
 	db := Open()
 	var user User
-
-	//db.Table("users").
-	//	Select("users.*, my_goals.*, todos.*").
-	//	Joins("left JOIN my_goals ON users.id = my_goals.user_id").
-	//	Joins("left JOIN todos ON my_goals.id = todos.goal_id").
-	//	Where("users.id = ?", id).
-	//	Find(&userInfo)
-	// Where("users.id = ?", id).
-	// .Related(&user.MyGoal, "UserID")
-	// First(&user, id)
-
-	//db.Debug().Table("users").First(&user, id).Related(&user.MyGoal, "UserID")
-	db.Debug().Table("users").First(&user, id).Association("MyGoal").Find(&user.MyGoal)
-
+	//var myGoal MyGoal
+	db.Debug().First(&user, id)
+	db.Model(&user).Related(&user.MyGoals)
+	//db.Model(&myGoal).Related(&myGoal.Todo)
 	db.Close()
 	return user
 }

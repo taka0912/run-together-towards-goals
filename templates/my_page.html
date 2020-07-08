@@ -41,38 +41,40 @@
             </div>
         </div>
 
-        <div>
-            <div class="underline">
-                <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
-                {{ range $i, $v := .genres }}
-                    <option value="{{.ID}}" {{ if eq $v.ID $.user.GenreID }} selected {{ end }}> {{ .GenreName }} </option>
-                {{ end }}
-                </select>
+        {{ range $i, $mg := .user.MyGoals }}
+            <div>
+                <div class="underline">
+                    <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
+                    {{ range $j, $ge := $.genres }}
+                        <option value="{{ $ge.ID}}" {{ if eq $ge.ID $mg.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
+                    {{ end }}
+                    </select>
+                </div>
             </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="goal" id="goal" value="{{.user.Goal}}" placeholder="Goal"/>
+            <div>
+                <div class="underline">
+                    <input type="text" tabindex="1" name="goal" id="goal" value="{{ $mg.Goal }}" placeholder="Goal"/>
+                </div>
             </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="required_elements" id="required_elements"
-                       value="{{.user.RequiredElements}}" placeholder="RequiredElements"/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="specific_goal" id="specific_goal" value="{{.user.SpecificGoal}}"
-                       placeholder="SpecificGoal"/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="date" tabindex="1" name="limit_date" id="limit_date" value="{{.user.IgnoreMe}}"
-                       placeholder="LimitDate"/>
-            </div>
-        </div>
+        {{ end }}
+        {{/*        <div>*/}}
+        {{/*            <div class="underline">*/}}
+        {{/*                <input type="text" tabindex="1" name="required_elements" id="required_elements"*/}}
+        {{/*                       value="{{.user.RequiredElements}}" placeholder="RequiredElements"/>*/}}
+        {{/*            </div>*/}}
+        {{/*        </div>*/}}
+        {{/*        <div>*/}}
+        {{/*            <div class="underline">*/}}
+        {{/*                <input type="text" tabindex="1" name="specific_goal" id="specific_goal" value="{{.user.SpecificGoal}}"*/}}
+        {{/*                       placeholder="SpecificGoal"/>*/}}
+        {{/*            </div>*/}}
+        {{/*        </div>*/}}
+        {{/*        <div>*/}}
+        {{/*            <div class="underline">*/}}
+        {{/*                <input type="date" tabindex="1" name="limit_date" id="limit_date" value="{{.user.IgnoreMe}}"*/}}
+        {{/*                       placeholder="LimitDate"/>*/}}
+        {{/*            </div>*/}}
+        {{/*        </div>*/}}
 
         <div class="buttons">
             <div>

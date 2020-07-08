@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -154,7 +155,7 @@ func NewRegistration(c *gin.Context) {
 	}
 
 	rg := models.NewMyGoalRepository()
-	rg.UserID = int(r.ID)
+	//rg.UserID = int(r.ID)
 	genreID, _ := c.GetPostForm("genre_id")
 	rg.GenreID, _ = strconv.Atoi(genreID)
 	rg.Goal, _ = c.GetPostForm("goal")
@@ -165,6 +166,7 @@ func NewRegistration(c *gin.Context) {
 	rt.RequiredElements, _ = c.GetPostForm("required_elements")
 	rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
 	limitDate, _ := c.GetPostForm("limit_date")
+	rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
 	rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
 	rt.Add(&rt)
 
@@ -177,14 +179,13 @@ func NewRegistration(c *gin.Context) {
 func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
-	loginUser := r.GetLoginUser(c)
-
-	fmt.Printf("loginUser : ")
-	spew.Dump(loginUser)
-	fmt.Printf("\n")
+	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
 
 	user := r.GetAllInfo(int(loginUser.ID))
-	//user.IgnoreMe = user.LimitDate.Format("2006-01-02")
+
+	fmt.Printf("user : ")
+	spew.Dump(user)
+	fmt.Printf("\n")
 
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()

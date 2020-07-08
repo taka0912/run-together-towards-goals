@@ -22,7 +22,7 @@ func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 func (h *Handler) AddDailyKpt(c *gin.Context) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	if user == (interface{})(nil) {
+	if user.ID == 0 {
 		c.Redirect(http.StatusUnauthorized, "/logout")
 	}
 	userId := int(user.ID)
