@@ -225,9 +225,7 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "my_page.html", gin.H{
-		"user": user,
-	})
+	h.GetMyPage(c)
 }
 
 // EditGoal...
