@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
+	"time"
 )
 
 type KptReactionHistory struct {
@@ -46,6 +47,7 @@ func (o *KptReactionHistory) AddReaction(kptId int, userId int, reaction int) {
 func (o *KptReactionHistory) Edit(kptReactionHistory KptReactionHistory) {
 	db := Open()
 	db.Save(kptReactionHistory)
+	kptReactionHistory.UpdatedAt = time.Now()
 	db.Close()
 }
 

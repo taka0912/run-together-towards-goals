@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
+	"time"
 )
 
 type Genre struct {
@@ -25,6 +26,7 @@ func (o *Genre) Add(genre *Genre) {
 // DB更新
 func (o *Genre) Edit(genre Genre) {
 	db := Open()
+	genre.UpdatedAt = time.Now()
 	db.Save(genre)
 	db.Close()
 }

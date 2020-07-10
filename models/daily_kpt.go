@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
+	"time"
 )
 
 // DailyKpt is
@@ -42,6 +43,7 @@ func (o *DailyKpt) Add(dailyKpt *DailyKpt) {
 // DB更新
 func (o *DailyKpt) Edit(dailyKpt DailyKpt) {
 	db := Open()
+	dailyKpt.UpdatedAt = time.Now()
 	db.Save(dailyKpt)
 	db.Close()
 }

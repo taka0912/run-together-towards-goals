@@ -20,7 +20,7 @@ type User struct {
 	Age      int    `validate:"numeric"`
 	Role     int    `validate:"numeric,oneof=0 1"`
 	IgnoreMe string `gorm:"-"`
-	MyGoals  []MyGoal
+	Goals  []Goal
 }
 
 type UserView struct {
@@ -35,17 +35,6 @@ type UserView struct {
 	SpecificGoal     string
 	LimitDate        time.Time
 	IgnoreMe         string
-}
-
-type UserInfo struct {
-	ID       int
-	Nickname string
-	Password string
-	Age      int
-	Role     int
-	MyGoals  MyGoal
-	//MyGoal []MyGoal
-	//MyGoal MyGoal   `gorm:"ForeignKey:ID"`
 }
 
 // NewUser ...
@@ -109,10 +98,7 @@ func (o *User) GetOne(id int) User {
 func (o *User) GetAllInfo(id int) User {
 	db := Open()
 	var user User
-	//var myGoal MyGoal
-	db.Debug().First(&user, id)
-	db.Model(&user).Related(&user.MyGoals)
-	//db.Model(&myGoal).Related(&myGoal.Todo)
+	db.Preload("Goals").Preload("Goals.TodoLists").Find(&user, id)
 	db.Close()
 	return user
 }

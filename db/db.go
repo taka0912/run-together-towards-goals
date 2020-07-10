@@ -16,10 +16,10 @@ func Init() *gorm.DB {
 	db.AutoMigrate(
 		&models.User{},
 		&models.DailyKpt{},
-		&models.MyGoal{},
+		&models.Goal{},
 		&models.Genre{},
 		&models.KptReactionHistory{},
-		&models.Todo{},
+		&models.TodoList{},
 	)
 
 	r := models.NewGenreRepository()

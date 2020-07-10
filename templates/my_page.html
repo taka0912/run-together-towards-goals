@@ -13,83 +13,171 @@
 
 {{ template "header" }}
 
-<form method="post" action="/user/edit_ok/{{.user.ID}}">
+<form method="post" action="/user/edit_my_page">
     <div class="form-inner">
-        <h2>My Page</h2>
+        <h1>My Page</h1>
+        <h2>My Profile</h2>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="nickname" id="nickname" value="{{.user.Nickname}}"
-                       placeholder="Nickname"/>
+                <input type="text" name="nickname" id="nickname" value="{{.user.Nickname}}"
+                       placeholder="Nickname" required/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="password" tabindex="1" name="password" id="password" value="" placeholder="Password"/>
+                <input type="password" name="password" id="password" value="" placeholder="Password"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="number" tabindex="1" name="age" id="age" value="{{.user.Age}}" placeholder="Age"/>
+                <input type="number" name="age" id="age" value="{{.user.Age}}" placeholder="Age"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <select name="role" id="role" placeholder="Role"/>
+                <select name="role" id="role" placeholder="Role" required/>
                 <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
                 <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
                 </select>
             </div>
         </div>
+        <div class="buttons">
+            <div>
+                <button>Profile Edit</button>
+            </div>
+            <div>
+                <button formaction="/user/delete/{{.user.ID}}" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+            </div>
+        </div>
 
-        {{ range $i, $mg := .user.MyGoals }}
+        {{ range $i, $go := .user.Goals }}
+            <h2>My Goal {{ $i }}</h2>
             <div>
                 <div class="underline">
-                    <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
+                    <select name="genre_id" id="genre_id" placeholder="Genre" required/>
                     {{ range $j, $ge := $.genres }}
-                        <option value="{{ $ge.ID}}" {{ if eq $ge.ID $mg.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
+                        <option value="{{ $ge.ID}}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
                     {{ end }}
                     </select>
                 </div>
             </div>
             <div>
                 <div class="underline">
-                    <input type="text" tabindex="1" name="goal" id="goal" value="{{ $mg.Goal }}" placeholder="Goal"/>
+                    <input type="text" name="goal_name" id="goal_name" value="{{ $go.GoalName }}"
+                           placeholder="Goal" required/>
                 </div>
             </div>
+            <div class="buttons">
+                <div>
+                    <button formaction="/user/user_edit_goal/{{$go.ID}}">Goal Edit</button>
+                </div>
+                <div>
+                    <button formaction="/user/user_delete_goal/{{$go.ID}}" onClick="alert('本当に削除してよろしいですか？');">Goal
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            {{ range $k, $to := $go.TodoLists }}
+                <h3>Todo {{$k}}</h3>
+                <div>
+                    <div class="underline">
+                        <input type="text" name="required_elements" id="required_elements"
+                               value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
+                    </div>
+                </div>
+                <div>
+                    <div class="underline">
+                        <input type="text" name="specific_goal" id="specific_goal"
+                               value="{{$to.SpecificGoal}}"
+                               placeholder="SpecificGoal" required/>
+                    </div>
+                </div>
+                <div>
+                    <div class="underline">
+                        <input type="date" name="limit_date" id="limit_date" value="{{$to.LimitDate.Format "2006-01-02"}}"
+                               placeholder="LimitDate" required/>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div>
+                        <button formaction="/user/user_edit_todo/{{$to.ID}}">Todo Edit</button>
+                    </div>
+                    <div>
+                        <button formaction="/user/user_delete_todo/{{$to.ID}}" onClick="alert('本当に削除してよろしいですか？');">Todo Delete</button>
+                    </div>
+                </div>
+
+            {{ end }}
         {{ end }}
-        {{/*        <div>*/}}
-        {{/*            <div class="underline">*/}}
-        {{/*                <input type="text" tabindex="1" name="required_elements" id="required_elements"*/}}
-        {{/*                       value="{{.user.RequiredElements}}" placeholder="RequiredElements"/>*/}}
-        {{/*            </div>*/}}
-        {{/*        </div>*/}}
-        {{/*        <div>*/}}
-        {{/*            <div class="underline">*/}}
-        {{/*                <input type="text" tabindex="1" name="specific_goal" id="specific_goal" value="{{.user.SpecificGoal}}"*/}}
-        {{/*                       placeholder="SpecificGoal"/>*/}}
-        {{/*            </div>*/}}
-        {{/*        </div>*/}}
-        {{/*        <div>*/}}
-        {{/*            <div class="underline">*/}}
-        {{/*                <input type="date" tabindex="1" name="limit_date" id="limit_date" value="{{.user.IgnoreMe}}"*/}}
-        {{/*                       placeholder="LimitDate"/>*/}}
-        {{/*            </div>*/}}
-        {{/*        </div>*/}}
-
-        <div class="buttons">
-            <div>
-                <button type="submit" tabindex="14">Edit</button>
-            </div>
-        </div>
-
-        {{if .err}}
-            <div class="form-footer">
-                <p>{{.err}}</p>
-            </div>
-        {{end}}
-
     </div>
 </form>
+
+<form method="post" action="/user/edit_my_page">
+    <div class="form-inner">
+        <h2>Add Goal</h2>
+        <div>
+            <div class="underline">
+                <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
+                {{ range $j, $ge := $.genres }}
+                    <option value="{{ $ge.ID}}"> {{ $ge.GenreName }} </option>
+                {{ end }}
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="goal_name" id="goal_name" placeholder="Goal Name"/>
+            </div>
+        </div>
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form method="post" action="/user/edit_my_page">
+    <div class="form-inner">
+        <h2>Add Todo</h2>
+        <div>
+            <div class="underline">
+                <input type="text" name="required_elements" id="required_elements"
+                       placeholder="RequiredElements"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="specific_goal" id="specific_goal"
+                       placeholder="SpecificGoal"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="date" name="limit_date" id="limit_date" placeholder="LimitDate"/>
+            </div>
+        </div>
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{if .err}}
+    <div class="form-footer">
+        <p>{{.err}}</p>
+    </div>
+{{end}}
+
 
 </body>
 </html>
