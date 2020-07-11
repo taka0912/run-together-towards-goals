@@ -58,7 +58,7 @@
         <h2>My Goal {{ $i }}</h2>
         <div>
             <div class="underline">
-                <select name="genre_id" id="genre_id" placeholder="Genre" required/>
+                <select name="genre_id_{{ $go.ID}}" id="genre_id" placeholder="Genre" required/>
                 {{ range $j, $ge := $.genres }}
                     <option value="{{ $ge.ID}}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
                 {{ end }}
@@ -67,7 +67,7 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="goal_name" id="goal_name" value="{{ $go.GoalName }}"
+                <input type="text" name="goal_name_{{ $go.ID}}" id="goal_name" value="{{ $go.GoalName }}"
                        placeholder="Goal" required/>
             </div>
         </div>
@@ -82,46 +82,46 @@
             </div>
         </div>
     </div>
-</form>
 
-{{ range $k, $to := $go.TodoLists }}
-<form method="post" action="/user/edit_my_page">
-    <div class="form-inner">
-        <h3>Todo {{$k}}</h3>
-        <div>
-            <div class="underline">
-                <input type="text" name="required_elements" id="required_elements"
-                       value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" name="specific_goal" id="specific_goal"
-                       value="{{$to.SpecificGoal}}"
-                       placeholder="SpecificGoal" required/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="date" name="limit_date" id="limit_date"
-                       value="{{$to.LimitDate.Format "2006-01-02"}}"
-                       placeholder="LimitDate" required/>
-            </div>
-        </div>
-        <div class="buttons">
+    {{ range $k, $to := $go.TodoLists }}
+    <form method="post" action="/user/edit_my_page">
+        <div class="form-inner">
+            <h3>Todo {{$k}}</h3>
             <div>
-                <button formaction="/user/user_edit_todo/{{$to.ID}}">Todo Edit</button>
+                <div class="underline">
+                    <input type="text" name="required_elements_{{ $to.ID}}" id="required_elements"
+                           value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
+                </div>
             </div>
             <div>
-                <button formaction="/user/user_delete_todo/{{$to.ID}}" onClick="alert('本当に削除してよろしいですか？');">Todo
-                    Delete
-                </button>
+                <div class="underline">
+                    <input type="text" name="specific_goal_{{ $to.ID}}" id="specific_goal"
+                           value="{{$to.SpecificGoal}}"
+                           placeholder="SpecificGoal" required/>
+                </div>
             </div>
-        </div>
+            <div>
+                <div class="underline">
+                    <input type="date" name="limit_date_{{ $to.ID}}" id="limit_date"
+                           value="{{$to.LimitDate.Format "2006-01-02"}}"
+                           placeholder="LimitDate" required/>
+                </div>
+            </div>
+            <div class="buttons">
+                <div>
+                    <button formaction="/user/user_edit_todo/{{$to.ID}}">Todo Edit</button>
+                </div>
+                <div>
+                    <button formaction="/user/user_delete_todo/{{$to.ID}}" onClick="alert('本当に削除してよろしいですか？');">Todo
+                        Delete
+                    </button>
+                </div>
+            </div>
 
-        {{ end }}
-        {{ end }}
-    </div>
+            {{ end }}
+            {{ end }}
+        </div>
+    </form>
 </form>
 
 <form method="post" action="/user/edit_my_page">

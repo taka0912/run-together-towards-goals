@@ -234,9 +234,11 @@ func (h *Handler) EditGoal(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	goal := r.GetOne(id)
 
-	genreId, _ := c.GetPostForm("genre_id")
+	tail := "_" + c.Param("id")
+
+	genreId, _ := c.GetPostForm("genre_id" + tail)
 	goal.GenreID, _ = strconv.Atoi(genreId)
-	goal.GoalName, _ = c.GetPostForm("goal_name")
+	goal.GoalName, _ = c.GetPostForm("goal_name" + tail)
 
 	r.Edit(goal)
 	h.GetMyPage(c)
@@ -256,9 +258,11 @@ func (h *Handler) EditTodo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	goal := r.GetOne(id)
 
-	goal.RequiredElements, _ = c.GetPostForm("required_elements")
-	goal.SpecificGoal, _ = c.GetPostForm("specific_goal")
-	limitDate, _ := c.GetPostForm("limit_date")
+	tail := "_" + c.Param("id")
+
+	goal.RequiredElements, _ = c.GetPostForm("required_elements" + tail)
+	goal.SpecificGoal, _ = c.GetPostForm("specific_goal" + tail)
+	limitDate, _ := c.GetPostForm("limit_date" + "_" + tail)
 	goal.LimitDate, _ = time.Parse("2006-01-02", limitDate)
 
 	r.Edit(goal)
