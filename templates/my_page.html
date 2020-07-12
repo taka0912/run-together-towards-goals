@@ -46,7 +46,7 @@
                 <button>Profile Edit</button>
             </div>
             <div>
-                <button formaction="/user/delete/{{.user.ID}}" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+                <button formaction="/user/delete/{{.user.ID }}" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
             </div>
         </div>
     </div>
@@ -58,25 +58,25 @@
         <h2>My Goal {{ $i }}</h2>
         <div>
             <div class="underline">
-                <select name="genre_id_{{ $go.ID}}" id="genre_id" placeholder="Genre" required/>
+                <select name="genre_id_{{ $go.ID }}" id="genre_id" placeholder="Genre" required/>
                 {{ range $j, $ge := $.genres }}
-                    <option value="{{ $ge.ID}}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
+                    <option value="{{ $ge.ID }}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
                 {{ end }}
                 </select>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="goal_name_{{ $go.ID}}" id="goal_name" value="{{ $go.GoalName }}"
+                <input type="text" name="goal_name_{{ $go.ID }}" id="goal_name" value="{{ $go.GoalName }}"
                        placeholder="Goal" required/>
             </div>
         </div>
         <div class="buttons">
             <div>
-                <button formaction="/user/user_edit_goal/{{$go.ID}}">Goal Edit</button>
+                <button formaction="/user/user_edit_goal/{{ $go.ID }}">Goal Edit</button>
             </div>
             <div>
-                <button formaction="/user/user_delete_goal/{{$go.ID}}" onClick="alert('本当に削除してよろしいですか？');">Goal
+                <button formaction="/user/user_delete_goal/{{ $go.ID }}" onClick="alert('本当に削除してよろしいですか？');">Goal
                     Delete
                 </button>
             </div>
@@ -86,33 +86,33 @@
     {{ range $k, $to := $go.TodoLists }}
     <form method="post" action="/user/edit_my_page">
         <div class="form-inner">
-            <h3>Todo {{$k}}</h3>
+            <h3>Todo {{ $k}}</h3>
             <div>
                 <div class="underline">
-                    <input type="text" name="required_elements_{{ $to.ID}}" id="required_elements"
+                    <input type="text" name="required_elements_{{ $to.ID }}" id="required_elements"
                            value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
                 </div>
             </div>
             <div>
                 <div class="underline">
-                    <input type="text" name="specific_goal_{{ $to.ID}}" id="specific_goal"
-                           value="{{$to.SpecificGoal}}"
+                    <input type="text" name="specific_goal_{{ $to.ID }}" id="specific_goal"
+                           value="{{ $to.SpecificGoal}}"
                            placeholder="SpecificGoal" required/>
                 </div>
             </div>
             <div>
                 <div class="underline">
-                    <input type="date" name="limit_date_{{ $to.ID}}" id="limit_date"
-                           value="{{$to.LimitDate.Format "2006-01-02"}}"
+                    <input type="date" name="limit_date_{{ $to.ID }}" id="limit_date"
+                           value="{{ $to.LimitDate.Format "2006-01-02"}}"
                            placeholder="LimitDate" required/>
                 </div>
             </div>
             <div class="buttons">
                 <div>
-                    <button formaction="/user/user_edit_todo/{{$to.ID}}">Todo Edit</button>
+                    <button formaction="/user/user_edit_todo/{{ $to.ID }}">Todo Edit</button>
                 </div>
                 <div>
-                    <button formaction="/user/user_delete_todo/{{$to.ID}}" onClick="alert('本当に削除してよろしいですか？');">Todo
+                    <button formaction="/user/user_delete_todo/{{ $to.ID }}" onClick="alert('本当に削除してよろしいですか？');">Todo
                         Delete
                     </button>
                 </div>
@@ -131,7 +131,7 @@
             <div class="underline">
                 <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
                 {{ range $j, $ge := $.genres }}
-                    <option value="{{ $ge.ID}}"> {{ $ge.GenreName }} </option>
+                    <option value="{{ $ge.ID }}"> {{ $ge.GenreName }} </option>
                 {{ end }}
                 </select>
             </div>

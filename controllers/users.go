@@ -262,7 +262,7 @@ func (h *Handler) EditTodo(c *gin.Context) {
 
 	goal.RequiredElements, _ = c.GetPostForm("required_elements" + tail)
 	goal.SpecificGoal, _ = c.GetPostForm("specific_goal" + tail)
-	limitDate, _ := c.GetPostForm("limit_date" + "_" + tail)
+	limitDate, _ := c.GetPostForm("limit_date" + tail)
 	goal.LimitDate, _ = time.Parse("2006-01-02", limitDate)
 
 	r.Edit(goal)
