@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"errors"
-	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"log"
 	"net/http"
 	"strings"

@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"net/http"
 	"strconv"
 )
