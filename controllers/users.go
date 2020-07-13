@@ -53,13 +53,14 @@ func (h *Handler) GetUser(c *gin.Context) {
 
 	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
 	adminFlag := false
-	if loginUser.Role == models.AdminUser {
+	// 「ログインユーザが管理者、もしくは編集ページのユーザー本人」の場合
+	if loginUser.Role == models.AdminUser || loginUser.ID == user.ID {
 		adminFlag = true
 	}
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
-		"user": user,
-		"genres": rg.GetAll(),
+		"user":      user,
+		"genres":    rg.GetAll(),
 		"adminFlag": adminFlag,
 	})
 }
@@ -69,15 +70,6 @@ func (h *Handler) EditUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetOne(id)
-
-	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
-	// 「ログインユーザが管理者、もしくは編集ページのユーザー本人」でない場合
-	if !(loginUser.Role == models.AdminUser || loginUser.ID == user.ID) {
-		c.HTML(http.StatusOK, "user_view.html", gin.H{
-			"err": "Unauthorized",
-		})
-		return
-	}
 
 	user.Nickname, _ = c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")

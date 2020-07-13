@@ -98,7 +98,9 @@ func Handler(dbConn *gorm.DB) {
 			rDailyKpt.POST("delete/:id", handler.DeleteDailyKpt)
 		}
 		r.GET("/index", func(c *gin.Context) {
+			ur := models.NewUserRepository()
 			c.HTML(http.StatusOK, "welcome.html", gin.H{
+				"user":  ur.GetLoginUser(sessions.Default(c).Get("UserId")),
 				"title": "title",
 			})
 		})
