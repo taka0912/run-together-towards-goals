@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/daisuzuki829/run-together-towards-goals/models"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -275,10 +273,6 @@ func (h *Handler) AddGoal(c *gin.Context) {
 	genreId, _ := c.GetPostForm("genre_id")
 	r.GenreID, _ = strconv.Atoi(genreId)
 	r.GoalName, _ = c.GetPostForm("goal_name")
-
-	fmt.Printf("r : ")
-	spew.Dump(r)
-	fmt.Printf("\n")
 
 	r.Add(&r)
 	h.GetMyPage(c)
