@@ -2,7 +2,7 @@
     "name": "run-together-towards-goals",
     "description": "Sample",
     "image": "heroku/go:1.6",
-    "mount_dir": "src/github.com/daisuzuki829/run-together-towards-goals",
-    "website": "http://github.com/daisuzuki829/run-together-towards-goals",
-    "repository": "http://github.com/daisuzuki829/run-together-towards-goals"
+    "mount_dir": "src/github.com/hariNEzuMI928/run-together-towards-goals",
+    "website": "http://github.com/hariNEzuMI928/run-together-towards-goals",
+    "repository": "http://github.com/hariNEzuMI928/run-together-towards-goals"
 }

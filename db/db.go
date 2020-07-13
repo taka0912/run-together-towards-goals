@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 )

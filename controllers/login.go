@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"errors"
-	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"

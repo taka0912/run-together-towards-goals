@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/daisuzuki829/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
