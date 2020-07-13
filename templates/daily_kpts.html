@@ -69,17 +69,14 @@
                 <td>{{ .CreatedAt.Format "2006-01-02 15:04" }}</td>
                 <td>
                     {{ .Good }}
-                    <button type="submit" formaction="/daily_kpt/good/{{.ID}}" class="btn-red">Good
-                    </button>
+                    <button formaction="/daily_kpt/good/{{.ID}}" class="btn-red">Good</button>
                 </td>
                 <td>
                     {{ .Fight }}
-                    <button type="submit" formaction="/daily_kpt/fight/{{.ID}}" class="btn-yellow">
-                        Fight
-                    </button>
+                    <button formaction="/daily_kpt/fight/{{.ID}}" class="btn-yellow">Fight</button>
                 </td>
                 <td>
-                    <button type="submit" formmethod="delete" formaction="/daily_kpt/delete/{{.ID}}" class="btn-blue"
+                    <button formaction="/daily_kpt/delete/{{.ID}}" class="btn-blue"
                             onClick="alert('本当に削除してよろしいですか？');">Delete
                     </button>
                 </td>
