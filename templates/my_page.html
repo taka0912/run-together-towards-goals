@@ -19,23 +19,23 @@
         <h2>My Profile</h2>
         <div>
             <div class="underline">
-                <input type="text" name="nickname" id="nickname" value="{{.user.Nickname}}"
+                <input type="text" name="nickname" value="{{.user.Nickname}}"
                        placeholder="Nickname" required/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="password" name="password" id="password" value="" placeholder="Password"/>
+                <input type="password" name="password" value="" placeholder="Password"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="number" name="age" id="age" value="{{.user.Age}}" placeholder="Age"/>
+                <input type="number" name="age" value="{{.user.Age}}" placeholder="Age"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <select name="role" id="role" placeholder="Role" required/>
+                <select name="role" placeholder="Role" required/>
                 <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
                 <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
                 </select>

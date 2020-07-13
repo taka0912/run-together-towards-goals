@@ -33,6 +33,7 @@ func (h *Handler) AddUser(c *gin.Context) {
 	role, _ := c.GetPostForm("role")
 	roleFmt, _ := strconv.Atoi(role)
 
+	// TODO
 	err := r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
 	users := r.GetAll()
 	if err != "" {
@@ -47,26 +48,21 @@ func (h *Handler) AddUser(c *gin.Context) {
 // GetUsers...
 func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
+	rg := models.NewGenreRepository()
+
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
 
-	//rg := models.NewGoalRepository()
-	//goals := rg.GetByUserId(user.ID)
-	//user.MyGoals = rg.GetByUserId(user.ID)
-
-	//user.IgnoreMe = user.LimitDate.Format("2006-01-02")
-	//rg := models.NewGenreRepository()
-	//genres := rg.GetAll()
-	//loginUser := r.GetLoginUser(c)
-	//adminFlag := false
-	//if loginUser.Role == models.AdminUser {
-	//	adminFlag = true
-	//}
+	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
+	adminFlag := false
+	if loginUser.Role == models.AdminUser {
+		adminFlag = true
+	}
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user": user,
-		//"genres": genres,
-		//"adminFlag": adminFlag,
+		"genres": rg.GetAll(),
+		"adminFlag": adminFlag,
 	})
 }
 
@@ -270,6 +266,12 @@ func (h *Handler) AddGoal(c *gin.Context) {
 	ur := models.NewUserRepository()
 	loginUser := ur.GetLoginUser(sessions.Default(c).Get("UserId"))
 	r.UserID = int(loginUser.ID)
+	// TODO
+	//loginUserId, err := GetLoginUserId(c)
+	//if err != nil {
+	//	c.Redirect(http.StatusMovedPermanently, "/logout")
+	//}
+
 	genreId, _ := c.GetPostForm("genre_id")
 	r.GenreID, _ = strconv.Atoi(genreId)
 	r.GoalName, _ = c.GetPostForm("goal_name")

@@ -16,22 +16,22 @@
         <h2>Add User</h2>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="nickname" id="nickname" placeholder="Nickname"/>
+                <input type="text" tabindex="1" name="nickname" placeholder="Nickname"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="password" tabindex="1" name="password" id="password" placeholder="Password"/>
+                <input type="password" tabindex="1" name="password" placeholder="Password"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="number" tabindex="1" name="age" id="age" placeholder="Age"/>
+                <input type="number" tabindex="1" name="age" placeholder="Age"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <select name="role" id="role" placeholder="Role"/>
+                <select name="role" placeholder="Role"/>
                 <option value="0">一般ユーザー</option>
                 <option value="1">管理者</option>
                 </select>
@@ -60,7 +60,7 @@
             <th>Nickname</th>
             <th>Age</th>
             <th>Role</th>
-            <th>View</th>
+            <th>Action</th>
         </tr>
         {{ range .users }}
             <tr>

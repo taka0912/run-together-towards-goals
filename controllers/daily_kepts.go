@@ -27,10 +27,16 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 	}
 	userId := int(user.ID)
 
+	// TODO
+	//loginUserId, err := GetLoginUserId(c)
+	//if err != nil {
+	//	c.Redirect(http.StatusMovedPermanently, "/logout")
+	//}
 	keep, _    := c.GetPostForm("keep")
 	problem, _ := c.GetPostForm("problem")
 	try, _     := c.GetPostForm("try")
 
+	// TODO
 	r := models.NewDailyKptRepository()
 	r.Add(&models.DailyKpt{UserID:userId, Keep:keep, Problem:problem, Try:try})
 
@@ -45,7 +51,7 @@ func (h *Handler) IncreaseGood(c *gin.Context) {
 	dailyKpt.Good += 1
 	r.Edit(dailyKpt)
 
-	loginUserId, err := GetLoginUser(c)
+	loginUserId, err := GetLoginUserId(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
@@ -64,7 +70,7 @@ func (h *Handler) IncreaseFight(c *gin.Context) {
 	dailyKpt.Fight += 1
 	r.Edit(dailyKpt)
 
-	loginUserId, err := GetLoginUser(c)
+	loginUserId, err := GetLoginUserId(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}

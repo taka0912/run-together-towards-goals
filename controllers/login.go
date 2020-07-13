@@ -78,7 +78,7 @@ func SessionCheck(c *gin.Context) {
 }
 
 // GetLoginUser...
-func GetLoginUser(c *gin.Context) (int, error) {
+func GetLoginUserId(c *gin.Context) (int, error) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
 	if user.ID == 0 {
