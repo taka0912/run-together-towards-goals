@@ -20,6 +20,7 @@ type DailyKpt struct {
 type Results struct {
 	ID        int
 	UserID    int
+	CreatedAt time.Time
 	Nickname  string
 	Keep      string
 	Problem   string

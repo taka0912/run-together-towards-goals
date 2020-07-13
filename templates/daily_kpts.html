@@ -54,6 +54,7 @@
             <th>Keep</th>
             <th>Problem</th>
             <th>Try</th>
+            <th>Created</th>
             <th>Good</th>
             <th>Fight</th>
             <th>Delete</th>
@@ -65,6 +66,7 @@
                 <td>{{ .Keep }}</td>
                 <td>{{ .Problem }}</td>
                 <td>{{ .Try }}</td>
+                <td>{{ .CreatedAt.Format "2006-01-02 15:04" }}</td>
                 <td>
                     {{ .Good }}
                     <button type="submit" formaction="/daily_kpt/good/{{.ID}}" class="btn-red">Good
