@@ -37,7 +37,7 @@ type UserView struct {
 	IgnoreMe         string
 }
 
-// NewUser ...
+// NewUser...
 func NewUserRepository() User {
 	return User{}
 }

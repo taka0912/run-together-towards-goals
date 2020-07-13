@@ -13,7 +13,7 @@ type Goal struct {
 	TodoLists    []TodoList
 }
 
-// NewGoalRepository ...
+// NewGoalRepository...
 func NewGoalRepository() Goal {
 	return Goal{}
 }

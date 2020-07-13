@@ -18,11 +18,9 @@ type User struct {
 
 // GetUser...
 func (h *Handler) GetUser(c *gin.Context) {
-	userId := c.DefaultQuery("id", "0")
-
 	r := models.NewUserRepository()
-	userIdFmt, _ := strconv.Atoi(userId)
-	user := r.GetOne(userIdFmt)
+	userId, _ := strconv.Atoi(c.DefaultQuery("id", "0"))
+	user := r.GetOne(userId)
 
 	c.JSON(http.StatusOK, gin.H{
 		"user": user,

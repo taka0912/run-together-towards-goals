@@ -73,6 +73,8 @@ func Handler(dbConn *gorm.DB) {
 			rUser.POST("user_delete_goal/:id", handler.DeleteGoal)
 			rUser.POST("user_edit_todo/:id", handler.EditTodo)
 			rUser.POST("user_delete_todo/:id", handler.DeleteTodo)
+			rUser.POST("add_goal", handler.AddGoal)
+			rUser.POST("add_todo", handler.AddTodo)
 		}
 
 		// genre info

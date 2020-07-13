@@ -11,7 +11,7 @@ type Genre struct {
 	IgnoreMe     string  `gorm:"-"`
 }
 
-// NewGenreRepository ...
+// NewGenreRepository...
 func NewGenreRepository() Genre {
 	return Genre{}
 }

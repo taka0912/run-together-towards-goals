@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// GetGenres ...
+// GetGenres...
 func (h *Handler) GetAllGenres(c *gin.Context) {
 	r := models.NewGenreRepository()
 	genres := r.GetAll()
@@ -17,7 +17,7 @@ func (h *Handler) GetAllGenres(c *gin.Context) {
 	})
 }
 
-// AddGenres ...
+// AddGenres...
 func (h *Handler) AddGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	genreName, _ := c.GetPostForm("genre_name")
@@ -27,7 +27,7 @@ func (h *Handler) AddGenre(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
 
-// GetGenres ...
+// GetGenres...
 func (h *Handler) GetGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -37,7 +37,7 @@ func (h *Handler) GetGenre(c *gin.Context) {
 	})
 }
 
-// EditGenres ...
+// EditGenres...
 func (h *Handler) EditGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -47,7 +47,7 @@ func (h *Handler) EditGenre(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
 
-// DeleteGenres ...
+// DeleteGenres...
 func (h *Handler) DeleteGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	id, _ := strconv.Atoi(c.Param("id"))

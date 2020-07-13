@@ -53,12 +53,12 @@
 </form>
 
 {{ range $i, $go := .user.Goals }}
-<form method="post" action="/user/edit_my_page">
+<form method="post">
     <div class="form-inner">
         <h2>My Goal {{ $i }}</h2>
         <div>
             <div class="underline">
-                <select name="genre_id_{{ $go.ID }}" id="genre_id" placeholder="Genre" required/>
+                <select name="genre_id_{{ $go.ID }}" placeholder="Genre" required/>
                 {{ range $j, $ge := $.genres }}
                     <option value="{{ $ge.ID }}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
                 {{ end }}
@@ -67,7 +67,7 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="goal_name_{{ $go.ID }}" id="goal_name" value="{{ $go.GoalName }}"
+                <input type="text" name="goal_name_{{ $go.ID }}" value="{{ $go.GoalName }}"
                        placeholder="Goal" required/>
             </div>
         </div>
@@ -89,21 +89,27 @@
             <h3>Todo {{ $k}}</h3>
             <div>
                 <div class="underline">
-                    <input type="text" name="required_elements_{{ $to.ID }}" id="required_elements"
+                    <input type="text" name="required_elements_{{ $to.ID }}"
                            value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
                 </div>
             </div>
             <div>
                 <div class="underline">
-                    <input type="text" name="specific_goal_{{ $to.ID }}" id="specific_goal"
+                    <input type="text" name="specific_goal_{{ $to.ID }}"
                            value="{{ $to.SpecificGoal}}"
                            placeholder="SpecificGoal" required/>
                 </div>
             </div>
             <div>
                 <div class="underline">
-                    <input type="date" name="limit_date_{{ $to.ID }}" id="limit_date"
-                           value="{{ $to.LimitDate.Format "2006-01-02"}}"
+                    <input type="text" name="todo_{{ $to.ID }}"
+                           value="{{ $to.Todo}}"
+                           placeholder="Todo" required/>
+                </div>
+            </div>
+            <div>
+                <div class="underline">
+                    <input type="date" name="limit_date_{{ $to.ID }}" value="{{ $to.LimitDate.Format "2006-01-02"}}"
                            placeholder="LimitDate" required/>
                 </div>
             </div>
@@ -124,12 +130,12 @@
     </form>
 </form>
 
-<form method="post" action="/user/edit_my_page">
+<form method="post" action="/user/add_goal">
     <div class="form-inner">
-        <h2>Add Goal</h2>
+        <h2 title="目標を追加できます。">Add Goal</h2>
         <div>
             <div class="underline">
-                <select name="genre_id" id="genre_id" placeholder="Genre_id"/>
+                <select name="genre_id" placeholder="Genre_id" title="目標のジャンルを選択してください"/>
                 {{ range $j, $ge := $.genres }}
                     <option value="{{ $ge.ID }}"> {{ $ge.GenreName }} </option>
                 {{ end }}
@@ -138,7 +144,8 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="goal_name" id="goal_name" placeholder="Goal Name"/>
+                <input type="text" name="goal_name" placeholder="Goal Name"
+                       title="最終目標を教えて下さい"/>
             </div>
         </div>
         <div class="buttons">
@@ -152,24 +159,40 @@
     </div>
 </form>
 
-<form method="post" action="/user/edit_my_page">
+<form method="post" action="/user/add_todo">
     <div class="form-inner">
-        <h2>Add Todo</h2>
+        <h2 title="目標に対するTodoを追加できます。"/>Add Todo</h2>
         <div>
             <div class="underline">
-                <input type="text" name="required_elements" id="required_elements"
-                       placeholder="RequiredElements"/>
+                <select name="goal_id" placeholder="goal_id" title="対応する目標を選択してください"/>
+                {{ range $i, $go := .user.Goals }}
+                    <option value="{{ $go.ID }}"> {{ $go.GoalName }} </option>
+                {{ end }}
+                </select>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="specific_goal" id="specific_goal"
-                       placeholder="SpecificGoal"/>
+                <input type="text" name="required_elements" placeholder="RequiredElements"
+                       title="目標を達成するために必要な要素を教えてください"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="date" name="limit_date" id="limit_date" placeholder="LimitDate"/>
+                <input type="text" name="todo" placeholder="Todo"
+                       title="そのためにやるべきことを教えて下さい"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="specific_goal" placeholder="SpecificGoal"
+                       title="目標達成の評価方法を教えて下さい"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="date" name="limit_date" placeholder="LimitDate"
+                       title="期限を教えて下さい"/>
             </div>
         </div>
         <div class="buttons">

@@ -28,7 +28,7 @@ type Results struct {
 	Fight     int
 }
 
-// NewUser ...
+// NewUser...
 func NewDailyKptRepository() DailyKpt {
 	return DailyKpt{}
 }

@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-// GetUsers ...
+// GetAllUsers...
 func (h *Handler) GetAllUsers(c *gin.Context) {
 	r := models.NewUserRepository()
 	users := r.GetAll()
@@ -22,7 +22,7 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 	})
 }
 
-// AddUsers ...
+// AddUsers...
 func (h *Handler) AddUser(c *gin.Context) {
 	r := models.NewUserRepository()
 
@@ -44,7 +44,7 @@ func (h *Handler) AddUser(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
-// GetUsers ...
+// GetUsers...
 func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -54,23 +54,9 @@ func (h *Handler) GetUser(c *gin.Context) {
 	//goals := rg.GetByUserId(user.ID)
 	//user.MyGoals = rg.GetByUserId(user.ID)
 
-	//fmt.Printf("r.GetAllInfo(id) : ")
-	//spew.Dump(user)
-	//fmt.Printf("\n")
-
-	for _, i := range user.Goals {
-		//for _, j := range i {
-		fmt.Printf("i : ")
-		spew.Dump(i)
-		fmt.Printf("\n")
-		//}
-	}
-
 	//user.IgnoreMe = user.LimitDate.Format("2006-01-02")
-	//
 	//rg := models.NewGenreRepository()
 	//genres := rg.GetAll()
-	//
 	//loginUser := r.GetLoginUser(c)
 	//adminFlag := false
 	//if loginUser.Role == models.AdminUser {
@@ -84,7 +70,7 @@ func (h *Handler) GetUser(c *gin.Context) {
 	})
 }
 
-// EditUsers ...
+// EditUsers...
 func (h *Handler) EditUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -121,7 +107,7 @@ func (h *Handler) EditUser(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
-// DeleteUsers ...
+// DeleteUsers...
 func (h *Handler) DeleteUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -183,7 +169,7 @@ func NewRegistration(c *gin.Context) {
 	})
 }
 
-// GetUsers ...
+// GetUsers...
 func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
@@ -244,7 +230,7 @@ func (h *Handler) EditGoal(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// DeleteGoal ...
+// DeleteGoal...
 func (h *Handler) DeleteGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -269,10 +255,45 @@ func (h *Handler) EditTodo(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// DeleteTodo ...
+// DeleteTodo...
 func (h *Handler) DeleteTodo(c *gin.Context) {
 	r := models.NewTodoListRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	r.Delete(id)
+	h.GetMyPage(c)
+}
+
+// AddGoal...
+func (h *Handler) AddGoal(c *gin.Context) {
+	r := models.NewGoalRepository()
+
+	ur := models.NewUserRepository()
+	loginUser := ur.GetLoginUser(sessions.Default(c).Get("UserId"))
+	r.UserID = int(loginUser.ID)
+	genreId, _ := c.GetPostForm("genre_id")
+	r.GenreID, _ = strconv.Atoi(genreId)
+	r.GoalName, _ = c.GetPostForm("goal_name")
+
+	fmt.Printf("r : ")
+	spew.Dump(r)
+	fmt.Printf("\n")
+
+	r.Add(&r)
+	h.GetMyPage(c)
+}
+
+// AddTodo...
+func (h *Handler) AddTodo(c *gin.Context) {
+	r := models.NewTodoListRepository()
+
+	goalId, _ := c.GetPostForm("goal_id")
+	r.GoalID, _ = strconv.Atoi(goalId)
+	r.RequiredElements, _ = c.GetPostForm("required_elements")
+	r.Todo, _ = c.GetPostForm("todo")
+	r.SpecificGoal, _ = c.GetPostForm("specific_goal")
+	limitDate, _ := c.GetPostForm("limit_date")
+	r.LimitDate, _ = time.Parse("2006-01-02", limitDate)
+
+	r.Add(&r)
 	h.GetMyPage(c)
 }

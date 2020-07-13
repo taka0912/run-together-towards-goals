@@ -9,12 +9,13 @@ type TodoList struct {
 	gorm.Model
 	GoalID           int       `gorm:"not null"`
 	RequiredElements string    `gorm:"not null"`
+	Todo             string    `gorm:"not null"`
 	SpecificGoal     string    `gorm:"not null"`
 	LimitDate        time.Time `sql:"not null;type:date"`
 	IgnoreMe         string    `gorm:"-"`
 }
 
-// NewTodoListRepository ...
+// NewTodoListRepository...
 func NewTodoListRepository() TodoList {
 	return TodoList{}
 }
