@@ -58,14 +58,12 @@
     <table>
         <tr>
             <th>Nickname</th>
-            <th>Age</th>
             <th>Role</th>
             <th>Action</th>
         </tr>
         {{ range .users }}
             <tr>
                 <td>{{ .Nickname }}</td>
-                <td>{{ .Age }}</td>
                 {{if eq .Role 0 }}
                     <td>一般ユーザー</td>
                 {{ else }}
@@ -74,14 +72,6 @@
                 <td>
                     <a href="/user/view/{{.ID}}" class="btn-yellow">View</a>
                 </td>
-{{/*                <td>*/}}
-{{/*                    <a href="/user/edit/{{.ID}}" class="btn-yellow">Edit</a>*/}}
-{{/*                </td>*/}}
-{{/*                <td>*/}}
-{{/*                    <button type="submit" formmethod="post" formaction="/user/delete/{{.ID}}" class="btn-blue"*/}}
-{{/*                            onClick="alert('本当に削除してよろしいですか？');">Delete*/}}
-{{/*                    </button>*/}}
-{{/*                </td>*/}}
             </tr>
         {{end}}
     </table>

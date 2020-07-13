@@ -45,6 +45,11 @@
                 <div>
                     <button>Edit</button>
                 </div>
+                <div>
+                    <button formmethod="post" formaction="/user/delete/{{.user.ID}}" class="btn-blue"
+                            onClick="alert('本当に削除してよろしいですか？');">Delete
+                    </button>
+                </div>
             </div>
         {{end}}
 
