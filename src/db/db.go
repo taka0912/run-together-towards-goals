@@ -12,7 +12,6 @@ func Init() *gorm.DB {
 
 	db.LogMode(true)
 
-	//db.Exec("DROP TABLE genres")
 	db.AutoMigrate(
 		&models.User{},
 		&models.DailyKpt{},
