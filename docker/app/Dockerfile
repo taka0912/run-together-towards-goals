@@ -21,3 +21,4 @@ ENV PORT=${PORT}
 WORKDIR /app
 
 CMD ["./app"]
+#CMD ash -c "ash start_app.sh && /bin/ash"

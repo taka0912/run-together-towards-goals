@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 # MySQLサーバーが起動するまで待機する
 until mysqladmin ping -h mysql -P 3306 --silent; do
@@ -7,4 +7,3 @@ until mysqladmin ping -h mysql -P 3306 --silent; do
 done
 
 echo 'mysqld is connect !'
-/server

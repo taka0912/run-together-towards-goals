@@ -23,6 +23,7 @@ services:
       # MySQL起動時にDBを作成する
       - "./docker/db/init/:/docker-entrypoint-initdb.d"
   app:
+    container_name: app-r2g
     links:
       - mysql
     depends_on:
@@ -30,9 +31,9 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
-    container_name: app-r2g
     ports:
       - "8080:8080"
+    tty: true
     volumes:
       - ./src:/go/src/app
 volumes:
