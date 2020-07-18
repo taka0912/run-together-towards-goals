@@ -1,0 +1,10 @@
+build:
+  docker:
+    web: Dockerfile
+    worker:
+      dockerfile: Dockerfile
+      target: builder # builderのイメージをbuildする際に使う
+release:
+  image: worker # 上記のworkerのイメージをreleaseフェーズでも使う
+  command:
+    - make up_migrate_prod # マイグレーションを流す

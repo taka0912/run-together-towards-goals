@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"

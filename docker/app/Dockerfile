@@ -1,23 +1,23 @@
-FROM golang:latest
+#Step 1 Builld
+FROM golang:alpine as builder
 
 WORKDIR /go/src/app/
-COPY src/ .
+ADD src/ .
 
+RUN apk update \
+    && apk add --no-cache git vim less curl make gcc \
+    && go mod download \
+    && go build -o app main.go
 
-#RUN apt-get update -qq \
-#    && apk add-get -y git vim mariadb-client \
-##    && go mod download \
-##    && go build -o /server \
-#    && go get -u github.com/gin-gonic/gin \
-#    && go get github.com/jinzhu/gorm \
-#    && go get github.com/go-sql-driver/mysql \
-#
-##   / && export CGO_ENABLED=0
+#Step2 Move build file
+FROM alpine:3.9
 
-RUN go get -u github.com/gin-gonic/gin \
-    && go get github.com/jinzhu/gorm \
-    && go get github.com/go-sql-driver/mysql \
-    && apt-get update \
-    && apt-get install -y mariadb-client
+RUN apk add --no-cache mariadb-client mysql-dev alpine-sdk
 
-CMD ["sh", "start_app.sh"]
+COPY --from=builder /go/src/app/ /app
+
+ENV PORT=${PORT}
+
+WORKDIR /app
+
+CMD ["./app"]

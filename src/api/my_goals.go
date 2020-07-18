@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
 	"github.com/jinzhu/gorm"
 	"net/http"
 	"strconv"
