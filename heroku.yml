@@ -1,8 +1,8 @@
 build:
   docker:
-    web: docker/app/Dockerfile.web
+    web: docker/app/Dockerfile
     worker:
-      dockerfile: docker/app/Dockerfile.web
+      dockerfile: docker/app/Dockerfile
       target: builder # builderのイメージをbuildする際に使う
 release:
   image: worker # 上記のworkerのイメージをreleaseフェーズでも使う
