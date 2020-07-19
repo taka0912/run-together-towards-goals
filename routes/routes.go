@@ -133,8 +133,6 @@ func Handler(dbConn *gorm.DB) {
 		}
 	}
 
-	//spew.Dump(r)
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

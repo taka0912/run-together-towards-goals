@@ -5,7 +5,8 @@ WORKDIR /go/src/app/
 ADD . .
 
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-w" -a -o app .
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-w" -a -o app .
+RUN go build -o app .
 
 #Step2 Move build file
 FROM alpine:latest
