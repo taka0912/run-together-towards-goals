@@ -2,17 +2,15 @@
 FROM golang:alpine as builder
 
 WORKDIR /go/src/app/
-ADD src/ .
+ADD ./src/ .
 
-RUN apk update \
-    && apk add --no-cache git vim less curl make gcc \
-    && go mod download \
-    && go build -o app main.go
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-w" -a -o app .
 
 #Step2 Move build file
-FROM alpine:3.9
+FROM alpine:latest
 
-RUN apk add --no-cache mariadb-client mysql-dev alpine-sdk
+RUN apk add --no-cache git vim less curl make gcc mariadb-client mysql-dev alpine-sdk
 
 COPY --from=builder /go/src/app/ /app
 
@@ -20,5 +18,4 @@ ENV PORT=${PORT}
 
 WORKDIR /app
 
-CMD ["./app"]
-#CMD ash -c "ash start_app.sh && /bin/ash"
+ENTRYPOINT ["./app"]
