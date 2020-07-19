@@ -1,13 +1,14 @@
 package controllers
 
 import (
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // GetAllUsers...

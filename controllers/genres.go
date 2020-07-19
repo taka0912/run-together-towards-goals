@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
 
 // GetGenres...
@@ -55,4 +56,3 @@ func (h *Handler) DeleteGenre(c *gin.Context) {
 	r.Delete(id)
 	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }
-

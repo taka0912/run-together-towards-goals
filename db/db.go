@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"github.com/jinzhu/gorm"
 )
 

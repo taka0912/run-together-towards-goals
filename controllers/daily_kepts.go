@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
 
 // GetAllDailyKpts...
@@ -32,13 +33,13 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 	//if err != nil {
 	//	c.Redirect(http.StatusMovedPermanently, "/logout")
 	//}
-	keep, _    := c.GetPostForm("keep")
+	keep, _ := c.GetPostForm("keep")
 	problem, _ := c.GetPostForm("problem")
-	try, _     := c.GetPostForm("try")
+	try, _ := c.GetPostForm("try")
 
 	// TODO
 	r := models.NewDailyKptRepository()
-	r.Add(&models.DailyKpt{UserID:userId, Keep:keep, Problem:problem, Try:try})
+	r.Add(&models.DailyKpt{UserID: userId, Keep: keep, Problem: problem, Try: try})
 
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }

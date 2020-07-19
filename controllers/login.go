@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"errors"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/src/models"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
 
 type SessionInfo struct {
