@@ -15,7 +15,6 @@ const (
 type User struct {
 	gorm.Model
 	Nickname string `validate:"required,gt=1"`
-	//`json:"id" gorm:"column:id"`
 	Password string `validate:"required,gt=4"`
 	Age      int    `validate:"numeric"`
 	Role     int    `validate:"numeric,oneof=0 1"`

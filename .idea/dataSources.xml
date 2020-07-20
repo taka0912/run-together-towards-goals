@@ -29,5 +29,11 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="my_goal@localhost" uuid="a84256f7-9a35-47a6-a050-5a1fd6dbb4d3">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/my_goal</jdbc-url>
+    </data-source>
   </component>
 </project>

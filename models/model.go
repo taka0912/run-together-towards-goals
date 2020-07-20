@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"net/url"
 	"os"
@@ -17,7 +18,7 @@ func Open() *gorm.DB {
 		dataSource = "root:pass@tcp(mysql:3306)/my_goal"
 	}
 
-	db, err := gorm.Open(DBMS, dataSource + "?charset=utf8")
+	db, err := gorm.Open(DBMS, dataSource + "?parseTime=true&charset=utf8")
 	if err != nil {
 		panic(err.Error())
 	}

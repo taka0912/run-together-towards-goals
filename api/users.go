@@ -30,24 +30,25 @@ func (h *Handler) GetUser(c *gin.Context) {
 
 // AddUser...
 func (h *Handler) AddUser(c *gin.Context) {
-	var user User
-	c.BindJSON(&user)
+	var apiUser User
+	c.BindJSON(&apiUser)
 
-	age, _ := strconv.Atoi(user.Age)
-	role, _ := strconv.Atoi(user.Role)
+	age, _ := strconv.Atoi(apiUser.Age)
+	role, _ := strconv.Atoi(apiUser.Role)
+
+	var user models.User
+	user.Nickname = apiUser.Nickname
+	user.Password = apiUser.Password
+	user.Age = age
+	user.Role = role
 
 	r := models.NewUserRepository()
-	err := r.Add(&models.User{
-		Nickname: user.Nickname,
-		Password: user.Password,
-		Age:      age,
-		Role:     role,
-	})
+	err := r.Add(&user)
 	if err != "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": http.StatusBadRequest,
 			"msg":  err,
-			"id":   r.Count(),
+			"id":   user.ID,
 		})
 		return
 	}
@@ -55,7 +56,7 @@ func (h *Handler) AddUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "Created",
-		"id":   r.Count(),
+		"id":   user.ID,
 	})
 }
 
