@@ -1,30 +1,54 @@
 # Run together towards the goal
 
-## サービス概要
-- ミレニアル世代が目標を達成するためのスモールSNS
-- 尊厳欲求（承認欲求）・自己実現欲求を煽り、各々の目標を達成する
-- 頑張っている人は風当たりが厳しいと感じることもある。
-- 自習室効果。「他のみんなも頑張っているから私も頑張ろう」
-- 
+https://run-together-towards-goals.herokuapp.com/
 
-## CMS
-- ユーザー情報（user）一覧を取得
-- 対象のユーザー情報（user）と目標（user.my_goals）と日々のKPT（daily_kpts）を閲覧
-- ユーザー情報を編集
-- 目標（user.my_goals）のジャンル（genre）を編集
-- 
 
-## API
-- ユーザー情報（user）を設定する
-- 目標（user.my_goals）を設定する（数字を含めないとバリデーションで弾く）（期日も）
+## 🗻Tech
+- Golang
+  - Gin
+  - Gorm
+- MySQL
+- Docker（docker-compose）
+- Heroku
+
+## 🏃How to setup
+1. 
+
+    git clone https://github.com/hariNEzuMI928/run-together-towards-goals.git r2g
+
+2. 
+
+    cd r2g
+
+3. 
+
+    docker-compose up -d
+
+
+
+## ❓About app
+
+- 目標を構造的に定義し、それを目標を応援するためのスモールSNS
+- 尊厳欲求（承認欲求）・自己実現欲求を活発化させ、各々の目標を達成することを促進する
+- 自習室効果促進。「他のみんなも頑張っているから私も頑張ろう」
+
+## 🔧機能概要
+
+### 💻WEB
+- ユーザー（users）登録・編集
+- 各ユーザーは目標を立て、それに対するTODOを期限付きで立てる
+- そうすることで、目標と、それを達成するためのTODO（todo_lists）を構造的に定義する
+- ユーザーは日々のKPT（daily_kpts）を投稿する
+- 他ユーザー情報と目標（goals）とTODO（todo_lists）を閲覧
+- Goodアクション、Fightアクション
+
+### 📪API
+- ユーザー情報（user）登録・編集・取得
+- 目標（.my_goals）の設定・更新
 - 日々のKPT（daily_kpts）を投稿する
-- 全ユーザーの、対象のユーザーの目標（my_goals）と日々のKPT（daily_kpts）を取得
-- 対象のユーザーの目標（my_goals）と日々のKPT（daily_kpts）を取得
-- 
+- Goodアクション、Fightアクション
 
-## アプリ
+### 📱クライアント（予定）
 - 設定時間になったらKPTを投稿するよう催促
-- いいねボタン
-- 目標を達成したユーザーはKPTタブにて公開され、全ユーザーからいいねボタンがもらえる
-- 目標設定に問題があると感じた人がいたらその人に対し匿名で通知を送れる
-- 
+- 目標を達成したユーザーは、全ユーザーからGoodアクションが送られる
+- 目標設定に問題があると感じるユーザーに対し（匿名で）コメントを送れる
