@@ -1,10 +1,11 @@
 package controllers
 
 import (
+	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"net/http"
 	"strconv"
 
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
@@ -21,25 +22,22 @@ func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 
 // AddDailyKpt...
 func (h *Handler) AddDailyKpt(c *gin.Context) {
-	ru := models.NewUserRepository()
-	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	if user.ID == 0 {
-		c.Redirect(http.StatusUnauthorized, "/logout")
+	loginUserId, err := GetLoginUserId(c)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
-	userId := int(user.ID)
 
-	// TODO
-	//loginUserId, err := GetLoginUserId(c)
-	//if err != nil {
-	//	c.Redirect(http.StatusMovedPermanently, "/logout")
-	//}
-	keep, _ := c.GetPostForm("keep")
-	problem, _ := c.GetPostForm("problem")
-	try, _ := c.GetPostForm("try")
+	fmt.Printf("loginUserId : ")
+	spew.Dump(loginUserId)
+	fmt.Printf("\n")
 
-	// TODO
 	r := models.NewDailyKptRepository()
-	r.Add(&models.DailyKpt{UserID: userId, Keep: keep, Problem: problem, Try: try})
+	r.UserID = loginUserId
+	r.Keep, _ = c.GetPostForm("keep")
+	r.Problem, _ = c.GetPostForm("problem")
+	r.Try, _ = c.GetPostForm("try")
+
+	r.Add(&r)
 
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }

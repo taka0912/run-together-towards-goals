@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"net/url"
 	"os"
 )
@@ -18,7 +19,7 @@ func Open() *gorm.DB {
 		dataSource = "root:pass@tcp(mysql:3306)/my_goal"
 	}
 
-	db, err := gorm.Open(DBMS, dataSource + "?parseTime=true&charset=utf8")
+	db, err := gorm.Open(DBMS, dataSource+"?parseTime=true&charset=utf8")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -26,7 +27,7 @@ func Open() *gorm.DB {
 }
 
 func convertDataSource(ds string) (result string) {
-	url, _ := url.Parse(ds)
-	result = fmt.Sprintf("%s@tcp(%s:3306)%s", url.User.String(), url.Host, url.Path)
+	parse, _ := url.Parse(ds)
+	result = fmt.Sprintf("%s@tcp(%s:3306)%s", parse.User.String(), parse.Host, parse.Path)
 	return result
 }
