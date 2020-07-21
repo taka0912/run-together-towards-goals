@@ -19,11 +19,12 @@ type DailyKpt struct {
 // PostDailyKpt...
 func (h *Handler) PostDailyKpt(c *gin.Context) {
 	var dailyKpt DailyKpt
-	c.BindJSON(&dailyKpt)
+	_ = c.BindJSON(&dailyKpt)
 
 	userID, _ := strconv.Atoi(dailyKpt.UserID)
 
 	r := models.NewDailyKptRepository()
+	// TODO
 	r.Add(&models.DailyKpt{
 		UserID:  userID,
 		Keep:    dailyKpt.Keep,
@@ -34,7 +35,8 @@ func (h *Handler) PostDailyKpt(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "Created",
-		"id":   r.Count(),
+		// TODO
+		"id": r.Count(),
 	})
 }
 

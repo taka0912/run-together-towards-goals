@@ -20,12 +20,13 @@ type Goal struct {
 // PostDailyKpt...
 func (h *Handler) SetMyGoal(c *gin.Context) {
 	var myGoal Goal
-	c.BindJSON(&myGoal)
+	_ = c.BindJSON(&myGoal)
 
 	userID, _ := strconv.Atoi(myGoal.UserID)
 	genreID, _ := strconv.Atoi(myGoal.GenreID)
 
 	r := models.NewGoalRepository()
+	// TODO
 	r.Add(&models.Goal{
 		UserID:   userID,
 		GoalName: myGoal.Goal,
@@ -35,7 +36,8 @@ func (h *Handler) SetMyGoal(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "Created",
-		"id":   r.Count(),
+		// TODO
+		"id": r.Count(),
 	})
 }
 
@@ -56,7 +58,7 @@ func (h *Handler) EditMyGoal(c *gin.Context) {
 	}
 
 	var goal Goal
-	c.BindJSON(&goal)
+	_ = c.BindJSON(&goal)
 
 	newMyGoal.GoalName = goal.Goal
 	newMyGoal.GenreID, _ = strconv.Atoi(goal.GenreID)
