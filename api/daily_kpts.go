@@ -101,3 +101,7 @@ func (h *Handler) IncreaseFight(c *gin.Context) {
 		"id":   dailyKpt.ID,
 	})
 }
+
+func GetHello(userName string) string {
+	return "Hello, " + userName + "!!"
+}
