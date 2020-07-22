@@ -2,19 +2,20 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
+	v "gopkg.in/go-playground/validator.v9"
 	"time"
 )
 
 // DailyKpt is
 type DailyKpt struct {
 	gorm.Model
-	UserID    int     `gorm:"not null"`
-	Keep      string  `gorm:"not null"`
-	Problem   string  `gorm:"not null"`
-	Try       string  `gorm:"not null"`
-	Good      int
-	Fight     int
-	IgnoreMe  string  `gorm:"-"`
+	UserID   int    `gorm:"not null" validate:"required,numeric"`
+	Keep     string `gorm:"not null"`
+	Problem  string `gorm:"not null"`
+	Try      string `gorm:"not null"`
+	Good     int    `validate:"numeric"`
+	Fight    int    `validate:"numeric"`
+	IgnoreMe string `gorm:"-"`
 }
 
 type Results struct {
@@ -35,10 +36,17 @@ func NewDailyKptRepository() DailyKpt {
 }
 
 // DB追加
-func (o *DailyKpt) Add(dailyKpt *DailyKpt) {
+func (o *DailyKpt) Add(dailyKpt *DailyKpt) string {
+	validate := v.New()
+	err := validate.Struct(dailyKpt)
+	if err != nil {
+		return err.Error()
+	}
+
 	db := Open()
 	db.Create(dailyKpt)
 	defer db.Close()
+	return ""
 }
 
 // DB更新

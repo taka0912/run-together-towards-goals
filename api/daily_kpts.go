@@ -18,25 +18,28 @@ type DailyKpt struct {
 
 // PostDailyKpt...
 func (h *Handler) PostDailyKpt(c *gin.Context) {
-	var dailyKpt DailyKpt
-	_ = c.BindJSON(&dailyKpt)
-
-	userID, _ := strconv.Atoi(dailyKpt.UserID)
+	var apiDailyKpt DailyKpt
+	_ = c.BindJSON(&apiDailyKpt)
 
 	r := models.NewDailyKptRepository()
-	// TODO
-	r.Add(&models.DailyKpt{
-		UserID:  userID,
-		Keep:    dailyKpt.Keep,
-		Problem: dailyKpt.Problem,
-		Try:     dailyKpt.Try,
-	})
+	r.UserID, _ = strconv.Atoi(apiDailyKpt.UserID)
+	r.Keep = apiDailyKpt.Problem
+	r.Problem = apiDailyKpt.Problem
+	r.Try = apiDailyKpt.Try
+
+	if err := r.Add(&r); err != "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"msg":  err,
+		})
+		c.Abort()
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "Created",
-		// TODO
-		"id": r.Count(),
+		"id":   r.ID,
 	})
 }
 
