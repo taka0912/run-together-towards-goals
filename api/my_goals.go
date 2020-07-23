@@ -11,33 +11,26 @@ import (
 
 type Goal struct {
 	gorm.Model
-	UserID    string `json:"user_id"`
-	Goal      string `json:"goal"`
-	GenreID   string `json:"genre_id"`
-	LimitDate string `json:"limit_date"`
+	UserID   string `json:"user_id"`
+	GenreID  string `json:"genre_id"`
+	GoalName string `json:"goal_name"`
 }
 
 // PostDailyKpt...
 func (h *Handler) SetMyGoal(c *gin.Context) {
-	var myGoal Goal
-	_ = c.BindJSON(&myGoal)
-
-	userID, _ := strconv.Atoi(myGoal.UserID)
-	genreID, _ := strconv.Atoi(myGoal.GenreID)
+	var apiMyGoal Goal
+	_ = c.BindJSON(&apiMyGoal)
 
 	r := models.NewGoalRepository()
-	// TODO
-	r.Add(&models.Goal{
-		UserID:   userID,
-		GoalName: myGoal.Goal,
-		GenreID:  genreID,
-	})
+	r.UserID, _ = strconv.Atoi(apiMyGoal.UserID)
+	r.GenreID, _ = strconv.Atoi(apiMyGoal.GenreID)
+	r.GoalName = apiMyGoal.GoalName
+	r.Add(&r)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"msg":  "Created",
-		// TODO
-		"id": r.Count(),
+		"id":   r.ID,
 	})
 }
 
@@ -60,7 +53,7 @@ func (h *Handler) EditMyGoal(c *gin.Context) {
 	var goal Goal
 	_ = c.BindJSON(&goal)
 
-	newMyGoal.GoalName = goal.Goal
+	newMyGoal.GoalName = goal.GoalName
 	newMyGoal.GenreID, _ = strconv.Atoi(goal.GenreID)
 
 	r.Edit(newMyGoal)
