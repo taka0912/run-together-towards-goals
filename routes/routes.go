@@ -41,8 +41,7 @@ func Handler(dbConn *gorm.DB) {
 	r.Static("/assets", "./assets")
 
 	// セッションの設定
-	store := cookie.NewStore([]byte("secret"))
-	r.Use(sessions.Sessions("my_session", store))
+	r.Use(sessions.Sessions("my_session", cookie.NewStore([]byte("secret"))))
 
 	// login
 	r.POST("/login", controllers.Login)

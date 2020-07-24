@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"net/http"
 	"strconv"
 
@@ -27,10 +25,6 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
-	fmt.Printf("loginUserId : ")
-	spew.Dump(loginUserId)
-	fmt.Printf("\n")
-
 	r := models.NewDailyKptRepository()
 	r.UserID = loginUserId
 	r.Keep, _ = c.GetPostForm("keep")
@@ -38,7 +32,6 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 	r.Try, _ = c.GetPostForm("try")
 
 	r.Add(&r)
-
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
