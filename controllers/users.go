@@ -25,15 +25,14 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 func (h *Handler) AddUser(c *gin.Context) {
 	r := models.NewUserRepository()
 
-	nickname, _ := c.GetPostForm("nickname")
-	password, _ := c.GetPostForm("password")
+	r.Nickname, _ = c.GetPostForm("nickname")
+	r.Password, _ = c.GetPostForm("password")
 	age, _ := c.GetPostForm("age")
-	ageFmt, _ := strconv.Atoi(age)
+	r.Age, _ = strconv.Atoi(age)
 	role, _ := c.GetPostForm("role")
-	roleFmt, _ := strconv.Atoi(role)
+	r.Role, _ = strconv.Atoi(role)
 
-	// TODO
-	err := r.Add(&models.User{Nickname: nickname, Password: password, Age: ageFmt, Role: roleFmt})
+	err := r.Add(&r)
 	users := r.GetAll()
 	if err != "" {
 		c.HTML(http.StatusOK, "users.html", gin.H{
@@ -254,15 +253,7 @@ func (h *Handler) DeleteTodo(c *gin.Context) {
 func (h *Handler) AddGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 
-	ur := models.NewUserRepository()
-	loginUser := ur.GetLoginUser(sessions.Default(c).Get("UserId"))
-	r.UserID = int(loginUser.ID)
-	// TODO
-	//loginUserId, err := GetLoginUserId(c)
-	//if err != nil {
-	//	c.Redirect(http.StatusMovedPermanently, "/logout")
-	//}
-
+	r.UserID, _ = GetLoginUserId(c)
 	genreId, _ := c.GetPostForm("genre_id")
 	r.GenreID, _ = strconv.Atoi(genreId)
 	r.GoalName, _ = c.GetPostForm("goal_name")

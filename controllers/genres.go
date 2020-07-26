@@ -21,10 +21,8 @@ func (h *Handler) GetAllGenres(c *gin.Context) {
 // AddGenres...
 func (h *Handler) AddGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
-	genreName, _ := c.GetPostForm("genre_name")
-
-	// TODO
-	r.Add(&models.Genre{GenreName: genreName})
+	r.GenreName, _ = c.GetPostForm("genre_name")
+	r.Add(&r)
 
 	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"strings"
@@ -82,10 +81,10 @@ func SessionCheck(c *gin.Context) {
 func GetLoginUserId(c *gin.Context) (int, error) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	if user.ID == 0 {
-		return 0, errors.New("cannot get Login User")
-	}
 	userId := int(user.ID)
+	if userId == 0 {
+		c.Redirect(http.StatusMovedPermanently, "/logout")
+	}
 
 	return userId, nil
 }
