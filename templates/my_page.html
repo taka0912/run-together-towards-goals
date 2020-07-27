@@ -30,11 +30,6 @@
         </div>
         <div>
             <div class="underline">
-                <input type="number" name="age" value="{{.user.Age}}" placeholder="Age"/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
                 <select name="role" placeholder="Role" required/>
                 <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
                 <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
@@ -54,7 +49,7 @@
 
 {{ range $i, $go := .user.Goals }}
 <form method="post">
-    <div class="form-inner">
+    <div class="form-inner">users
         <h2>My Goal {{ $i }}</h2>
         <div>
             <div class="underline">

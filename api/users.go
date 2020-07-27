@@ -13,7 +13,6 @@ type User struct {
 	Id       string `json:"id"`
 	Nickname string `json:"nickname"`
 	Password string `json:"password"`
-	Age      string `json:"age"`
 	Role     string `json:"role"`
 }
 
@@ -33,14 +32,10 @@ func (h *Handler) AddUser(c *gin.Context) {
 	var apiUser User
 	c.BindJSON(&apiUser)
 
-	age, _ := strconv.Atoi(apiUser.Age)
-	role, _ := strconv.Atoi(apiUser.Role)
-
 	var user models.User
 	user.Nickname = apiUser.Nickname
 	user.Password = apiUser.Password
-	user.Age = age
-	user.Role = role
+	user.Role,_ = strconv.Atoi(apiUser.Role)
 
 	r := models.NewUserRepository()
 	err := r.Add(&user)
@@ -74,7 +69,6 @@ func (h *Handler) EditUser(c *gin.Context) {
 		password, _ := bcrypt.GenerateFromPassword([]byte(beforeUser.Password), bcrypt.DefaultCost)
 		user.Password = string(password)
 	}
-	user.Age, _ = strconv.Atoi(beforeUser.Age)
 
 	err := r.Edit(user)
 	if err != "" {

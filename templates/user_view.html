@@ -28,11 +28,6 @@
         </div>
         <div>
             <div class="underline">
-                <input type="number" tabindex="1" name="age" value="{{.user.Age}}" placeholder="Age"/>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
                 <select name="role"/>
                 <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
                 <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>

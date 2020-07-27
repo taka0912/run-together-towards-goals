@@ -27,8 +27,6 @@ func (h *Handler) AddUser(c *gin.Context) {
 
 	r.Nickname, _ = c.GetPostForm("nickname")
 	r.Password, _ = c.GetPostForm("password")
-	age, _ := c.GetPostForm("age")
-	r.Age, _ = strconv.Atoi(age)
 	role, _ := c.GetPostForm("role")
 	r.Role, _ = strconv.Atoi(role)
 
@@ -77,8 +75,6 @@ func (h *Handler) EditUser(c *gin.Context) {
 		hashPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		user.Password = string(hashPassword)
 	}
-	age, _ := c.GetPostForm("age")
-	user.Age, _ = strconv.Atoi(age)
 	role, _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
 
@@ -122,8 +118,6 @@ func NewRegistration(c *gin.Context) {
 	r := models.NewUserRepository()
 	r.Nickname, _ = c.GetPostForm("nickname")
 	r.Password, _ = c.GetPostForm("password")
-	age, _ := c.GetPostForm("age")
-	r.Age, _ = strconv.Atoi(age)
 	role, _ := c.GetPostForm("role")
 	r.Role, _ = strconv.Atoi(role)
 	err := r.Add(&r)
@@ -183,8 +177,6 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 		hashPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		user.Password = string(hashPassword)
 	}
-	age, _ := c.GetPostForm("age")
-	user.Age, _ = strconv.Atoi(age)
 	role, _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
 

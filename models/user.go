@@ -16,24 +16,9 @@ type User struct {
 	gorm.Model
 	Nickname string `validate:"required,gt=1"`
 	Password string `validate:"required,gt=4"`
-	Age      int    `validate:"numeric"`
 	Role     int    `validate:"numeric,oneof=0 1"`
 	IgnoreMe string `gorm:"-"`
 	Goals  []Goal
-}
-
-type UserView struct {
-	ID               int
-	Nickname         string
-	Password         string
-	Age              int
-	Role             int
-	GenreID          int
-	Goal             string
-	RequiredElements string
-	SpecificGoal     string
-	LimitDate        time.Time
-	IgnoreMe         string
 }
 
 // NewUser...
