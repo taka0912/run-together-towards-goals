@@ -10,7 +10,7 @@ import (
 )
 
 func Open() *gorm.DB {
-	DBMS := "mysql"
+	driver := "mysql"
 	var dataSource string
 
 	if os.Getenv("CLEARDB_DATABASE_URL") != "" {
@@ -18,11 +18,12 @@ func Open() *gorm.DB {
 	} else {
 		dataSource = "root:pass@tcp(mysql:3306)/my_goal"
 	}
-
-	db, err := gorm.Open(DBMS, dataSource+"?parseTime=true&charset=utf8")
+	databaseConnect :=  dataSource+"?parseTime=true&charset=utf8&loc=Asia%2FTokyo"
+	db, err := gorm.Open(driver, databaseConnect)
 	if err != nil {
 		panic(err.Error())
 	}
+	_ = os.Setenv("DATABASE_URL", databaseConnect)
 	return db
 }
 

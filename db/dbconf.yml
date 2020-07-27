@@ -1,8 +1,0 @@
-# cd ./db/migrations
-# goose mysql "user:pass@tcp(127.0.0.1:3306)/my_goal?parseTime=true" up  -dir .
-
-local:
-  driver: mysql
-#   open: tcp:localhost:3306*[db_name]/[user_name]/[password]
-  open: user:pass@tcp(127.0.0.1:3306)/my_goal?parseTime=true
-#    "tcp:ホスト名:3306*データベース名/ユーザ名/パスワード"
