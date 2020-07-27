@@ -18,7 +18,7 @@ func Open() *gorm.DB {
 	} else {
 		dataSource = "root:pass@tcp(mysql:3306)/my_goal"
 	}
-	databaseConnect :=  dataSource+"?parseTime=true&charset=utf8&loc=Asia%2FTokyo"
+	databaseConnect :=  dataSource+"?parseTime=true&charset=utf8"
 	db, err := gorm.Open(driver, databaseConnect)
 	if err != nil {
 		panic(err.Error())
