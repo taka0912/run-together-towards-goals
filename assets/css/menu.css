@@ -99,3 +99,10 @@
     0% {transform: rotate3d(0,0,1,-45deg) translate3d(0,-120%,0);background: rgba(255,255,255,0.5);}
     100% {transform: rotate3d(0,0,1,-25deg) translate3d(0,150%,0);background: rgba(255,255,255,0.5);}
 }
+
+a.no-underline {
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    color: #1e1e1e;
+}
