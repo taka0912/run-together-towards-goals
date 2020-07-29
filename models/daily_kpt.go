@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/hariNEzuMI928/run-together-towards-goals/redis"
 	"github.com/jinzhu/gorm"
 	v "gopkg.in/go-playground/validator.v9"
 	"time"
@@ -44,8 +45,12 @@ func (o *DailyKpt) Add(dailyKpt *DailyKpt) string {
 	}
 
 	db := Open()
-	db.Create(dailyKpt)
 	defer db.Close()
+	db.Create(dailyKpt)
+
+	c := redis.Connection()
+	var dailyKptList = []string{dailyKpt.Keep, dailyKpt.Problem, dailyKpt.Try}
+	redis.SetList(dailyKpt.ID, dailyKptList, c)
 	return ""
 }
 
