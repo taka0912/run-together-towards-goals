@@ -8,6 +8,7 @@ https://run-together-towards-goals.herokuapp.com/
   - Gin
   - Gorm
 - MySQL
+- Redis
 - Docker（docker-compose）
 - Heroku
 
