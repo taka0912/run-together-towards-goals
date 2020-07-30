@@ -16,17 +16,17 @@
         <h2>Post daily KPT</h2>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="keep" placeholder="Keep"/>
+                <textarea rows="3" name="keep" placeholder="Keep" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="problem" placeholder="Problem"/>
+                <textarea rows="3" name="problem" placeholder="Problem" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="text" tabindex="1" name="try" placeholder="Try"/>
+                <textarea rows="3" name="try" placeholder="Try" required></textarea>
             </div>
         </div>
 
@@ -77,7 +77,7 @@
                 </td>
                 <td>
                     <button formaction="/daily_kpt/delete/{{.ID}}" class="btn-blue"
-                            onClick="alert('本当に削除してよろしいですか？');">Delete
+                            onClick="alert('本当に削除しても良いですか？');">Delete
                     </button>
                 </td>
             </tr>

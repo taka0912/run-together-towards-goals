@@ -26,22 +26,7 @@ form {
     clear: both;
 }
 
-.form-inner > h2 {
-    font-size: 28px;
-    font-family: "Roboto", sans-serif;
-    color: #777;
-    margin: 0;
-    margin-top: 50px !important;
-    margin-bottom: 10px !important;
-    margin-left: 10px;
-    font-weight: bold;
-    display: block;
-    position: relative;
-    float: left;
-    width: 90%;
-}
-
-.form-inner > h3 {
+.form-inner > h2, h3 {
     font-size: 28px;
     font-family: "Roboto", sans-serif;
     color: #777;
@@ -155,8 +140,7 @@ form {
 }
 
 .form-inner > div.dropdown.open .dropdown-box {
-    padding: 8px;
-    padding-top: 0;
+    padding: 0 8px 8px;
     height: auto;
     border: 2px solid #1065e7;
     border-top: none;
@@ -164,7 +148,7 @@ form {
 
 .form-inner > div.dropdown .dropdown-box {
     background-color: #fff;
-    border-bottom: 0px solid transparent;
+    border-bottom: 0 solid transparent;
     border-left: 2px solid #1065e7;
     border-right: 2px solid #1065e7;
     border-top: none;
@@ -227,9 +211,7 @@ form {
 .form-inner > div.buttons > div > button {
     font-family: "Roboto", sans-serif;
     font-weight: bold;
-    border: none;
     outline: none;
-    /*background-color: none;*/
     background: none;
     border: 2px solid #777;
     padding: 5px 0;
@@ -250,10 +232,6 @@ form {
 }
 
 .form-inner > div > div {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     position: relative;
     margin: 0 10px;
@@ -333,7 +311,6 @@ form {
     outline: none;
     padding: 0;
     margin: 0;
-    -webkit-appearance: none;
     border-radius: 0;
     overflow: hidden;
     border-image-width: 0;
@@ -354,7 +331,7 @@ form {
     cursor: text;
 }
 
-.form-inner > div > div > input {
+.form-inner > div > div > input, textarea {
     position: relative;
     border: none;
     border-image-width: 0;
@@ -363,7 +340,6 @@ form {
     font-size: 18px;
     padding: 0;
     z-index: 1;
-    -webkit-appearance: none;
     border-radius: 0;
     background-color: transparent;
     width: 100%;
@@ -392,7 +368,7 @@ form {
     font-weight: normal;
     color: #777;
     font-family: "Roboto", sans-serif;
-    top: 0px;
+    top: 0;
     left: 0;
     box-sizing: border-box;
     width: auto;
@@ -462,7 +438,7 @@ form {
 }
 
 .form-inner > div > div > .spinner-arrow {
-    padding: 0px 12px;
+    padding: 0 12px;
 }
 
 .form-inner > div > div > .spinner-arrow.up {
@@ -555,7 +531,7 @@ form {
     height: 14px;
     position: relative;
     display: block;
-    top: 4.17157288px;
+    top: 4px;
     left: 10px;
 }
 
@@ -757,4 +733,11 @@ input::-moz-focus-inner {
 
 .form-inner > div > div.example_text {
     color: #777;
+}
+
+::-webkit-input-placeholder{
+    font-weight: bold;
+}
+:-moz-placeholder {
+    font-weight: bold;
 }
