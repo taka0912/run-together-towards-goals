@@ -70,6 +70,7 @@ func (o *DailyKpt) GetAll() []Results {
 		Select("daily_kpts.*, users.nickname").
 		Joins("inner JOIN users ON daily_kpts.user_id = users.id").
 		Where("daily_kpts.deleted_at is null").
+		Order("daily_kpts.id").
 		Find(&results)
 
 	db.Close()
