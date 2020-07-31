@@ -3,10 +3,6 @@
 
 SET CHARSET UTF8;
 
-CREATE DATABASE IF NOT EXISTS my_goal DEFAULT CHARACTER SET utf8;
-
-use my_goal;
-
 create table IF NOT EXISTS users (
     id integer primary key AUTO_INCREMENT,
     created_at datetime,
