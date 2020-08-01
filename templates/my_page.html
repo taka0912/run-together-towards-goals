@@ -49,7 +49,7 @@
 
 {{ range $i, $go := .user.Goals }}
 <form method="post">
-    <div class="form-inner">users
+    <div class="form-inner">
         <h2>My Goal {{ $i }}</h2>
         <div>
             <div class="underline">
@@ -64,6 +64,14 @@
             <div class="underline">
                 <input type="text" name="goal_name_{{ $go.ID }}" value="{{ $go.GoalName }}"
                        placeholder="Goal" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <select name="display_flag_{{ $go.ID }}" required/>
+                <option value="1" {{if eq $go.DisplayFlag 0}} selected {{end}}>非表示</option>
+                <option value="0" {{if eq $go.DisplayFlag 1}} selected {{end}}>表示</option>
+                </select>
             </div>
         </div>
         <div class="buttons">

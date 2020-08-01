@@ -153,8 +153,8 @@ func NewRegistration(c *gin.Context) {
 func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
-	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
-	user := r.GetAllInfo(int(loginUser.ID))
+	loginUserID, _ := GetLoginUserId(c)
+	user := r.GetAllInfo(loginUserID)
 
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()
@@ -203,6 +203,8 @@ func (h *Handler) EditGoal(c *gin.Context) {
 	genreId, _ := c.GetPostForm("genre_id" + tail)
 	goal.GenreID, _ = strconv.Atoi(genreId)
 	goal.GoalName, _ = c.GetPostForm("goal_name" + tail)
+	displayFlag, _ := c.GetPostForm("display_flag" + tail)
+	goal.DisplayFlag, _ = strconv.Atoi(displayFlag)
 
 	r.Edit(goal)
 	h.GetMyPage(c)

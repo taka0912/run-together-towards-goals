@@ -6,12 +6,18 @@ import (
 
 type Goal struct {
 	gorm.Model
-	UserID   int    `gorm:"not null"`
-	GenreID  int    `gorm:"not null"`
-	GoalName string `gorm:"not null"`
-	IgnoreMe string `gorm:"-"`
-	TodoLists    []TodoList
+	UserID      int    `gorm:"not null"`
+	GenreID     int    `gorm:"not null"`
+	GoalName    string `gorm:"not null"`
+	DisplayFlag int    `gorm:"not null"`
+	IgnoreMe    string `gorm:"-"`
+	TodoLists   []TodoList
 }
+
+const (
+	DisplayFlagFalse = iota // 0：非表示
+	DisplayFlagTrue         // 1：表示
+)
 
 // NewGoalRepository...
 func NewGoalRepository() Goal {
@@ -45,11 +51,7 @@ func (o *Goal) GetAll() []Goal {
 func (o *Goal) GetOne(id int) Goal {
 	db := Open()
 	var goal Goal
-	//db.Debug().First(&goal, id).Related(&goal.TodoLists, "GoalID")
 	db.Preload("TodoLists").Find(&goal, id)
-	//db.Model(&goal)
-	//db.Debug().First(&user, id)
-	//db.Model(&user).Related(&user.Goals)
 	db.Close()
 	return goal
 }
