@@ -28,25 +28,31 @@
         </div>
         <div>
             <div class="underline">
-                <select name="role"/>
-                <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
-                <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
+                <select name="role">
+                    <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
+                    <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
                 </select>
             </div>
         </div>
 
-        {{if .adminFlag }}
-            <div class="buttons">
+        <div class="buttons">
+            {{ if .loginFlag }}
+                <div>
+                    <button formmethod="get" formaction="/user/my_page">Go to MyPage</button>
+                </div>
+            {{end}}
+            {{ if eq .adminFlag 1 }}
                 <div>
                     <button>Edit</button>
                 </div>
                 <div>
-                    <button formmethod="post" formaction="/user/delete/{{.user.ID}}" class="btn-blue"
-                            onClick="alert('本当に削除してよろしいですか？');">Delete
-                    </button>
+                    <button formaction="/user/delete/{{.user.ID}}" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
                 </div>
-            </div>
-        {{end}}
+            {{end}}
+        </div>
+
+        <div class="buttons">
+        </div>
 
         {{ range $i, $go := .user.Goals }}
             {{ if eq $go.DisplayFlag 1 }}
@@ -55,10 +61,10 @@
                         <h2>My Goal</h2>
                         <div>
                             <div class="underline">
-                                <select name="genre_id_{{ $go.ID }}" disabled/>
-                                {{ range $j, $ge := $.genres }}
-                                    <option value="{{ $ge.ID }}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
-                                {{ end }}
+                                <select name="genre_id_{{ $go.ID }}" disabled>
+                                    {{ range $j, $ge := $.genres }}
+                                        <option value="{{ $ge.ID }}" {{ if eq $ge.ID $go.GenreID }} selected {{ end }}> {{ $ge.GenreName }} </option>
+                                    {{ end }}
                                 </select>
                             </div>
                         </div>

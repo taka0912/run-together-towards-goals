@@ -48,18 +48,13 @@ func (h *Handler) GetUser(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
-
 	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
-	adminFlag := false
-	// 「ログインユーザが管理者、もしくは編集ページのユーザー本人」の場合
-	if loginUser.Role == models.AdminUser || loginUser.ID == user.ID {
-		adminFlag = true
-	}
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":      user,
 		"genres":    rg.GetAll(),
-		"adminFlag": adminFlag,
+		"adminFlag": loginUser.Role,
+		"loginFlag": loginUser.ID == user.ID,
 	})
 }
 
