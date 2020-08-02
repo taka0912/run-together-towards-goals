@@ -26,9 +26,9 @@
         </div>
         <div>
             <div class="underline">
-                <select name="role" placeholder="Role"/>
-                <option value="0">一般ユーザー</option>
-                <option value="1">管理者</option>
+                <select name="role">
+                    <option value="0">一般ユーザー</option>
+                    <option value="1">管理者</option>
                 </select>
             </div>
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="form-footer">
             {{if .err}}
-                    <p>{{.err}}</p>
+                <p>{{.err}}</p>
             {{end}}
         </div>
     </div>

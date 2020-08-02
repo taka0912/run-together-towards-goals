@@ -23,7 +23,7 @@
         <div>
             <div class="underline">
                 <select name="genre_id" required
-                        title="目標のジャンルを教えて下さい"/>
+                        title="目標のジャンルを教えて下さい">
                 {{if .genre}}
                     {{ range .genre }}
                         <option value="{{.ID}}">{{.GenreName}}</option>
