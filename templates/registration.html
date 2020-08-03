@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>registration</title>
+    <link href="../assets/css/menu.css" rel="stylesheet">
     <link href="../assets/css/from.css" rel="stylesheet">
 </head>
 <body>
+
+    <div class="type-shine">Run together towards the goal</div>
+
 
 <form action="/registration" method="post">
     <div class="form-inner">
@@ -20,77 +24,20 @@
                 <input type="password" tabindex="1" name="password" placeholder="Password" required/>
             </div>
         </div>
-        <div>
-            <div class="underline">
-                <select name="genre_id" required
-                        title="目標のジャンルを教えて下さい">
-                {{if .genre}}
-                    {{ range .genre }}
-                        <option value="{{.ID}}">{{.GenreName}}</option>
-                    {{end}}
-                {{end}}
-                </select>
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="goal" placeholder="Your Goal" required
-                       title="最終目標を教えて下さい"/>
-            </div>
-            <div align="right" class="example_text">
-                ex)痩せてキレイになる
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="required_elements" placeholder="Required Elements" required
-                       title="目標を達成するために必要な要素を教えてください"/>
-            </div>
-            <div align="right">
-                ex)継続的な有酸素運動
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="todo" placeholder="Todo" required
-                       title="そのためにやるべきことを教えて下さい"/>
-            </div>
-            <div align="right">
-                ex)毎日4キロ走る
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="text" tabindex="1" name="specific_goal" placeholder="Specific Goal"
-                       required
-                       title="目標達成の評価方法を教えて下さい"/>
-            </div>
-            <div align="right">
-                ex)今より3キロ痩せる
-            </div>
-        </div>
-        <div>
-            <div class="underline">
-                <input type="date" tabindex="1" name="limit_date" placeholder="Expire Date" required
-                       title="期限を教えて下さい"/>
-            </div>
-            <div align="right">
-                ex)2024/12/31
-            </div>
-        </div>
-
 
         <div class="buttons">
             <div>
                 <button type="reset" tabindex="13">Clear</button>
             </div>
             <div>
-                <button type="submit" tabindex="14">Add</button>
+                <button type="submit" tabindex="14">New Registration</button>
             </div>
         </div>
         <div class="form-footer">
-            {{if .err}}
-                <p>{{.err}}</p>
+            {{ if .err }}
+                {{ range $i, $v := .err }}
+                    <p class="error">{{ $v }}</p>
+                {{ end }}
             {{end}}
         </div>
     </div>

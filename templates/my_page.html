@@ -127,9 +127,9 @@
             </div>
 
             {{ end }}
-            {{ end }}
         </div>
     </form>
+    {{ end }}
 </form>
 
 <form method="post" action="/user/add_goal">
@@ -148,6 +148,9 @@
             <div class="underline">
                 <input type="text" name="goal_name" placeholder="Goal Name"
                        title="最終目標を教えて下さい"/>
+            </div>
+            <div align="right" class="example_text">
+                ex)痩せてキレイになる
             </div>
         </div>
         <div class="buttons">
@@ -178,11 +181,17 @@
                 <input type="text" name="required_elements" placeholder="RequiredElements"
                        title="目標を達成するために必要な要素を教えてください"/>
             </div>
+            <div align="right">
+                ex)継続的な有酸素運動
+            </div>
         </div>
         <div>
             <div class="underline">
                 <input type="text" name="todo" placeholder="Todo"
                        title="そのためにやるべきことを教えて下さい"/>
+            </div>
+            <div align="right">
+                ex)毎日4キロ走る
             </div>
         </div>
         <div>
@@ -190,11 +199,17 @@
                 <input type="text" name="specific_goal" placeholder="SpecificGoal"
                        title="目標達成の評価方法を教えて下さい"/>
             </div>
+            <div align="right">
+                ex)今より3キロ痩せる
+            </div>
         </div>
         <div>
             <div class="underline">
                 <input type="date" name="limit_date" placeholder="LimitDate"
                        title="期限を教えて下さい"/>
+            </div>
+            <div align="right">
+                ex)2024/12/31
             </div>
         </div>
         <div class="buttons">

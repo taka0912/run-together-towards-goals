@@ -18,7 +18,7 @@ type User struct {
 	Password string `validate:"required,gt=4"`
 	Role     int    `validate:"numeric,oneof=0 1"`
 	IgnoreMe string `gorm:"-"`
-	Goals  []Goal
+	Goals    []Goal
 }
 
 // NewUser...
@@ -27,13 +27,12 @@ func NewUserRepository() User {
 }
 
 // DB追加
-func (o *User) Add(user *User) string {
+func (o *User) Add(user *User) []string {
 	db := Open()
 
-	validate := v.New()
-	err := validate.Struct(user)
+	err := getUsersErrors(user)
 	if err != nil {
-		return err.Error()
+		return err
 	}
 
 	password, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
@@ -41,7 +40,7 @@ func (o *User) Add(user *User) string {
 
 	db.Create(user)
 	defer db.Close()
-	return ""
+	return nil
 }
 
 // DB更新
@@ -121,4 +120,28 @@ func (o *User) GetLoginUser(id interface{}) User {
 	db.First(&user, id)
 	db.Close()
 	return user
+}
+
+func getUsersErrors(user *User) []string {
+	var errorMessages []string
+
+	validate := v.New()
+	err := validate.Struct(user)
+	if err != nil {
+		for _, err := range err.(v.ValidationErrors) {
+			var errorMessage string
+			fieldName := err.Field() //バリデーションでNGになった変数名を取得
+
+			switch fieldName {
+			case "Nickname":
+				errorMessage = "Nickname is required"
+			case "Password":
+				errorMessage = "Password must be 4 or more alphanumeric characters"
+			case "Role":
+				errorMessage = "Role is 0 or 1 only"
+			}
+			errorMessages = append(errorMessages, errorMessage)
+		}
+	}
+	return errorMessages
 }

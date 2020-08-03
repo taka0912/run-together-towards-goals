@@ -741,3 +741,7 @@ input::-moz-focus-inner {
 :-moz-placeholder {
     font-weight: bold;
 }
+
+.form-footer > p.error  {
+    color: #ee3e52;
+}

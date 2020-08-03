@@ -32,9 +32,9 @@ func (h *Handler) AddUser(c *gin.Context) {
 
 	err := r.Add(&r)
 	users := r.GetAll()
-	if err != "" {
+	if err != nil {
 		c.HTML(http.StatusOK, "users.html", gin.H{
-			"err":   err,
+			"errs":   err,
 			"users": users,
 		})
 	}
@@ -116,28 +116,29 @@ func NewRegistration(c *gin.Context) {
 	role, _ := c.GetPostForm("role")
 	r.Role, _ = strconv.Atoi(role)
 	err := r.Add(&r)
-	if err != "" {
+
+	if err != nil {
 		c.HTML(http.StatusMovedPermanently, "registration.html", gin.H{
 			"err": err,
 		})
 		return
 	}
 
-	rg := models.NewGoalRepository()
-	//rg.UserID = int(r.ID)
-	genreID, _ := c.GetPostForm("genre_id")
-	rg.GenreID, _ = strconv.Atoi(genreID)
-	rg.GoalName, _ = c.GetPostForm("goal")
-	rg.Add(&rg)
+	// rg := models.NewGoalRepository()
+	// rg.UserID = int(r.ID)
+	// genreID, _ := c.GetPostForm("genre_id")
+	// rg.GenreID, _ = strconv.Atoi(genreID)
+	// rg.GoalName, _ = c.GetPostForm("goal")
+	// rg.Add(&rg)
 
-	rt := models.NewTodoListRepository()
-	rt.GoalID = int(rg.ID)
-	rt.RequiredElements, _ = c.GetPostForm("required_elements")
-	rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
-	limitDate, _ := c.GetPostForm("limit_date")
-	rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
-	rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
-	rt.Add(&rt)
+	// rt := models.NewTodoListRepository()
+	// rt.GoalID = int(rg.ID)
+	// rt.RequiredElements, _ = c.GetPostForm("required_elements")
+	// rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
+	// limitDate, _ := c.GetPostForm("limit_date")
+	// rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
+	// rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
+	// rt.Add(&rt)
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"msg": "Welcome! Let's Login.",

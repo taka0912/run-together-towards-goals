@@ -84,6 +84,10 @@
     font-size: 60px;
     position: relative;
     overflow: hidden;
+    font-weight: bold;
+    line-height: 1;
+    color: #1e1e1e;
+
 }
 .type-shine:before {
     -webkit-animation: shine .6s ease 1.5s;

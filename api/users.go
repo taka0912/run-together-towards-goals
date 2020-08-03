@@ -39,7 +39,7 @@ func (h *Handler) AddUser(c *gin.Context) {
 
 	r := models.NewUserRepository()
 	err := r.Add(&user)
-	if err != "" {
+	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": http.StatusBadRequest,
 			"msg":  err,
