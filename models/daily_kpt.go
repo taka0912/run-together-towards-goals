@@ -48,9 +48,10 @@ func (o *DailyKpt) Add(dailyKpt *DailyKpt) string {
 	defer db.Close()
 	db.Create(dailyKpt)
 
-	c := redis.Connection()
-	var dailyKptList = []string{dailyKpt.Keep, dailyKpt.Problem, dailyKpt.Try}
-	redis.SetList(dailyKpt.ID, dailyKptList, c)
+	if c, err := redis.Connection(); err == nil {
+		var dailyKptList = []string{dailyKpt.Keep, dailyKpt.Problem, dailyKpt.Try}
+		redis.SetList(dailyKpt.ID, dailyKptList, c)
+	}
 	return ""
 }
 

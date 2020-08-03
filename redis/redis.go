@@ -6,15 +6,15 @@ import (
 	"os"
 )
 
-func Connection() redis.Conn {
+func Connection() (redis.Conn, error) {
 	const IpPort = "127.0.0.1:6379"
 
 	//redisに接続
 	c, err := redis.Dial("tcp", IpPort)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return c
+	return c, nil
 }
 
 func Set(key string, value string, c redis.Conn){
