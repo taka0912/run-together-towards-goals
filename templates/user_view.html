@@ -19,11 +19,55 @@
             <div class="underline">
                 <input type="text" tabindex="1" name="nickname" value="{{.user.Nickname}}"
                        placeholder="Nickname"/>
+
+            </div>
+        </div>
+        {{ if eq .adminFlag 1 }}
+            <div>
+                <div class="underline">
+                    <input type="password" tabindex="1" name="password" value="" placeholder="Password"/>
+                </div>
+            </div>
+        {{end}}
+        {{if eq .user.AgeDisplayFlag 1}}
+            <div>
+                <div class="underline">
+                    <input type="text" name="age" value="{{.user.Age}}"
+                           placeholder="Age" title="年齢 or 年代"/>
+                </div>
+            </div>
+        {{end}}
+        <div>
+            <div class="underline">
+                <input type="text" name="address" value="{{.user.Address}}"
+                       placeholder="Address" title="住んでいる地域"/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="password" tabindex="1" name="password" value="" placeholder="Password"/>
+                <input type="text" name="birth_place" placeholder="Birth Place" value="{{.user.BirthPlace}}"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="hobby" placeholder="Hobby">{{.user.Hobby}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="Occupation" title="職業"/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="strong_point" placeholder="Strong Point" title="自身の強み"
+                >{{.user.StrongPoint}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="skill" placeholder="Skills you can use" title="使えるスキル、言語など"
+                >{{.user.Skill}}</textarea>
             </div>
         </div>
         <div>
@@ -46,7 +90,7 @@
                     <button>Edit</button>
                 </div>
                 <div>
-                    <button formaction="/user/delete/{{.user.ID}}" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+                    <button formaction="/user/delete/{{.user.ID}}" onClick="alert('本当に削除しても良いですか？');">Delete</button>
                 </div>
             {{end}}
         </div>

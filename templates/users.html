@@ -24,14 +24,6 @@
                 <input type="password" tabindex="1" name="password" placeholder="Password"/>
             </div>
         </div>
-        <div>
-            <div class="underline">
-                <select name="role">
-                    <option value="0">一般ユーザー</option>
-                    <option value="1">管理者</option>
-                </select>
-            </div>
-        </div>
 
         <div class="buttons">
             <div>
@@ -53,17 +45,29 @@
     <table>
         <tr>
             <th>Nickname</th>
+            <th>Age</th>
+            <th>Occupation</th>
             <th>Role</th>
             <th>Action</th>
         </tr>
         {{ range .users }}
             <tr>
                 <td>{{ .Nickname }}</td>
-                {{if eq .Role 0 }}
-                    <td>一般ユーザー</td>
-                {{ else }}
-                    <td>管理者</td>
-                {{ end }}
+                <td>
+                    {{if eq .AgeDisplayFlag 0 }}
+                        非表示
+                    {{ else }}
+                        {{ .Age }}
+                    {{ end }}
+                </td>
+                <td>{{ .Occupation }}</td>
+                <td>
+                    {{if eq .Role 0 }}
+                        一般ユーザー
+                    {{ else }}
+                        管理者
+                    {{ end }}
+                </td>
                 <td>
                     <a href="/user/view/{{.ID}}" class="btn-yellow">View</a>
                 </td>

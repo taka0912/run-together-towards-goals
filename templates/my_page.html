@@ -29,10 +29,50 @@
         </div>
         <div>
             <div class="underline">
-                <select name="role" required>
-                    <option value="0" {{if eq .user.Role 0}} selected {{end}}>一般ユーザー</option>
-                    <option value="1" {{if eq .user.Role 1}} selected {{end}}>管理者</option>
+                <input type="text" name="age" value="{{.user.Age}}"
+                       placeholder="Age" title="年齢 or 年代" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <select name="age_display_flag" title="他ユーザーに年齢を公開するかどうか選べます" required>
+                    <option value="0" {{if eq .user.AgeDisplayFlag 0}} selected {{end}}>年齢非表示</option>
+                    <option value="1" {{if eq .user.AgeDisplayFlag 1}} selected {{end}}>年齢表示</option>
                 </select>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="address" value="{{.user.Address}}"
+                       placeholder="Address" title="住んでいる地域" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="birth_place" value="{{.user.BirthPlace}}"
+                       placeholder="Birth Place" title="出身地" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="hobby" placeholder="Hobby" title="趣味" required>{{.user.Hobby}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="Occupation" title="職業" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="strong_point" placeholder="Strong Point" title="自身の強み"
+                          required>{{.user.StrongPoint}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="skill" placeholder="Skills you can use"title="使えるスキル、言語など  "
+                          required>{{.user.Skill}}</textarea>
             </div>
         </div>
         <div class="buttons">

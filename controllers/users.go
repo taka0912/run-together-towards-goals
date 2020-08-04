@@ -27,14 +27,13 @@ func (h *Handler) AddUser(c *gin.Context) {
 
 	r.Nickname, _ = c.GetPostForm("nickname")
 	r.Password, _ = c.GetPostForm("password")
-	role, _ := c.GetPostForm("role")
-	r.Role, _ = strconv.Atoi(role)
+	r.Role = models.PublicUser
 
 	err := r.Add(&r)
 	users := r.GetAll()
 	if err != nil {
 		c.HTML(http.StatusOK, "users.html", gin.H{
-			"errs":   err,
+			"errs":  err,
 			"users": users,
 		})
 	}
@@ -124,22 +123,6 @@ func NewRegistration(c *gin.Context) {
 		return
 	}
 
-	// rg := models.NewGoalRepository()
-	// rg.UserID = int(r.ID)
-	// genreID, _ := c.GetPostForm("genre_id")
-	// rg.GenreID, _ = strconv.Atoi(genreID)
-	// rg.GoalName, _ = c.GetPostForm("goal")
-	// rg.Add(&rg)
-
-	// rt := models.NewTodoListRepository()
-	// rt.GoalID = int(rg.ID)
-	// rt.RequiredElements, _ = c.GetPostForm("required_elements")
-	// rt.SpecificGoal, _ = c.GetPostForm("specific_goal")
-	// limitDate, _ := c.GetPostForm("limit_date")
-	// rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
-	// rt.LimitDate, _ = time.Parse("2006-01-02", limitDate)
-	// rt.Add(&rt)
-
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"msg": "Welcome! Let's Login.",
 	})
@@ -173,8 +156,16 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 		hashPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		user.Password = string(hashPassword)
 	}
-	role, _ := c.GetPostForm("role")
-	user.Role, _ = strconv.Atoi(role)
+
+	user.Age, _ = c.GetPostForm("age")
+	ageDisplayFlag, _ := c.GetPostForm("age_display_flag")
+	user.AgeDisplayFlag, _ = strconv.Atoi(ageDisplayFlag)
+	user.Address, _ = c.GetPostForm("address")
+	user.BirthPlace, _ = c.GetPostForm("birth_place")
+	user.Hobby, _ = c.GetPostForm("hobby")
+	user.Occupation, _ = c.GetPostForm("occupation")
+	user.StrongPoint, _ = c.GetPostForm("strong_point")
+	user.Skill, _ = c.GetPostForm("skill")
 
 	err := r.Edit(user)
 	if err != "" {

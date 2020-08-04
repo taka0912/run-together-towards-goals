@@ -14,11 +14,19 @@ const (
 
 type User struct {
 	gorm.Model
-	Nickname string `validate:"required,gt=1"`
-	Password string `validate:"required,gt=4"`
-	Role     int    `validate:"numeric,oneof=0 1"`
-	IgnoreMe string `gorm:"-"`
-	Goals    []Goal
+	Nickname       string `validate:"required,gt=1"`
+	Password       string `validate:"required,gt=4"`
+	Age            string
+	AgeDisplayFlag int
+	Address        string
+	BirthPlace     string
+	Hobby          string
+	Occupation     string
+	StrongPoint    string
+	Skill          string
+	Role           int    `validate:"numeric,oneof=0 1"`
+	IgnoreMe       string `gorm:"-"`
+	Goals          []Goal
 }
 
 // NewUser...
