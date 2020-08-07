@@ -19,7 +19,7 @@ func NoticeForgotPass(text string) {
 	}
 }
 
-const adminUrl = "https://hooks.slack.com/services/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"
+const adminUrl = "https://hooks.slack.com/services/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"
 
 func postSlack(requestBody interface{}) string {
 	jsonModel, err := json.Marshal(requestBody)
