@@ -19,7 +19,11 @@ func NoticeForgotPass(text string) {
 	}
 }
 
-const adminUrl = "https://hooks.slack.com/services/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"
+const (
+	domain = "https://hooks.slack.com/services/"
+	adminWebHock = "T013G7QJRJ5/B0188DNEB8W/DSSIgi86iOq1VkSoT89Nd9G6"
+)
+
 
 func postSlack(requestBody interface{}) string {
 	jsonModel, err := json.Marshal(requestBody)
@@ -27,7 +31,7 @@ func postSlack(requestBody interface{}) string {
 		log.Println(err)
 		return err.Error()
 	}
-	req, err := http.NewRequest("POST", adminUrl, bytes.NewBuffer(jsonModel))
+	req, err := http.NewRequest("POST", domain + adminWebHock, bytes.NewBuffer(jsonModel))
 	if err != nil {
 		log.Println(err)
 		return err.Error()
