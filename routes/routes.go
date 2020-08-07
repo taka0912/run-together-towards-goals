@@ -55,6 +55,12 @@ func Handler(dbConn *gorm.DB) {
 		})
 	})
 	r.POST("/registration", controllers.NewRegistration)
+	r.GET("/forgot_password", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "forgot_password.html", gin.H{
+			"title": "title",
+		})
+	})
+	r.POST("/forgot_password", controllers.ForgotPassword)
 
 	r.Group("/")
 	r.Use(controllers.SessionCheck)

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/hariNEzuMI928/run-together-towards-goals/models"
+	"github.com/hariNEzuMI928/run-together-towards-goals/slack"
 )
 
 type SessionInfo struct {
@@ -87,4 +88,13 @@ func GetLoginUserId(c *gin.Context) (int, error) {
 	}
 
 	return userId, nil
+}
+
+func ForgotPassword(c *gin.Context)  {
+	nickname, _ := c.GetPostForm("nickname")
+	slack.NoticeForgotPass(nickname)
+	c.HTML(http.StatusOK, "login.html", gin.H{
+		"msg": "Plz wait for setting new password",
+	})
+
 }
