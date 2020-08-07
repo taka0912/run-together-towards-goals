@@ -11,8 +11,6 @@ type request struct {
 	Text string `json:"text"`
 }
 
-const adminUrl = "https://hooks.slack.com/services/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"
-
 func NoticeForgotPass(text string) {
 	log.Print(text)
 	err := postSlack(request{Text: "Forgot Password : " + text})
@@ -20,6 +18,8 @@ func NoticeForgotPass(text string) {
 		log.Println(err)
 	}
 }
+
+const adminUrl = "https://hooks.slack.com/services/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"
 
 func postSlack(requestBody interface{}) string {
 	jsonModel, err := json.Marshal(requestBody)
