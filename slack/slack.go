@@ -11,7 +11,7 @@ type request struct {
 	Text string `json:"text"`
 }
 
-const adminUrl = "https://hooks.slack.com/services/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"
+const adminUrl = "https://hooks.slack.com/services/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"
 
 func NoticeForgotPass(text string) {
 	log.Print(text)
