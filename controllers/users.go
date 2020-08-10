@@ -72,8 +72,8 @@ func (h *Handler) EditUser(c *gin.Context) {
 	role, _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
 
-	err := r.Edit(user)
-	if err != "" {
+	err := r.Edit(&user)
+	if err != nil {
 		c.HTML(http.StatusOK, "user_edit.html", gin.H{
 			"err": err,
 		})
@@ -97,7 +97,7 @@ func LoginUser(c *gin.Context) (models.User, string) {
 	password, _ := c.GetPostForm("password")
 
 	r := models.NewUserRepository()
-	user := r.GetByName(nickname)
+	user, _ := r.GetByName(nickname)
 
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
@@ -167,8 +167,8 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 	user.StrongPoint, _ = c.GetPostForm("strong_point")
 	user.Skill, _ = c.GetPostForm("skill")
 
-	err := r.Edit(user)
-	if err != "" {
+	err := r.Edit(&user)
+	if err != nil {
 		c.HTML(http.StatusOK, "my_page.html", gin.H{
 			"user": user,
 			"err":  err,

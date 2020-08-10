@@ -30,7 +30,7 @@ func (h *Handler) GetUser(c *gin.Context) {
 // AddUser...
 func (h *Handler) AddUser(c *gin.Context) {
 	var apiUser User
-	c.BindJSON(&apiUser)
+	_ = c.BindJSON(&apiUser)
 
 	var user models.User
 	user.Nickname = apiUser.Nickname
@@ -70,8 +70,8 @@ func (h *Handler) EditUser(c *gin.Context) {
 		user.Password = string(password)
 	}
 
-	err := r.Edit(user)
-	if err != "" {
+	err := r.Edit(&user)
+	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": http.StatusBadRequest,
 			"msg":  err,

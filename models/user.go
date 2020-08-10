@@ -52,19 +52,18 @@ func (o *User) Add(user *User) []string {
 }
 
 // DB更新
-func (o *User) Edit(user User) string {
+func (o *User) Edit(user *User) []string {
 	db := Open()
 
-	validate := v.New()
-	err := validate.Struct(user)
+	err := getUsersErrors(user)
 	if err != nil {
-		return err.Error()
+		return err
 	}
 	user.UpdatedAt = time.Now()
 
 	db.Save(user)
 	db.Close()
-	return ""
+	return nil
 }
 
 // DB全取得
@@ -95,12 +94,15 @@ func (o *User) GetAllInfo(id int) User {
 }
 
 // GetByName...
-func (o *User) GetByName(nickname string) User {
+func (o *User) GetByName(nickname string) (User, string) {
 	db := Open()
 	var user User
 	db.Where("nickname = ?", nickname).First(&user)
 	db.Close()
-	return user
+	if user.ID == 0 {
+		return User{}, "Not found"
+	}
+	return user, ""
 }
 
 // DB削除
@@ -151,5 +153,13 @@ func getUsersErrors(user *User) []string {
 			errorMessages = append(errorMessages, errorMessage)
 		}
 	}
+
+	// 既にそのニックネームが使われている場合(unique判定)
+	//TODO：idではなくてstringのunique判定のやり方
+	r := NewUserRepository()
+	if _, err := r.GetByName(user.Nickname); err == "" {
+		errorMessages = append(errorMessages, "The nickname is already registered or used by another user")
+	}
+
 	return errorMessages
 }
