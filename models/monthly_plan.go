@@ -19,9 +19,9 @@ type MonthlyPlan struct {
 }
 
 // NewMonthlyPlanRepository...
-//func NewMonthlyPlanRepository() MonthlyPlan {
-//	return MonthlyPlan{}
-//}
+func NewMonthlyPlanRepository() MonthlyPlan {
+	return MonthlyPlan{}
+}
 
 // DB追加
 func (o *MonthlyPlan) Add(monthlyPlan *MonthlyPlan) {

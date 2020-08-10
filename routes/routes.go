@@ -83,6 +83,27 @@ func Handler(dbConn *gorm.DB) {
 			rUser.POST("add_todo", handler.AddTodo)
 		}
 
+		// monthly_plans
+		r.GET("/_monthly_plans", handler.GetAllMonthlyPlans)
+		//rMonthlyPlan := r.Group("/monthly_plan")
+		//{
+			//rMonthlyPlan.POST("add", handler.AddGenre)
+			//rMonthlyPlan.GET("edit/:id", handler.GetGenre)
+			//rMonthlyPlan.POST("edit_ok/:id", handler.EditGenre)
+			//rMonthlyPlan.GET("delete/:id", handler.DeleteGenre)
+			//rMonthlyPlan.DELETE("delete/:id", handler.DeleteGenre)
+		//}
+
+		// daily kpt info
+		r.GET("/_daily_kpts", handler.GetAllDailyKpts)
+		rDailyKpt := r.Group("/daily_kpt")
+		{
+			rDailyKpt.POST("add", handler.AddDailyKpt)
+			rDailyKpt.POST("good/:id", handler.IncreaseGood)
+			rDailyKpt.POST("fight/:id", handler.IncreaseFight)
+			rDailyKpt.POST("delete/:id", handler.DeleteDailyKpt)
+		}
+
 		// genre info
 		r.GET("/_genres", handler.GetAllGenres)
 		rGenre := r.Group("/genre")
@@ -94,15 +115,6 @@ func Handler(dbConn *gorm.DB) {
 			rGenre.DELETE("delete/:id", handler.DeleteGenre)
 		}
 
-		// daily kpt info
-		r.GET("/_daily_kpts", handler.GetAllDailyKpts)
-		rDailyKpt := r.Group("/daily_kpt")
-		{
-			rDailyKpt.POST("add", handler.AddDailyKpt)
-			rDailyKpt.POST("good/:id", handler.IncreaseGood)
-			rDailyKpt.POST("fight/:id", handler.IncreaseFight)
-			rDailyKpt.POST("delete/:id", handler.DeleteDailyKpt)
-		}
 		r.GET("/index", func(c *gin.Context) {
 			ur := models.NewUserRepository()
 			c.HTML(http.StatusOK, "welcome.html", gin.H{

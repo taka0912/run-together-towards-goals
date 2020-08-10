@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Plan</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+    <link href="../assets/css/table.css" rel="stylesheet">
+    <link href="../assets/css/btn.css" rel="stylesheet">
+</head>
+<body>
+
+{{ template "header" }}
+
+<Marquee>🌵制作中🌵</Marquee>
+
+<form action="/monthly_plan/add" method="post">
+    <div class="form-inner">
+        <h2>Add Monthly Plan</h2>
+        <div class="buttons">
+            <div>
+                <button type="submit" tabindex="14">Let's Go!</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table>
+    <tr>
+        <th>UserID</th>
+        <th>GoalID</th>
+        <th>Month</th>
+        <th>先月のKeep</th>
+        <th>先月のプロブレム</th>
+        <th>半年後の目標</th>
+        <th>今月の目標</th>
+        <th>現在の状態</th>
+        <th>日々やること</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {{ range .monthlyPlans }}
+        <tr>
+            <td>{{ .UserID }}</td>
+            <td>{{ .GoalID }}</td>
+            <td>{{ .Month }}</td>
+            <td>{{ .KeepInLastMonth }}</td>
+            <td>{{ .ProblemInLastMonth }}</td>
+            <td>{{ .GoalAfterHalfYear }}</td>
+            <td>{{ .GoalInThisMonth }}</td>
+            <td>{{ .CurrentState }}</td>
+            <td>{{ .DailyTodo }}</td>
+            <td>
+                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>
+            </td>
+            <td>
+                <button formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+            </td>
+        </tr>
+    {{end}}
+</table>
+
+</body>
+</html>
+
