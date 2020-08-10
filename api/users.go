@@ -70,7 +70,7 @@ func (h *Handler) EditUser(c *gin.Context) {
 		user.Password = string(password)
 	}
 
-	err := r.Edit(&user)
+	err := r.Edit(user)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": http.StatusBadRequest,

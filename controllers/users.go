@@ -72,7 +72,7 @@ func (h *Handler) EditUser(c *gin.Context) {
 	role, _ := c.GetPostForm("role")
 	user.Role, _ = strconv.Atoi(role)
 
-	err := r.Edit(&user)
+	err := r.Edit(user)
 	if err != nil {
 		c.HTML(http.StatusOK, "user_edit.html", gin.H{
 			"err": err,
@@ -147,8 +147,7 @@ func (h *Handler) GetMyPage(c *gin.Context) {
 // EditMyPage...
 func (h *Handler) EditMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
-	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
-	user := r.GetAllInfo(int(loginUser.ID))
+	user := r.GetLoginUser(sessions.Default(c).Get("UserId"))
 
 	user.Nickname, _ = c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
@@ -167,7 +166,8 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 	user.StrongPoint, _ = c.GetPostForm("strong_point")
 	user.Skill, _ = c.GetPostForm("skill")
 
-	err := r.Edit(&user)
+	err := r.Edit(user)
+
 	if err != nil {
 		c.HTML(http.StatusOK, "my_page.html", gin.H{
 			"user": user,

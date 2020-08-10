@@ -16,6 +16,13 @@
     <div class="form-inner">
         <h1>My Page</h1>
         <h2>My Profile</h2>
+        <div class="form-footer">
+            {{ if .err }}
+                {{ range $i, $v := .err }}
+                    <p class="error">{{ $v }}</p>
+                {{ end }}
+            {{end}}
+        </div>
         <div>
             <div class="underline">
                 <input type="text" name="nickname" value="{{.user.Nickname}}"
@@ -60,7 +67,8 @@
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="Occupation" title="職業" required/>
+                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="Occupation" title="職業"
+                       required/>
             </div>
         </div>
         <div>
@@ -71,7 +79,7 @@
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="skill" placeholder="Skills you can use"title="使えるスキル、言語など  "
+                <textarea rows="3" name="skill" placeholder="Skills you can use" title="使えるスキル、言語など  "
                           required>{{.user.Skill}}</textarea>
             </div>
         </div>

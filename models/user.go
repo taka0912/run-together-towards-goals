@@ -35,10 +35,11 @@ func NewUserRepository() User {
 }
 
 // DB追加
+// TODO：Addの引数は要らない。r.Add()だけで良い
 func (o *User) Add(user *User) []string {
 	db := Open()
 
-	err := getUsersErrors(user)
+	err := validateUser(user)
 	if err != nil {
 		return err
 	}
@@ -52,10 +53,10 @@ func (o *User) Add(user *User) []string {
 }
 
 // DB更新
-func (o *User) Edit(user *User) []string {
+func (o *User) Edit(user User) []string {
 	db := Open()
 
-	err := getUsersErrors(user)
+	err := validateUser(&user)
 	if err != nil {
 		return err
 	}
@@ -132,7 +133,7 @@ func (o *User) GetLoginUser(id interface{}) User {
 	return user
 }
 
-func getUsersErrors(user *User) []string {
+func validateUser(user *User) []string {
 	var errorMessages []string
 
 	validate := v.New()
@@ -157,9 +158,8 @@ func getUsersErrors(user *User) []string {
 	// 既にそのニックネームが使われている場合(unique判定)
 	//TODO：idではなくてstringのunique判定のやり方
 	r := NewUserRepository()
-	if _, err := r.GetByName(user.Nickname); err == "" {
+	if tmpUser, err := r.GetByName(user.Nickname); tmpUser.ID != user.ID && err == "" {
 		errorMessages = append(errorMessages, "The nickname is already registered or used by another user")
 	}
-
 	return errorMessages
 }
