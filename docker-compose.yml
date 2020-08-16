@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    container_name: db-r2g
+    container_name: r2g-db
     restart: always
     build:
       context: .
@@ -24,7 +24,7 @@ services:
       - "./docker/db/init/:/docker-entrypoint-initdb.d"
 
   app:
-    container_name: app-r2g
+    container_name: r2g-app
     links:
       - mysql
       - redis
@@ -44,7 +44,7 @@ services:
 
   redis:
     hostname: redis
-    container_name: redis-r2g
+    container_name: r2g-redis
     image: "redis:latest"
     ports:
       - "6379:6379"

@@ -51,35 +51,35 @@
         <div>
             <div class="underline">
                 <input type="text" name="address" value="{{.user.Address}}"
-                       placeholder="Address" title="住んでいる地域" required/>
+                       placeholder="住んでいる地域" title="住んでいる地域" required/>
             </div>
         </div>
         <div>
             <div class="underline">
                 <input type="text" name="birth_place" value="{{.user.BirthPlace}}"
-                       placeholder="Birth Place" title="出身地" required/>
+                       placeholder="出身地" title="出身地" required/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="hobby" placeholder="Hobby" title="趣味" required>{{.user.Hobby}}</textarea>
+                <textarea rows="3" name="hobby" placeholder="趣味" title="趣味" required>{{.user.Hobby}}</textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="Occupation" title="職業"
+                <input type="text" name="occupation" value="{{.user.Occupation}}" placeholder="職業" title="職業"
                        required/>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="strong_point" placeholder="Strong Point" title="自身の強み"
+                <textarea rows="3" name="strong_point" placeholder="自身の強み" title="自身の強み"
                           required>{{.user.StrongPoint}}</textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="skill" placeholder="Skills you can use" title="使えるスキル、言語など  "
+                <textarea rows="3" name="skill" placeholder="使えるスキル、言語など" title="使えるスキル、言語など"
                           required>{{.user.Skill}}</textarea>
             </div>
         </div>
@@ -110,7 +110,7 @@
         <div>
             <div class="underline">
                 <input type="text" name="goal_name_{{ $go.ID }}" value="{{ $go.GoalName }}"
-                       placeholder="Goal" required/>
+                       placeholder="最終目標" required/>
             </div>
         </div>
         <div>
@@ -140,14 +140,14 @@
             <div>
                 <div class="underline">
                     <input type="text" name="required_elements_{{ $to.ID }}"
-                           value="{{ $to.RequiredElements }}" placeholder="RequiredElements" required/>
+                           value="{{ $to.RequiredElements }}" placeholder="目標達成のために必要なこと" required/>
                 </div>
             </div>
             <div>
                 <div class="underline">
                     <input type="text" name="specific_goal_{{ $to.ID }}"
                            value="{{ $to.SpecificGoal}}"
-                           placeholder="SpecificGoal" required/>
+                           placeholder="具体的な目標" required/>
                 </div>
             </div>
             <div>
@@ -160,7 +160,7 @@
             <div>
                 <div class="underline">
                     <input type="date" name="limit_date_{{ $to.ID }}" value="{{ $to.LimitDate.Format "2006-01-02"}}"
-                           placeholder="LimitDate" required/>
+                           placeholder="期限" required/>
                 </div>
             </div>
             <div class="buttons">
