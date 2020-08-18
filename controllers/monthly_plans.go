@@ -16,15 +16,26 @@ func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
 	})
 }
 
-//// AddGenres...
-//func (h *Handler) AddGenre(c *gin.Context) {
-//	r := models.NewGenreRepository()
-//	r.GenreName, _ = c.GetPostForm("genre_name")
-//	r.Add(&r)
-//
-//	c.Redirect(http.StatusMovedPermanently, "/_genres")
-//}
-//
+// AddGenres...
+func (h *Handler) AddMonthlyPlans(c *gin.Context) {
+	r := models.NewMonthlyPlanRepository()
+	//r.GoalID, _ = c.GetPostForm("genre_name")
+	//UserID             int       `gorm:"not null" validate:"required,numeric"`
+	//GoalID             int       `gorm:"not null" validate:"required,numeric"`
+	//Month              time.Time `gorm:"not null" sql:"not null;type:date"`
+	//KeepInLastMonth    string
+	//ProblemInLastMonth string
+	//GoalAfterHalfYear  string
+	//GoalInThisMonth    string
+	//CurrentState       string
+	//DailyTodo          string
+
+
+	r.Add(&r)
+
+	c.Redirect(http.StatusMovedPermanently, "/_genres")
+}
+
 //// GetGenres...
 //func (h *Handler) GetGenre(c *gin.Context) {
 //	r := models.NewGenreRepository()

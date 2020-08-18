@@ -85,14 +85,14 @@ func Handler(dbConn *gorm.DB) {
 
 		// monthly_plans
 		r.GET("/_monthly_plans", handler.GetAllMonthlyPlans)
-		//rMonthlyPlan := r.Group("/monthly_plan")
-		//{
-			//rMonthlyPlan.POST("add", handler.AddGenre)
+		rMonthlyPlan := r.Group("/monthly_plan")
+		{
+			rMonthlyPlan.POST("add", handler.AddMonthlyPlans)
 			//rMonthlyPlan.GET("edit/:id", handler.GetGenre)
 			//rMonthlyPlan.POST("edit_ok/:id", handler.EditGenre)
 			//rMonthlyPlan.GET("delete/:id", handler.DeleteGenre)
 			//rMonthlyPlan.DELETE("delete/:id", handler.DeleteGenre)
-		//}
+		}
 
 		// daily kpt info
 		r.GET("/_daily_kpts", handler.GetAllDailyKpts)

@@ -11,14 +11,50 @@
 
 {{ template "header" }}
 
-<Marquee>🌵制作中🌵</Marquee>
-
 <form action="/monthly_plan/add" method="post">
     <div class="form-inner">
         <h2>Add Monthly Plan</h2>
+        <div>
+            <div class="underline">
+                <input type="date" name="Month" value="{{.MonthlyPlans.Month}}" placeholder="月" required/>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="KeepInLastMonth" placeholder="先月のKeep" required>{{.MonthlyPlans.KeepInLastMonth}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="ProblemInLastMonth" placeholder="先月のProblem" required>{{.MonthlyPlans.ProblemInLastMonth}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="GoalAfterHalfYear" placeholder="半年後の目標" required>{{.MonthlyPlans.GoalAfterHalfYear}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="GoalInThisMonth" placeholder="今月の目標" required>{{.MonthlyPlans.GoalInThisMonth}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="CurrentState" placeholder="現在の状態" required>{{.MonthlyPlans.CurrentState}}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="DailyTodo" placeholder="日々やること" required>{{.MonthlyPlans.DailyTodo}}</textarea>
+            </div>
+        </div>
         <div class="buttons">
             <div>
-                <button type="submit" tabindex="14">Let's Go!</button>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Add Monthly Plan</button>
             </div>
         </div>
     </div>
@@ -27,7 +63,6 @@
 <table>
     <tr>
         <th>UserID</th>
-        <th>GoalID</th>
         <th>Month</th>
         <th>先月のKeep</th>
         <th>先月のプロブレム</th>
@@ -41,7 +76,6 @@
     {{ range .monthlyPlans }}
         <tr>
             <td>{{ .UserID }}</td>
-            <td>{{ .GoalID }}</td>
             <td>{{ .Month }}</td>
             <td>{{ .KeepInLastMonth }}</td>
             <td>{{ .ProblemInLastMonth }}</td>
@@ -53,7 +87,9 @@
                 <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>
             </td>
             <td>
-                <button formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>
+                <button formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">
+                    Delete
+                </button>
             </td>
         </tr>
     {{end}}

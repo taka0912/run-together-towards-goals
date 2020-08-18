@@ -1,12 +1,12 @@
 version: "3"
 services:
   mysql:
+    hostname: mysql
     container_name: r2g-db
     restart: always
     build:
       context: .
       dockerfile: ./docker/db/Dockerfile
-    hostname: mysql
     ports:
       - "3306:3306"
     environment:
