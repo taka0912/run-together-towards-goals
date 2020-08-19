@@ -18,6 +18,7 @@ func Init() *gorm.DB {
 		&models.Genre{},
 		&models.KptReactionHistory{},
 		&models.TodoList{},
+		&models.MonthlyPlan{},
 	)
 
 	r := models.NewGenreRepository()

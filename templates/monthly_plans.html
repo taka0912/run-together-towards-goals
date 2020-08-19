@@ -16,37 +16,37 @@
         <h2>Add Monthly Plan</h2>
         <div>
             <div class="underline">
-                <input type="date" name="Month" value="{{.MonthlyPlans.Month}}" placeholder="月" required/>
+                <input type="month" name="Month" min="2020-01" max="2022-12" required>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="KeepInLastMonth" placeholder="先月のKeep" required>{{.MonthlyPlans.KeepInLastMonth}}</textarea>
+                <textarea rows="3" name="KeepInLastMonth" placeholder="先月のKeep" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="ProblemInLastMonth" placeholder="先月のProblem" required>{{.MonthlyPlans.ProblemInLastMonth}}</textarea>
+                <textarea rows="3" name="ProblemInLastMonth" placeholder="先月のProblem" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="GoalAfterHalfYear" placeholder="半年後の目標" required>{{.MonthlyPlans.GoalAfterHalfYear}}</textarea>
+                <textarea rows="3" name="GoalAfterHalfYear" placeholder="半年後の目標" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="GoalInThisMonth" placeholder="今月の目標" required>{{.MonthlyPlans.GoalInThisMonth}}</textarea>
+                <textarea rows="3" name="GoalInThisMonth" placeholder="今月の目標" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="CurrentState" placeholder="現在の状態" required>{{.MonthlyPlans.CurrentState}}</textarea>
+                <textarea rows="3" name="CurrentState" placeholder="現在の状態" required></textarea>
             </div>
         </div>
         <div>
             <div class="underline">
-                <textarea rows="3" name="DailyTodo" placeholder="日々やること" required>{{.MonthlyPlans.DailyTodo}}</textarea>
+                <textarea rows="3" name="DailyTodo" placeholder="日々やること" required></textarea>
             </div>
         </div>
         <div class="buttons">
@@ -76,7 +76,7 @@
     {{ range .monthlyPlans }}
         <tr>
             <td>{{ .UserID }}</td>
-            <td>{{ .Month }}</td>
+            <td>{{ .Month.Format "2006-01" }}</td>
             <td>{{ .KeepInLastMonth }}</td>
             <td>{{ .ProblemInLastMonth }}</td>
             <td>{{ .GoalAfterHalfYear }}</td>
