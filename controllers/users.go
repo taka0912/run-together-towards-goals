@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// GetAllUsers...
+// GetAllUsers ...
 func (h *Handler) GetAllUsers(c *gin.Context) {
 	r := models.NewUserRepository()
 	users := r.GetAll()
@@ -21,7 +21,7 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 	})
 }
 
-// AddUsers...
+// AddUser ...
 func (h *Handler) AddUser(c *gin.Context) {
 	r := models.NewUserRepository()
 
@@ -40,7 +40,7 @@ func (h *Handler) AddUser(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
-// GetUsers...
+// GetUser ...
 func (h *Handler) GetUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	rg := models.NewGenreRepository()
@@ -57,7 +57,7 @@ func (h *Handler) GetUser(c *gin.Context) {
 	})
 }
 
-// EditUsers...
+// EditUser ...
 func (h *Handler) EditUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -83,7 +83,7 @@ func (h *Handler) EditUser(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
-// DeleteUsers...
+// DeleteUser ...
 func (h *Handler) DeleteUser(c *gin.Context) {
 	r := models.NewUserRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -91,7 +91,7 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_users")
 }
 
-// LoginUser...
+// LoginUser ...
 func LoginUser(c *gin.Context) (models.User, string) {
 	nickname, _ := c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
@@ -107,7 +107,7 @@ func LoginUser(c *gin.Context) (models.User, string) {
 	return user, ""
 }
 
-// NewRegistration...
+// NewRegistration ...
 func NewRegistration(c *gin.Context) {
 	r := models.NewUserRepository()
 	r.Nickname, _ = c.GetPostForm("nickname")
@@ -128,23 +128,23 @@ func NewRegistration(c *gin.Context) {
 	})
 }
 
-// GetUsers...
+// GetMyPage ...
 func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
-	loginUserID, _ := GetLoginUserId(c)
+	loginUserID, _ := GetloginUserID(c)
 	user := r.GetAllInfo(loginUserID)
 
 	rg := models.NewGenreRepository()
 	genres := rg.GetAll()
 
 	c.HTML(http.StatusOK, "my_page.html", gin.H{
-		"user":   &user,
+		"user":   user,
 		"genres": genres,
 	})
 }
 
-// EditMyPage...
+// EditMyPage ...
 func (h *Handler) EditMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 	user := r.GetLoginUser(sessions.Default(c).Get("UserId"))
@@ -179,7 +179,7 @@ func (h *Handler) EditMyPage(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// EditGoal...
+// EditGoal ...
 func (h *Handler) EditGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -187,8 +187,8 @@ func (h *Handler) EditGoal(c *gin.Context) {
 
 	tail := "_" + c.Param("id")
 
-	genreId, _ := c.GetPostForm("genre_id" + tail)
-	goal.GenreID, _ = strconv.Atoi(genreId)
+	genreID, _ := c.GetPostForm("genre_id" + tail)
+	goal.GenreID, _ = strconv.Atoi(genreID)
 	goal.GoalName, _ = c.GetPostForm("goal_name" + tail)
 	displayFlag, _ := c.GetPostForm("display_flag" + tail)
 	goal.DisplayFlag, _ = strconv.Atoi(displayFlag)
@@ -197,7 +197,7 @@ func (h *Handler) EditGoal(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// DeleteGoal...
+// DeleteGoal ...
 func (h *Handler) DeleteGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -205,7 +205,7 @@ func (h *Handler) DeleteGoal(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// EditTodo...
+// EditTodo ...
 func (h *Handler) EditTodo(c *gin.Context) {
 	r := models.NewTodoListRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -222,7 +222,7 @@ func (h *Handler) EditTodo(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// DeleteTodo...
+// DeleteTodo ...
 func (h *Handler) DeleteTodo(c *gin.Context) {
 	r := models.NewTodoListRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -230,25 +230,25 @@ func (h *Handler) DeleteTodo(c *gin.Context) {
 	h.GetMyPage(c)
 }
 
-// AddGoal...
+// AddGoal ...
 func (h *Handler) AddGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 
-	r.UserID, _ = GetLoginUserId(c)
-	genreId, _ := c.GetPostForm("genre_id")
-	r.GenreID, _ = strconv.Atoi(genreId)
+	r.UserID, _ = GetloginUserID(c)
+	genreID, _ := c.GetPostForm("genre_id")
+	r.GenreID, _ = strconv.Atoi(genreID)
 	r.GoalName, _ = c.GetPostForm("goal_name")
 
 	r.Add(&r)
 	h.GetMyPage(c)
 }
 
-// AddTodo...
+// AddTodo ...
 func (h *Handler) AddTodo(c *gin.Context) {
 	r := models.NewTodoListRepository()
 
-	goalId, _ := c.GetPostForm("goal_id")
-	r.GoalID, _ = strconv.Atoi(goalId)
+	goalID, _ := c.GetPostForm("goal_id")
+	r.GoalID, _ = strconv.Atoi(goalID)
 	r.RequiredElements, _ = c.GetPostForm("required_elements")
 	r.Todo, _ = c.GetPostForm("todo")
 	r.SpecificGoal, _ = c.GetPostForm("specific_goal")

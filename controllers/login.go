@@ -11,13 +11,15 @@ import (
 	"github.com/hariNEzuMI928/run-together-towards-goals/slack"
 )
 
+// SessionInfo ...
 type SessionInfo struct {
-	UserId interface{}
+	UserID interface{}
 }
 
+// LoginInfo ...
 var LoginInfo SessionInfo
 
-// Login...
+// Login ...
 func Login(c *gin.Context) {
 	user, err := LoginUser(c)
 
@@ -28,12 +30,12 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	UserId := user.ID
+	UserID := user.ID
 	UserNickname := user.Nickname
 
 	//セッションにデータを格納する
 	session := sessions.Default(c)
-	session.Set("UserId", UserId)
+	session.Set("UserId", UserID)
 	session.Set("UserNickname", UserNickname)
 	session.Save()
 
@@ -42,14 +44,14 @@ func Login(c *gin.Context) {
 	})
 }
 
-// Logout...
+// Logout ...
 func Logout(c *gin.Context) {
 	//セッションからデータを破棄する
 	session := sessions.Default(c)
 
 	session.Clear()
 	session.Save()
-	LoginInfo.UserId = session.Get("UserId")
+	LoginInfo.UserID = session.Get("UserId")
 
 	log.Println("ログアウト")
 
@@ -58,16 +60,16 @@ func Logout(c *gin.Context) {
 	})
 }
 
-// SessionCheck...
+// SessionCheck ...
 func SessionCheck(c *gin.Context) {
 	session := sessions.Default(c)
-	LoginInfo.UserId = session.Get("UserId")
+	LoginInfo.UserID = session.Get("UserId")
 
 	if strings.HasPrefix(c.Request.RequestURI, "/api") {
 		c.Next()
 		return
 	} else {
-		if LoginInfo.UserId == nil {
+		if LoginInfo.UserID == nil {
 			c.HTML(http.StatusUnauthorized, "login.html", gin.H{
 				"err": "Unauthorized",
 			})
@@ -78,19 +80,20 @@ func SessionCheck(c *gin.Context) {
 	}
 }
 
-// GetLoginUser...
-func GetLoginUserId(c *gin.Context) (int, error) {
+// GetloginUserID ...
+func GetloginUserID(c *gin.Context) (int, error) {
 	ru := models.NewUserRepository()
 	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	userId := int(user.ID)
-	if userId == 0 {
+	userID := int(user.ID)
+	if userID == 0 {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
-	return userId, nil
+	return userID, nil
 }
 
-func ForgotPassword(c *gin.Context)  {
+// ForgotPassword ...
+func ForgotPassword(c *gin.Context) {
 	nickname, _ := c.GetPostForm("nickname")
 	slack.NoticeForgotPass(nickname)
 	c.HTML(http.StatusOK, "login.html", gin.H{

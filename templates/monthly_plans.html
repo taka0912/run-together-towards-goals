@@ -16,6 +16,16 @@
         <h2>Add Monthly Plan</h2>
         <div>
             <div class="underline">
+                <select name="GoalID" required>
+                    {{ range $j, $go := $.goals }}
+                    <option value="{{ $go.ID }}"> {{ $go.GoalName }}
+                    </option>
+                    {{ end }}
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
                 <input type="month" name="Month" min="2020-01" max="2022-12" required>
             </div>
         </div>
@@ -62,7 +72,7 @@
 
 <table>
     <tr>
-        <th>UserID</th>
+        <th>ニックネーム</th>
         <th>Month</th>
         <th>先月のKeep</th>
         <th>先月のプロブレム</th>
@@ -75,7 +85,7 @@
     </tr>
     {{ range .monthlyPlans }}
         <tr>
-            <td>{{ .UserID }}</td>
+            <td>{{ .Nickname }}</td>
             <td>{{ .Month.Format "2006-01" }}</td>
             <td>{{ .KeepInLastMonth }}</td>
             <td>{{ .ProblemInLastMonth }}</td>
@@ -97,4 +107,3 @@
 
 </body>
 </html>
-

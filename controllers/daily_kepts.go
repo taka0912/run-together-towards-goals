@@ -20,13 +20,13 @@ func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 
 // AddDailyKpt...
 func (h *Handler) AddDailyKpt(c *gin.Context) {
-	loginUserId, err := GetLoginUserId(c)
+	loginUserID, err := GetloginUserID(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
 	r := models.NewDailyKptRepository()
-	r.UserID = loginUserId
+	r.UserID = loginUserID
 	r.Keep, _ = c.GetPostForm("keep")
 	r.Problem, _ = c.GetPostForm("problem")
 	r.Try, _ = c.GetPostForm("try")
@@ -43,13 +43,13 @@ func (h *Handler) IncreaseGood(c *gin.Context) {
 	dailyKpt.Good += 1
 	r.Edit(dailyKpt)
 
-	loginUserId, err := GetLoginUserId(c)
+	loginUserID, err := GetloginUserID(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
 	rah := models.NewKptReactionHistoryRepository()
-	rah.AddReaction(int(dailyKpt.ID), loginUserId, models.ReactionGood)
+	rah.AddReaction(int(dailyKpt.ID), loginUserID, models.ReactionGood)
 
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
@@ -62,13 +62,13 @@ func (h *Handler) IncreaseFight(c *gin.Context) {
 	dailyKpt.Fight += 1
 	r.Edit(dailyKpt)
 
-	loginUserId, err := GetLoginUserId(c)
+	loginUserID, err := GetloginUserID(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
 	rah := models.NewKptReactionHistoryRepository()
-	rah.AddReaction(int(dailyKpt.ID), loginUserId, models.ReactionFight)
+	rah.AddReaction(int(dailyKpt.ID), loginUserID, models.ReactionFight)
 
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Goal ...
 type Goal struct {
 	gorm.Model
 	UserID      int    `gorm:"not null"`
@@ -15,30 +16,32 @@ type Goal struct {
 }
 
 const (
-	DisplayFlagFalse = iota // 0：非表示
-	DisplayFlagTrue         // 1：表示
+	// DisplayFlagFalse ... 0：非表示
+	DisplayFlagFalse = iota
+	// DisplayFlagTrue ... 1：表示
+	DisplayFlagTrue
 )
 
-// NewGoalRepository...
+// NewGoalRepository ...
 func NewGoalRepository() Goal {
 	return Goal{}
 }
 
-// DB追加
+// Add ...
 func (o *Goal) Add(goal *Goal) {
 	db := Open()
 	db.Create(goal)
 	defer db.Close()
 }
 
-// DB更新
+// Edit ...
 func (o *Goal) Edit(goal Goal) {
 	db := Open()
 	db.Save(goal)
 	db.Close()
 }
 
-// DB全取得
+// GetAll ...
 func (o *Goal) GetAll() []Goal {
 	db := Open()
 	var goals []Goal
@@ -47,7 +50,7 @@ func (o *Goal) GetAll() []Goal {
 	return goals
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *Goal) GetOne(id int) Goal {
 	db := Open()
 	var goal Goal
@@ -56,7 +59,7 @@ func (o *Goal) GetOne(id int) Goal {
 	return goal
 }
 
-// DB削除
+// Delete ...
 func (o *Goal) Delete(id int) {
 	db := Open()
 	var goal Goal
@@ -65,11 +68,20 @@ func (o *Goal) Delete(id int) {
 	db.Close()
 }
 
-// Count...
+// Count ...
 func (o *Goal) Count() int {
 	db := Open()
 	var count = 0
 	db.Table("goals").Count(&count)
 	db.Close()
 	return count
+}
+
+// GetByUserID ...
+func (o *Goal) GetByUserID(id int) []Goal {
+	db := Open()
+	var goals []Goal
+	db.Where("user_id = ?", id).Find(&goals)
+	db.Close()
+	return goals
 }

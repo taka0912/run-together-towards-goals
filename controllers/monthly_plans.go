@@ -1,30 +1,39 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
 
-// GetGenres...
+// GetAllMonthlyPlans ...
 func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
 	r := models.NewMonthlyPlanRepository()
 	monthlyPlans := r.GetAll()
 
-	c.HTML(http.StatusOK, "monthly_plans.html", gin.H{
-		"monthlyPlans": monthlyPlans,
-	})
-}
-
-// AddGenres...
-func (h *Handler) AddMonthlyPlans(c *gin.Context) {
-	r := models.NewMonthlyPlanRepository()
-	loginUserId, err := GetLoginUserId(c)
+	loginUserID, err := GetloginUserID(c)
 	if err != nil {
 		c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
-	r.UserID = loginUserId
+	rg := models.NewGoalRepository()
+	goals := rg.GetByUserID(loginUserID)
+
+	c.HTML(http.StatusOK, "monthly_plans.html", gin.H{
+		"monthlyPlans": monthlyPlans,
+		"goals":        goals,
+	})
+}
+
+// AddMonthlyPlans ...
+func (h *Handler) AddMonthlyPlans(c *gin.Context) {
+	r := models.NewMonthlyPlanRepository()
+	loginUserID, err := GetloginUserID(c)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/logout")
+	}
+	r.UserID = loginUserID
 	r.GoalID = 0
 	month, _ := c.GetPostForm("Month")
 	r.Month, _ = time.Parse("2006-01", month)
