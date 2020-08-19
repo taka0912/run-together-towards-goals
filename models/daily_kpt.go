@@ -1,10 +1,11 @@
 package models
 
 import (
+	"time"
+
 	"github.com/hariNEzuMI928/run-together-towards-goals/redis"
 	"github.com/jinzhu/gorm"
 	v "gopkg.in/go-playground/validator.v9"
-	"time"
 )
 
 // DailyKpt is
@@ -19,6 +20,7 @@ type DailyKpt struct {
 	IgnoreMe string `gorm:"-"`
 }
 
+// Results ...
 type Results struct {
 	ID        int
 	UserID    int
@@ -31,12 +33,12 @@ type Results struct {
 	Fight     int
 }
 
-// NewUser...
+// NewDailyKptRepository ...
 func NewDailyKptRepository() DailyKpt {
 	return DailyKpt{}
 }
 
-// DB追加
+// Add ...
 func (o *DailyKpt) Add(dailyKpt *DailyKpt) string {
 	validate := v.New()
 	err := validate.Struct(dailyKpt)
@@ -55,7 +57,7 @@ func (o *DailyKpt) Add(dailyKpt *DailyKpt) string {
 	return ""
 }
 
-// DB更新
+// Edit ...
 func (o *DailyKpt) Edit(dailyKpt DailyKpt) {
 	db := Open()
 	dailyKpt.UpdatedAt = time.Now()
@@ -63,7 +65,7 @@ func (o *DailyKpt) Edit(dailyKpt DailyKpt) {
 	db.Close()
 }
 
-// DB全取得
+// GetAll ...
 func (o *DailyKpt) GetAll() []Results {
 	db := Open()
 	var results []Results
@@ -78,7 +80,7 @@ func (o *DailyKpt) GetAll() []Results {
 	return results
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *DailyKpt) GetOne(id int) DailyKpt {
 	db := Open()
 	var dailyKpt DailyKpt
@@ -87,7 +89,7 @@ func (o *DailyKpt) GetOne(id int) DailyKpt {
 	return dailyKpt
 }
 
-// DB削除
+// Delete ...
 func (o *DailyKpt) Delete(id int) {
 	db := Open()
 	var dailyKpt DailyKpt
@@ -96,7 +98,7 @@ func (o *DailyKpt) Delete(id int) {
 	db.Close()
 }
 
-// Count...
+// Count ...
 func (o *DailyKpt) Count() int {
 	db := Open()
 	var count = 0

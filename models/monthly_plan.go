@@ -1,10 +1,12 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
+// MonthlyPlan ...
 type MonthlyPlan struct {
 	gorm.Model
 	UserID             int       `gorm:"not null" validate:"required,numeric"`
@@ -18,35 +20,55 @@ type MonthlyPlan struct {
 	DailyTodo          string
 }
 
-// NewMonthlyPlanRepository...
+// MonthlyPlans ...
+type MonthlyPlans struct {
+	gorm.Model
+	UserID             int
+	Nickname           string
+	GoalID             int
+	Month              time.Time
+	KeepInLastMonth    string
+	ProblemInLastMonth string
+	GoalAfterHalfYear  string
+	GoalInThisMonth    string
+	CurrentState       string
+	DailyTodo          string
+}
+
+// NewMonthlyPlanRepository ...
 func NewMonthlyPlanRepository() MonthlyPlan {
 	return MonthlyPlan{}
 }
 
-// DB追加
+// Add ...
 func (o *MonthlyPlan) Add(monthlyPlan *MonthlyPlan) {
 	db := Open()
 	db.Create(monthlyPlan)
 	defer db.Close()
 }
 
-// DB更新
+// Edit ...
 func (o *MonthlyPlan) Edit(monthlyPlan MonthlyPlan) {
 	db := Open()
 	db.Save(monthlyPlan)
 	db.Close()
 }
 
-// DB全取得
-func (o *MonthlyPlan) GetAll() []MonthlyPlan {
+// GetAll ...
+func (o *MonthlyPlan) GetAll() []MonthlyPlans {
 	db := Open()
-	var monthlyPlans []MonthlyPlan
-	db.Find(&monthlyPlans)
+	var monthlyPlans []MonthlyPlans
+	db.Table("monthly_plans").
+		Select("monthly_plans.*, users.nickname").
+		Joins("inner JOIN users ON monthly_plans.user_id = users.id").
+		Where("monthly_plans.deleted_at is null").
+		Order("monthly_plans.id").
+		Find(&monthlyPlans)
 	db.Close()
 	return monthlyPlans
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *MonthlyPlan) GetOne(id int) MonthlyPlan {
 	db := Open()
 	var monthlyPlan MonthlyPlan
@@ -55,7 +77,7 @@ func (o *MonthlyPlan) GetOne(id int) MonthlyPlan {
 	return monthlyPlan
 }
 
-// DB削除
+// Delete ...
 func (o *MonthlyPlan) Delete(id int) {
 	db := Open()
 	var monthlyPlan MonthlyPlan
@@ -64,7 +86,7 @@ func (o *MonthlyPlan) Delete(id int) {
 	db.Close()
 }
 
-// Count...
+// Count ...
 func (o *MonthlyPlan) Count() int {
 	db := Open()
 	var count = 0

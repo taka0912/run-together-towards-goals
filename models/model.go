@@ -2,13 +2,16 @@ package models
 
 import (
 	"fmt"
+	// 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	// 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"net/url"
 	"os"
 )
 
+// Open ...
 func Open() *gorm.DB {
 	driver := "mysql"
 	var dataSource string

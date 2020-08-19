@@ -1,10 +1,12 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
+// TodoList ...
 type TodoList struct {
 	gorm.Model
 	GoalID           int       `gorm:"not null"`
@@ -15,19 +17,19 @@ type TodoList struct {
 	IgnoreMe         string    `gorm:"-"`
 }
 
-// NewTodoListRepository...
+// NewTodoListRepository ...
 func NewTodoListRepository() TodoList {
 	return TodoList{}
 }
 
-// DB追加
+// Add ...
 func (o *TodoList) Add(todoList *TodoList) {
 	db := Open()
 	db.Create(todoList)
 	defer db.Close()
 }
 
-// DB更新
+// Edit ...
 func (o *TodoList) Edit(todoList TodoList) {
 	db := Open()
 	todoList.UpdatedAt = time.Now()
@@ -35,7 +37,7 @@ func (o *TodoList) Edit(todoList TodoList) {
 	db.Close()
 }
 
-// DB全取得
+// GetAll ...
 func (o *TodoList) GetAll() []TodoList {
 	db := Open()
 	var todoLists []TodoList
@@ -44,7 +46,7 @@ func (o *TodoList) GetAll() []TodoList {
 	return todoLists
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *TodoList) GetOne(id int) TodoList {
 	db := Open()
 	var todoList TodoList
@@ -53,7 +55,7 @@ func (o *TodoList) GetOne(id int) TodoList {
 	return todoList
 }
 
-// DB削除
+// Delete ...
 func (o *TodoList) Delete(id int) {
 	db := Open()
 	var todoList TodoList
@@ -62,7 +64,7 @@ func (o *TodoList) Delete(id int) {
 	db.Close()
 }
 
-// Count...
+// Count ...
 func (o *TodoList) Count() int {
 	db := Open()
 	var count = 0

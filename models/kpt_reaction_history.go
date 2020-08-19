@@ -1,49 +1,54 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
+// KptReactionHistory ...
 type KptReactionHistory struct {
 	gorm.Model
-	KptId      int     `gorm:"not null"`
-	UserId     int     `gorm:"not null"`
-	Reaction   int     `gorm:"not null"`
-	IgnoreMe   string  `gorm:"-"`
+	KptID    int    `gorm:"not null"`
+	UserID   int    `gorm:"not null"`
+	Reaction int    `gorm:"not null"`
+	IgnoreMe string `gorm:"-"`
 }
 
 const (
+	// ReactionOthers ...
 	ReactionOthers = iota
+	// ReactionGood ...
 	ReactionGood
+	// ReactionFight ...
 	ReactionFight
 )
 
-// NewKptReactionHistoryRepository...
+// NewKptReactionHistoryRepository ...
 func NewKptReactionHistoryRepository() KptReactionHistory {
 	return KptReactionHistory{}
 }
 
-// DB追加
+// Add ...
 func (o *KptReactionHistory) Add(kptReactionHistory *KptReactionHistory) {
 	db := Open()
 	db.Create(kptReactionHistory)
 	defer db.Close()
 }
 
-// DB追加
-func (o *KptReactionHistory) AddReaction(kptId int, userId int, reaction int) {
+// AddReaction ...
+func (o *KptReactionHistory) AddReaction(kptID int, userID int, reaction int) {
 	db := Open()
 	newReaction := NewKptReactionHistoryRepository()
-	newReaction.KptId    = kptId
-	newReaction.UserId   = userId
+	newReaction.KptID = kptID
+	newReaction.UserID = userID
 	newReaction.Reaction = reaction
 
 	db.Create(&newReaction)
 	defer db.Close()
 }
 
-// DB更新
+// Edit ...
 func (o *KptReactionHistory) Edit(kptReactionHistory KptReactionHistory) {
 	db := Open()
 	db.Save(kptReactionHistory)
@@ -51,7 +56,7 @@ func (o *KptReactionHistory) Edit(kptReactionHistory KptReactionHistory) {
 	db.Close()
 }
 
-// DB全取得
+// GetAll ...
 func (o *KptReactionHistory) GetAll() []KptReactionHistory {
 	db := Open()
 	var kptReactionHistorys []KptReactionHistory
@@ -60,7 +65,7 @@ func (o *KptReactionHistory) GetAll() []KptReactionHistory {
 	return kptReactionHistorys
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *KptReactionHistory) GetOne(id int) KptReactionHistory {
 	db := Open()
 	var kptReactionHistory KptReactionHistory
@@ -69,7 +74,7 @@ func (o *KptReactionHistory) GetOne(id int) KptReactionHistory {
 	return kptReactionHistory
 }
 
-// DB削除
+// Delete ...
 func (o *KptReactionHistory) Delete(id int) {
 	db := Open()
 	var kptReactionHistory KptReactionHistory
@@ -77,5 +82,3 @@ func (o *KptReactionHistory) Delete(id int) {
 	db.Delete(&kptReactionHistory)
 	db.Close()
 }
-
-

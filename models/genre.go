@@ -1,29 +1,31 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
+// Genre ...
 type Genre struct {
 	gorm.Model
-	GenreName    string  `gorm:"not null"`
-	IgnoreMe     string  `gorm:"-"`
+	GenreName string `gorm:"not null"`
+	IgnoreMe  string `gorm:"-"`
 }
 
-// NewGenreRepository...
+// NewGenreRepository ...
 func NewGenreRepository() Genre {
 	return Genre{}
 }
 
-// DB追加
+// Add ...
 func (o *Genre) Add(genre *Genre) {
 	db := Open()
 	db.Create(genre)
 	defer db.Close()
 }
 
-// DB更新
+// Edit ...
 func (o *Genre) Edit(genre Genre) {
 	db := Open()
 	genre.UpdatedAt = time.Now()
@@ -31,7 +33,7 @@ func (o *Genre) Edit(genre Genre) {
 	db.Close()
 }
 
-// DB全取得
+// GetAll ...
 func (o *Genre) GetAll() []Genre {
 	db := Open()
 	var genres []Genre
@@ -40,7 +42,7 @@ func (o *Genre) GetAll() []Genre {
 	return genres
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *Genre) GetOne(id int) Genre {
 	db := Open()
 	var genre Genre
@@ -49,7 +51,7 @@ func (o *Genre) GetOne(id int) Genre {
 	return genre
 }
 
-// DB削除
+// Delete ...
 func (o *Genre) Delete(id int) {
 	db := Open()
 	var genre Genre
@@ -58,7 +60,7 @@ func (o *Genre) Delete(id int) {
 	db.Close()
 }
 
-// Migration
+// GenreMigration ...
 func (o *Genre) GenreMigration() {
 	db := Open()
 	r := NewGenreRepository()

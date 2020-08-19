@@ -1,17 +1,21 @@
 package models
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 	v "gopkg.in/go-playground/validator.v9"
-	"time"
 )
 
 const (
+	// PublicUser ...
 	PublicUser = iota
+	// AdminUser ...
 	AdminUser
 )
 
+// User ...
 type User struct {
 	gorm.Model
 	Nickname       string `validate:"required,gt=1"`
@@ -29,12 +33,12 @@ type User struct {
 	Goals          []Goal
 }
 
-// NewUser...
+// NewUserRepository ...
 func NewUserRepository() User {
 	return User{}
 }
 
-// DB追加
+// Add ...
 // TODO：Addの引数は要らない。r.Add()だけで良い
 func (o *User) Add(user *User) []string {
 	db := Open()
@@ -52,7 +56,7 @@ func (o *User) Add(user *User) []string {
 	return nil
 }
 
-// DB更新
+// Edit ...
 func (o *User) Edit(user User) []string {
 	db := Open()
 
@@ -67,7 +71,7 @@ func (o *User) Edit(user User) []string {
 	return nil
 }
 
-// DB全取得
+// GetAll ...
 func (o *User) GetAll() []User {
 	db := Open()
 	var users []User
@@ -76,7 +80,7 @@ func (o *User) GetAll() []User {
 	return users
 }
 
-// DB一つ取得
+// GetOne ...
 func (o *User) GetOne(id int) User {
 	db := Open()
 	var user User
@@ -85,7 +89,7 @@ func (o *User) GetOne(id int) User {
 	return user
 }
 
-// DB一つ取得
+// GetAllInfo ...
 func (o *User) GetAllInfo(id int) User {
 	db := Open()
 	var user User
@@ -94,7 +98,7 @@ func (o *User) GetAllInfo(id int) User {
 	return user
 }
 
-// GetByName...
+// GetByName ...
 func (o *User) GetByName(nickname string) (User, string) {
 	db := Open()
 	var user User
@@ -106,7 +110,7 @@ func (o *User) GetByName(nickname string) (User, string) {
 	return user, ""
 }
 
-// DB削除
+// Delete ...
 func (o *User) Delete(id int) {
 	db := Open()
 	var user User
@@ -115,7 +119,7 @@ func (o *User) Delete(id int) {
 	db.Close()
 }
 
-// Count...
+// Count ...
 func (o *User) Count() int {
 	db := Open()
 	var count = 0
@@ -124,7 +128,7 @@ func (o *User) Count() int {
 	return count
 }
 
-// GetLoginUser
+// GetLoginUser ...
 func (o *User) GetLoginUser(id interface{}) User {
 	db := Open()
 	var user User
