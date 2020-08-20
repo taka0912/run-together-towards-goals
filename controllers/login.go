@@ -22,7 +22,6 @@ var LoginInfo SessionInfo
 // Login ...
 func Login(c *gin.Context) {
 	user, err := LoginUser(c)
-
 	if err != "" {
 		c.HTML(http.StatusFound, "login.html", gin.H{
 			"err": err,
@@ -30,13 +29,10 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	UserID := user.ID
-	UserNickname := user.Nickname
-
 	//セッションにデータを格納する
 	session := sessions.Default(c)
-	session.Set("UserId", UserID)
-	session.Set("UserNickname", UserNickname)
+	session.Set("UserID", int(user.ID))
+	session.Set("UserNickname", user.Nickname)
 	session.Save()
 
 	c.HTML(http.StatusOK, "welcome.html", gin.H{
@@ -51,7 +47,6 @@ func Logout(c *gin.Context) {
 
 	session.Clear()
 	session.Save()
-	LoginInfo.UserID = session.Get("UserId")
 
 	log.Println("ログアウト")
 
@@ -63,7 +58,7 @@ func Logout(c *gin.Context) {
 // SessionCheck ...
 func SessionCheck(c *gin.Context) {
 	session := sessions.Default(c)
-	LoginInfo.UserID = session.Get("UserId")
+	LoginInfo.UserID = session.Get("UserID")
 
 	if strings.HasPrefix(c.Request.RequestURI, "/api") {
 		c.Next()
@@ -80,16 +75,37 @@ func SessionCheck(c *gin.Context) {
 	}
 }
 
-// GetloginUserID ...
-func GetloginUserID(c *gin.Context) (int, error) {
-	ru := models.NewUserRepository()
-	user := ru.GetLoginUser(sessions.Default(c).Get("UserId"))
-	userID := int(user.ID)
-	if userID == 0 {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
+// GetLoginUser ...
+func GetLoginUser(c *gin.Context) models.User {
+	r := models.NewUserRepository()
+	user := r.GetLoginUser(sessions.Default(c).Get("UserID"))
+	if user.ID == 0 {
+		log.Println("cannot get GetLoginUser")
+		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
+			"err": "cannot get GetLoginUser",
+		})
+		c.Abort()
+	// c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
-	return userID, nil
+	return user
+}
+
+// GetLoginUserID ...
+func GetLoginUserID(c *gin.Context) int {
+	ru := models.NewUserRepository()
+	user := ru.GetLoginUser(sessions.Default(c).Get("UserID"))
+	userID := int(user.ID)
+	if userID == 0 {
+		log.Println("cannot get GetLoginUserID")
+		// c.Redirect(http.StatusMovedPermanently, "/logout")
+		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
+			"err": "cannot get GetLoginUserID",
+		})
+		c.Abort()
+	}
+
+	return userID
 }
 
 // ForgotPassword ...

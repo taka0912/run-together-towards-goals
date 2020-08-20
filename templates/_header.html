@@ -9,9 +9,14 @@
             <li>
                 <a href="/_users">Users <span class="caret"></span></a>
                 <div>
-                    <ul>
-                        <li><a href="/user/my_page">My Page</a></li>
-                    </ul>
+                    {{/*                    <ul>*/}}
+                    {{/*                        <li><a href="/user/my_page">My Page</a></li>*/}}
+                    {{/*                    </ul>*/}}
+                    <form>
+                        <div>
+                            <button formmethod="get" formaction="/user/my_page">My Page</button>
+                        </div>
+                    </form>
                 </div>
             </li>
             <li><a href="/_monthly_plans">Monthly Plan</a></li>

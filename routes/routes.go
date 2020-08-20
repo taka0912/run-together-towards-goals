@@ -116,10 +116,8 @@ func Handler(dbConn *gorm.DB) {
 		}
 
 		r.GET("/index", func(c *gin.Context) {
-			ur := models.NewUserRepository()
 			c.HTML(http.StatusOK, "welcome.html", gin.H{
-				"user":  ur.GetLoginUser(sessions.Default(c).Get("UserId")),
-				"title": "title",
+				"user":  controllers.GetLoginUser(c),
 			})
 		})
 

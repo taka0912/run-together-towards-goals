@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 	"golang.org/x/crypto/bcrypt"
@@ -47,7 +46,7 @@ func (h *Handler) GetUser(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 	user := r.GetAllInfo(id)
-	loginUser := r.GetLoginUser(sessions.Default(c).Get("UserId"))
+	loginUser := GetLoginUser(c)
 
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":      user,
@@ -114,8 +113,8 @@ func NewRegistration(c *gin.Context) {
 	r.Password, _ = c.GetPostForm("password")
 	role, _ := c.GetPostForm("role")
 	r.Role, _ = strconv.Atoi(role)
-	err := r.Add(&r)
 
+	err := r.Add(&r)
 	if err != nil {
 		c.HTML(http.StatusMovedPermanently, "registration.html", gin.H{
 			"err": err,
@@ -132,7 +131,7 @@ func NewRegistration(c *gin.Context) {
 func (h *Handler) GetMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
 
-	loginUserID, _ := GetloginUserID(c)
+	loginUserID := GetLoginUserID(c)
 	user := r.GetAllInfo(loginUserID)
 
 	rg := models.NewGenreRepository()
@@ -147,7 +146,7 @@ func (h *Handler) GetMyPage(c *gin.Context) {
 // EditMyPage ...
 func (h *Handler) EditMyPage(c *gin.Context) {
 	r := models.NewUserRepository()
-	user := r.GetLoginUser(sessions.Default(c).Get("UserId"))
+	user := GetLoginUser(c)
 
 	user.Nickname, _ = c.GetPostForm("nickname")
 	password, _ := c.GetPostForm("password")
@@ -234,7 +233,7 @@ func (h *Handler) DeleteTodo(c *gin.Context) {
 func (h *Handler) AddGoal(c *gin.Context) {
 	r := models.NewGoalRepository()
 
-	r.UserID, _ = GetloginUserID(c)
+	r.UserID = GetLoginUserID(c)
 	genreID, _ := c.GetPostForm("genre_id")
 	r.GenreID, _ = strconv.Atoi(genreID)
 	r.GoalName, _ = c.GetPostForm("goal_name")

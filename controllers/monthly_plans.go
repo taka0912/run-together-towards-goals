@@ -13,10 +13,8 @@ func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
 	r := models.NewMonthlyPlanRepository()
 	monthlyPlans := r.GetAll()
 
-	loginUserID, err := GetloginUserID(c)
-	if err != nil {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
-	}
+	loginUserID := GetLoginUserID(c)
+
 	rg := models.NewGoalRepository()
 	goals := rg.GetByUserID(loginUserID)
 
@@ -29,10 +27,8 @@ func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
 // AddMonthlyPlans ...
 func (h *Handler) AddMonthlyPlans(c *gin.Context) {
 	r := models.NewMonthlyPlanRepository()
-	loginUserID, err := GetloginUserID(c)
-	if err != nil {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
-	}
+	loginUserID := GetLoginUserID(c)
+
 	r.UserID = loginUserID
 	r.GoalID = 0
 	month, _ := c.GetPostForm("Month")

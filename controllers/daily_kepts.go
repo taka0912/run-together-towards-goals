@@ -8,7 +8,7 @@ import (
 	"github.com/hariNEzuMI928/run-together-towards-goals/models"
 )
 
-// GetAllDailyKpts...
+// GetAllDailyKpts ...
 func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	dailyKpts := r.GetAll()
@@ -18,12 +18,9 @@ func (h *Handler) GetAllDailyKpts(c *gin.Context) {
 	})
 }
 
-// AddDailyKpt...
+// AddDailyKpt ...
 func (h *Handler) AddDailyKpt(c *gin.Context) {
-	loginUserID, err := GetloginUserID(c)
-	if err != nil {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
-	}
+	loginUserID := GetLoginUserID(c)
 
 	r := models.NewDailyKptRepository()
 	r.UserID = loginUserID
@@ -35,18 +32,15 @@ func (h *Handler) AddDailyKpt(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
-// IncreaseGood...
+// IncreaseGood ...
 func (h *Handler) IncreaseGood(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	dailyKpt := r.GetOne(id)
-	dailyKpt.Good += 1
+	dailyKpt.Good++
 	r.Edit(dailyKpt)
 
-	loginUserID, err := GetloginUserID(c)
-	if err != nil {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
-	}
+	loginUserID := GetLoginUserID(c)
 
 	rah := models.NewKptReactionHistoryRepository()
 	rah.AddReaction(int(dailyKpt.ID), loginUserID, models.ReactionGood)
@@ -54,18 +48,15 @@ func (h *Handler) IncreaseGood(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
-// IncreaseFight...
+// IncreaseFight ...
 func (h *Handler) IncreaseFight(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	dailyKpt := r.GetOne(id)
-	dailyKpt.Fight += 1
+	dailyKpt.Fight++
 	r.Edit(dailyKpt)
 
-	loginUserID, err := GetloginUserID(c)
-	if err != nil {
-		c.Redirect(http.StatusMovedPermanently, "/logout")
-	}
+	loginUserID := GetLoginUserID(c)
 
 	rah := models.NewKptReactionHistoryRepository()
 	rah.AddReaction(int(dailyKpt.ID), loginUserID, models.ReactionFight)
@@ -73,7 +64,7 @@ func (h *Handler) IncreaseFight(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_daily_kpts")
 }
 
-// DeleteDailyKpt...
+// DeleteDailyKpt ...
 func (h *Handler) DeleteDailyKpt(c *gin.Context) {
 	r := models.NewDailyKptRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
