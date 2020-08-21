@@ -33,6 +33,11 @@ type User struct {
 	Goals          []Goal
 }
 
+var (
+	user User
+	users []User
+)
+
 // NewUserRepository ...
 func NewUserRepository() User {
 	return User{}
@@ -42,6 +47,7 @@ func NewUserRepository() User {
 // TODO：Addの引数は要らない。r.Add()だけで良い
 func (o *User) Add(user *User) []string {
 	db := Open()
+	defer db.Close()
 
 	err := validateUser(user)
 	if err != nil {
@@ -52,13 +58,13 @@ func (o *User) Add(user *User) []string {
 	user.Password = string(password)
 
 	db.Create(user)
-	defer db.Close()
 	return nil
 }
 
 // Edit ...
 func (o *User) Edit(user User) []string {
 	db := Open()
+	defer db.Close()
 
 	err := validateUser(&user)
 	if err != nil {
@@ -67,43 +73,38 @@ func (o *User) Edit(user User) []string {
 	user.UpdatedAt = time.Now()
 
 	db.Save(user)
-	db.Close()
 	return nil
 }
 
 // GetAll ...
 func (o *User) GetAll() []User {
 	db := Open()
-	var users []User
+	defer db.Close()
 	db.Find(&users)
-	db.Close()
 	return users
 }
 
 // GetOne ...
 func (o *User) GetOne(id int) User {
 	db := Open()
-	var user User
+	defer db.Close()
 	db.First(&user, id)
-	db.Close()
 	return user
 }
 
 // GetAllInfo ...
 func (o *User) GetAllInfo(id int) User {
 	db := Open()
-	var user User
+	defer db.Close()
 	db.Preload("Goals").Preload("Goals.TodoLists").Find(&user, id)
-	db.Close()
 	return user
 }
 
 // GetByName ...
 func (o *User) GetByName(nickname string) (User, string) {
 	db := Open()
-	var user User
+	defer db.Close()
 	db.Where("nickname = ?", nickname).First(&user)
-	db.Close()
 	if user.ID == 0 {
 		return User{}, "Not found"
 	}
@@ -113,27 +114,25 @@ func (o *User) GetByName(nickname string) (User, string) {
 // Delete ...
 func (o *User) Delete(id int) {
 	db := Open()
-	var user User
+	defer db.Close()
 	db.First(&user, id)
 	db.Delete(&user)
-	db.Close()
 }
 
 // Count ...
 func (o *User) Count() int {
 	db := Open()
+	defer db.Close()
 	var count = 0
 	db.Table("users").Count(&count)
-	db.Close()
 	return count
 }
 
 // GetLoginUser ...
 func (o *User) GetLoginUser(id interface{}) User {
 	db := Open()
-	var user User
+	defer db.Close()
 	db.First(&user, id)
-	db.Close()
 	return user
 }
 
