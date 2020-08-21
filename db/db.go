@@ -20,6 +20,9 @@ func Init() *gorm.DB {
 		&models.TodoList{},
 		&models.MonthlyPlan{},
 	)
+	db.AutoMigrate(
+		&models.MonthlyPlan{},
+	)
 
 	r := models.NewGenreRepository()
 	r.GenreMigration()
