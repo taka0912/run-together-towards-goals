@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit MonthlyPlan</title>
+    <link href="../assets/css/from.css" rel="stylesheet">
+    <style type="text/css" media="screen">
+        @import url("/assets/css/menu.css");
+        @import url("/assets/css/from.css");
+    </style>
+
+</head>
+
+<body>
+{{ template "header" }}
+
+<form method="post" action="/monthly_plan/edit_ok/{{.monthlyPlan.ID}}">
+    <div class="form-inner">
+        <h2>Edit MonthlyPlan</h2>
+        <div>
+            <div class="underline">
+                <select name="GoalID" required>
+                    {{ range $i, $go := .goals }}
+                        <option value="{{ $go.ID }}" {{if eq $.monthlyPlan.GoalID $go.ID }} selected {{end}}> {{ $go.GoalName }}</option>
+                    {{ end }}
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <input type="month" name="Month" min="2020-01" max="2022-12" required
+                       value="{{ .monthlyPlan.Month.Format "2006-01" }}">
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="KeepInLastMonth" placeholder="先月のKeep"
+                          required>{{ .monthlyPlan.KeepInLastMonth }}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="ProblemInLastMonth" placeholder="先月のProblem"
+                          required>{{ .monthlyPlan.ProblemInLastMonth }}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="GoalAfterHalfYear" placeholder="半年後の目標"
+                          required>{{ .monthlyPlan.GoalAfterHalfYear }}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="GoalInThisMonth" placeholder="今月の目標"
+                          required>{{ .monthlyPlan.GoalInThisMonth }}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="CurrentState" placeholder="現在の状態"
+                          required>{{ .monthlyPlan.CurrentState }}</textarea>
+            </div>
+        </div>
+        <div>
+            <div class="underline">
+                <textarea rows="3" name="DailyTodo" placeholder="日々やること"
+                          required>{{ .monthlyPlan.DailyTodo }}</textarea>
+            </div>
+        </div>
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Edit MonthlyPlan</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+</body>
+</html>

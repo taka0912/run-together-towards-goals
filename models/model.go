@@ -2,6 +2,8 @@ package models
 
 import (
 	"fmt"
+	"log"
+
 	// 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
@@ -24,7 +26,9 @@ func Open() *gorm.DB {
 	databaseConnect :=  dataSource+"?parseTime=true&charset=utf8"
 	db, err := gorm.Open(driver, databaseConnect)
 	if err != nil {
-		panic(err.Error())
+		log.Println(err.Error())
+		log.Println("データベースと接続できませんでした。")
+		os.Exit(1)
 	}
 	_ = os.Setenv("DATABASE_URL", databaseConnect)
 	return db

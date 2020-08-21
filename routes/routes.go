@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -88,10 +89,9 @@ func Handler(dbConn *gorm.DB) {
 		rMonthlyPlan := r.Group("/monthly_plan")
 		{
 			rMonthlyPlan.POST("add", handler.AddMonthlyPlans)
-			//rMonthlyPlan.GET("edit/:id", handler.GetGenre)
-			//rMonthlyPlan.POST("edit_ok/:id", handler.EditGenre)
-			//rMonthlyPlan.GET("delete/:id", handler.DeleteGenre)
-			//rMonthlyPlan.DELETE("delete/:id", handler.DeleteGenre)
+			rMonthlyPlan.GET("edit/:id", handler.GetMonthlyPlan)
+			rMonthlyPlan.POST("edit_ok/:id", handler.EditMonthlyPlan)
+			rMonthlyPlan.POST("delete/:id", handler.DeleteMonthlyPlan)
 		}
 
 		// daily kpt info
@@ -112,7 +112,6 @@ func Handler(dbConn *gorm.DB) {
 			rGenre.GET("edit/:id", handler.GetGenre)
 			rGenre.POST("edit_ok/:id", handler.EditGenre)
 			rGenre.GET("delete/:id", handler.DeleteGenre)
-			rGenre.DELETE("delete/:id", handler.DeleteGenre)
 		}
 
 		r.GET("/index", func(c *gin.Context) {
@@ -153,6 +152,7 @@ func Handler(dbConn *gorm.DB) {
 		port = "8080"
 	}
 	if err := r.Run(":" + port); err != nil {
-		panic(err)
+		log.Println(err.Error())
+		os.Exit(1)
 	}
 }

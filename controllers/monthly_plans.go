@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -13,10 +14,8 @@ func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
 	r := models.NewMonthlyPlanRepository()
 	monthlyPlans := r.GetAll()
 
-	loginUserID := GetLoginUserID(c)
-
 	rg := models.NewGoalRepository()
-	goals := rg.GetByUserID(loginUserID)
+	goals := rg.GetByUserID(GetLoginUserID(c))
 
 	c.HTML(http.StatusOK, "monthly_plans.html", gin.H{
 		"monthlyPlans": monthlyPlans,
@@ -30,7 +29,8 @@ func (h *Handler) AddMonthlyPlans(c *gin.Context) {
 	loginUserID := GetLoginUserID(c)
 
 	r.UserID = loginUserID
-	r.GoalID = 0
+	goalID, _ := c.GetPostForm("GoalID")
+	r.GoalID, _ = strconv.Atoi(goalID)
 	month, _ := c.GetPostForm("Month")
 	r.Month, _ = time.Parse("2006-01", month)
 	r.KeepInLastMonth, _ = c.GetPostForm("KeepInLastMonth")
@@ -45,30 +45,45 @@ func (h *Handler) AddMonthlyPlans(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/_monthly_plans")
 }
 
-//// GetGenres...
-//func (h *Handler) GetGenre(c *gin.Context) {
-//	r := models.NewGenreRepository()
-//	id, _ := strconv.Atoi(c.Param("id"))
-//	genre := r.GetOne(id)
-//	c.HTML(http.StatusOK, "genre_edit.html", gin.H{
-//		"genre": genre,
-//	})
-//}
-//
-//// EditGenres...
-//func (h *Handler) EditGenre(c *gin.Context) {
-//	r := models.NewGenreRepository()
-//	id, _ := strconv.Atoi(c.Param("id"))
-//	genre := r.GetOne(id)
-//	genre.GenreName, _ = c.GetPostForm("genreName")
-//	r.Edit(genre)
-//	c.Redirect(http.StatusMovedPermanently, "/_genres")
-//}
-//
-//// DeleteGenres...
-//func (h *Handler) DeleteGenre(c *gin.Context) {
-//	r := models.NewGenreRepository()
-//	id, _ := strconv.Atoi(c.Param("id"))
-//	r.Delete(id)
-//	c.Redirect(http.StatusMovedPermanently, "/_genres")
-//}
+// GetGenres...
+func (h *Handler) GetMonthlyPlan(c *gin.Context) {
+	r := models.NewMonthlyPlanRepository()
+	id, _ := strconv.Atoi(c.Param("id"))
+	monthlyPlan := r.GetOne(id)
+
+	rg := models.NewGoalRepository()
+	goals := rg.GetByUserID(GetLoginUserID(c))
+
+	c.HTML(http.StatusOK, "monthly_plan_edit.html", gin.H{
+		"monthlyPlan": monthlyPlan,
+		"goals":       goals,
+	})
+}
+
+// EditGenres...
+func (h *Handler) EditMonthlyPlan(c *gin.Context) {
+	r := models.NewMonthlyPlanRepository()
+	id, _ := strconv.Atoi(c.Param("id"))
+	monthlyPlan := r.GetOne(id)
+
+	r.GoalID, _ = strconv.Atoi(c.Param("GoalID"))
+	month, _ := c.GetPostForm("Month")
+	monthlyPlan.Month, _ = time.Parse("2006-01", month)
+	monthlyPlan.KeepInLastMonth, _ = c.GetPostForm("KeepInLastMonth")
+	monthlyPlan.ProblemInLastMonth, _ = c.GetPostForm("ProblemInLastMonth")
+	monthlyPlan.GoalAfterHalfYear, _ = c.GetPostForm("GoalAfterHalfYear")
+	monthlyPlan.GoalInThisMonth, _ = c.GetPostForm("GoalInThisMonth")
+	monthlyPlan.CurrentState, _ = c.GetPostForm("CurrentState")
+	monthlyPlan.DailyTodo, _ = c.GetPostForm("DailyTodo")
+
+	r.Edit(monthlyPlan)
+	c.Redirect(http.StatusMovedPermanently, "/_monthly_plans")
+}
+
+// DeleteGenres...
+func (h *Handler) DeleteMonthlyPlan(c *gin.Context) {
+	r := models.NewMonthlyPlanRepository()
+	id, _ := strconv.Atoi(c.Param("id"))
+	r.Delete(id)
+	c.Redirect(http.StatusMovedPermanently, "/_monthly_plans")
+}

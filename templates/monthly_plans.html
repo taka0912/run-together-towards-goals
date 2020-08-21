@@ -17,9 +17,8 @@
         <div>
             <div class="underline">
                 <select name="GoalID" required>
-                    {{ range $j, $go := $.goals }}
-                    <option value="{{ $go.ID }}"> {{ $go.GoalName }}
-                    </option>
+                    {{ range $i, $go := $.goals }}
+                        <option value="{{ $go.ID }}"> {{ $go.GoalName }}</option>
                     {{ end }}
                 </select>
             </div>
@@ -70,40 +69,44 @@
     </div>
 </form>
 
-<table>
-    <tr>
-        <th>ニックネーム</th>
-        <th>Month</th>
-        <th>先月のKeep</th>
-        <th>先月のプロブレム</th>
-        <th>半年後の目標</th>
-        <th>今月の目標</th>
-        <th>現在の状態</th>
-        <th>日々やること</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    {{ range .monthlyPlans }}
+<form method="post">
+    <table>
         <tr>
-            <td>{{ .Nickname }}</td>
-            <td>{{ .Month.Format "2006-01" }}</td>
-            <td>{{ .KeepInLastMonth }}</td>
-            <td>{{ .ProblemInLastMonth }}</td>
-            <td>{{ .GoalAfterHalfYear }}</td>
-            <td>{{ .GoalInThisMonth }}</td>
-            <td>{{ .CurrentState }}</td>
-            <td>{{ .DailyTodo }}</td>
-            <td>
-                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>
-            </td>
-            <td>
-                <button formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">
-                    Delete
-                </button>
-            </td>
+            <th>ニックネーム</th>
+            <th>目標</th>
+            <th>Month</th>
+            <th>先月のKeep</th>
+            <th>先月のプロブレム</th>
+            <th>半年後の目標</th>
+            <th>今月の目標</th>
+            <th>現在の状態</th>
+            <th>日々やること</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
-    {{end}}
-</table>
+        {{ range .monthlyPlans }}
+            <tr>
+                <td>{{ .Nickname }}</td>
+                <td>{{ .GoalName }}</td>
+                <td>{{ .Month.Format "2006-01" }}</td>
+                <td>{{ .KeepInLastMonth }}</td>
+                <td>{{ .ProblemInLastMonth }}</td>
+                <td>{{ .GoalAfterHalfYear }}</td>
+                <td>{{ .GoalInThisMonth }}</td>
+                <td>{{ .CurrentState }}</td>
+                <td>{{ .DailyTodo }}</td>
+                <td>
+                    <a href="/monthly_plan/edit/{{.ID}}" class="btn-yellow">Edit</a>
+                </td>
+                <td>
+                    <button formaction="/monthly_plan/delete/{{.ID}}" class="btn-blue"
+                            onClick="alert('本当に削除してよろしいですか？');">Delete
+                    </button>
+                </td>
+            </tr>
+        {{end}}
+    </table>
+</form>
 
 </body>
 </html>
