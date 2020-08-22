@@ -42,7 +42,7 @@ func (h *Handler) EditGenre(c *gin.Context) {
 	r := models.NewGenreRepository()
 	id, _ := strconv.Atoi(c.Param("id"))
 	genre := r.GetOne(id)
-	genre.GenreName, _ = c.GetPostForm("genreName")
+	genre.GenreName, _ = c.GetPostForm("genre_name")
 	r.Edit(genre)
 	c.Redirect(http.StatusMovedPermanently, "/_genres")
 }

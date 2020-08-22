@@ -13,6 +13,11 @@ type Genre struct {
 	IgnoreMe  string `gorm:"-"`
 }
 
+var (
+	genre Genre
+	genres []Genre
+)
+
 // NewGenreRepository ...
 func NewGenreRepository() Genre {
 	return Genre{}
@@ -21,48 +26,46 @@ func NewGenreRepository() Genre {
 // Add ...
 func (o *Genre) Add(genre *Genre) {
 	db := Open()
-	db.Create(genre)
 	defer db.Close()
+	db.Create(genre)
 }
 
 // Edit ...
 func (o *Genre) Edit(genre Genre) {
 	db := Open()
+	defer db.Close()
 	genre.UpdatedAt = time.Now()
 	db.Save(genre)
-	db.Close()
 }
 
 // GetAll ...
 func (o *Genre) GetAll() []Genre {
 	db := Open()
-	var genres []Genre
+	defer db.Close()
 	db.Find(&genres)
-	db.Close()
 	return genres
 }
 
 // GetOne ...
 func (o *Genre) GetOne(id int) Genre {
 	db := Open()
-	var genre Genre
+	defer db.Close()
 	db.First(&genre, id)
-	db.Close()
 	return genre
 }
 
 // Delete ...
 func (o *Genre) Delete(id int) {
 	db := Open()
-	var genre Genre
+	defer db.Close()
 	db.First(&genre, id)
 	db.Delete(&genre)
-	db.Close()
 }
 
 // GenreMigration ...
 func (o *Genre) GenreMigration() {
 	db := Open()
+	defer db.Close()
 	r := NewGenreRepository()
 
 	var count = 0
@@ -77,5 +80,4 @@ func (o *Genre) GenreMigration() {
 		r.Add(&Genre{GenreName: "語学"})
 		r.Add(&Genre{GenreName: "その他"})
 	}
-	db.Close()
 }

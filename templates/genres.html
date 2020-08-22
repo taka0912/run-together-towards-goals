@@ -41,7 +41,7 @@
         <tr>
             <td>{{ .GenreName }}</td>
             <td>
-                <a href="/genre_name/edit/{{.ID}}" class="btn-yellow">Edit</a>
+                <a href="/genre/edit/{{.ID}}" class="btn-yellow">Edit</a>
             </td>
             <td>
                 <button type="submit"formmethod="delete" formaction="/genre_name/delete/{{.ID}}" class="btn-blue" onClick="alert('本当に削除してよろしいですか？');">Delete</button>

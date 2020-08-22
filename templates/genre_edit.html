@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit GenreName</title>
-    <link href="../assets/css/from.css" rel="stylesheet">
+    <style type="text/css" media="screen">
+        @import url("/assets/css/menu.css");
+        @import url("/assets/css/from.css");
+    </style>
 </head>
 <body>
 
@@ -17,7 +20,14 @@
                 <input type="text" tabindex="1" name="genre_name" value="{{.genre.GenreName}}" placeholder="GenreName"/>
             </div>
         </div>
-        <p><input type="submit" value="Edit"></p>
+        <div class="buttons">
+            <div>
+                <button type="reset" tabindex="13">Clear</button>
+            </div>
+            <div>
+                <button type="submit" tabindex="14">Edit Genre</button>
+            </div>
+        </div>
     </div>
 </form>
 
