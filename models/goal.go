@@ -23,11 +23,6 @@ const (
 	DisplayFlagTrue
 )
 
-var (
-	goal Goal
-	goals []Goal
-)
-
 // NewGoalRepository ...
 func NewGoalRepository() Goal {
 	return Goal{}
@@ -50,6 +45,7 @@ func (o *Goal) Edit(goal Goal) {
 
 // GetAll ...
 func (o *Goal) GetAll() []Goal {
+	var goals []Goal
 	db := Open()
 	defer db.Close()
 	db.Find(&goals)
@@ -58,6 +54,7 @@ func (o *Goal) GetAll() []Goal {
 
 // GetOne ...
 func (o *Goal) GetOne(id int) Goal {
+	var goal Goal
 	db := Open()
 	defer db.Close()
 	db.Preload("TodoLists").Find(&goal, id)
@@ -66,6 +63,7 @@ func (o *Goal) GetOne(id int) Goal {
 
 // Delete ...
 func (o *Goal) Delete(id int) {
+	var goal Goal
 	db := Open()
 	defer db.Close()
 	db.First(&goal, id)
@@ -83,6 +81,7 @@ func (o *Goal) Count() int {
 
 // GetByUserID ...
 func (o *Goal) GetByUserID(id int) []Goal {
+	var goals []Goal
 	db := Open()
 	db.Where("user_id = ?", id).Find(&goals)
 	db.Close()

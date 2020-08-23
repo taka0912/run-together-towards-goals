@@ -13,11 +13,6 @@ type Genre struct {
 	IgnoreMe  string `gorm:"-"`
 }
 
-var (
-	genre Genre
-	genres []Genre
-)
-
 // NewGenreRepository ...
 func NewGenreRepository() Genre {
 	return Genre{}
@@ -40,6 +35,7 @@ func (o *Genre) Edit(genre Genre) {
 
 // GetAll ...
 func (o *Genre) GetAll() []Genre {
+	var genres []Genre
 	db := Open()
 	defer db.Close()
 	db.Find(&genres)
@@ -48,6 +44,7 @@ func (o *Genre) GetAll() []Genre {
 
 // GetOne ...
 func (o *Genre) GetOne(id int) Genre {
+	var genre Genre
 	db := Open()
 	defer db.Close()
 	db.First(&genre, id)
@@ -56,6 +53,7 @@ func (o *Genre) GetOne(id int) Genre {
 
 // Delete ...
 func (o *Genre) Delete(id int) {
+	var genre Genre
 	db := Open()
 	defer db.Close()
 	db.First(&genre, id)
