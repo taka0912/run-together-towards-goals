@@ -33,11 +33,6 @@ type User struct {
 	Goals          []Goal
 }
 
-var (
-	user User
-	users []User
-)
-
 // NewUserRepository ...
 func NewUserRepository() User {
 	return User{}
@@ -78,6 +73,7 @@ func (o *User) Edit(user User) []string {
 
 // GetAll ...
 func (o *User) GetAll() []User {
+	var users []User
 	db := Open()
 	defer db.Close()
 	db.Find(&users)
@@ -86,6 +82,7 @@ func (o *User) GetAll() []User {
 
 // GetOne ...
 func (o *User) GetOne(id int) User {
+	var user User
 	db := Open()
 	defer db.Close()
 	db.First(&user, id)
@@ -94,6 +91,7 @@ func (o *User) GetOne(id int) User {
 
 // GetAllInfo ...
 func (o *User) GetAllInfo(id int) User {
+	var user User
 	db := Open()
 	defer db.Close()
 	db.Preload("Goals").Preload("Goals.TodoLists").Find(&user, id)
@@ -102,6 +100,7 @@ func (o *User) GetAllInfo(id int) User {
 
 // GetByName ...
 func (o *User) GetByName(nickname string) (User, string) {
+	var user User
 	db := Open()
 	defer db.Close()
 	db.Where("nickname = ?", nickname).First(&user)
@@ -113,6 +112,7 @@ func (o *User) GetByName(nickname string) (User, string) {
 
 // Delete ...
 func (o *User) Delete(id int) {
+	var user User
 	db := Open()
 	defer db.Close()
 	db.First(&user, id)
@@ -129,7 +129,8 @@ func (o *User) Count() int {
 }
 
 // GetLoginUser ...
-func (o *User) GetLoginUser(id interface{}) User {
+func (o *User) GetUserByInterfaceID(id interface{}) User {
+	var user User
 	db := Open()
 	defer db.Close()
 	db.First(&user, id)

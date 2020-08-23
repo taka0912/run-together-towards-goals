@@ -31,8 +31,7 @@ func Login(c *gin.Context) {
 
 	//セッションにデータを格納する
 	session := sessions.Default(c)
-	session.Set("UserID", int(user.ID))
-	session.Set("UserNickname", user.Nickname)
+	session.Set("UserID", user.ID)
 	session.Save()
 
 	c.HTML(http.StatusOK, "welcome.html", gin.H{
@@ -78,14 +77,14 @@ func SessionCheck(c *gin.Context) {
 // GetLoginUser ...
 func GetLoginUser(c *gin.Context) models.User {
 	r := models.NewUserRepository()
-	user := r.GetLoginUser(sessions.Default(c).Get("UserID"))
+	user := r.GetUserByInterfaceID(sessions.Default(c).Get("UserID"))
 	if user.ID == 0 {
 		log.Println("cannot get GetLoginUser")
+		//c.Redirect(http.StatusMovedPermanently, "/logout")
 		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
 			"err": "cannot get GetLoginUser",
 		})
 		c.Abort()
-	// c.Redirect(http.StatusMovedPermanently, "/logout")
 	}
 
 	return user
@@ -94,11 +93,11 @@ func GetLoginUser(c *gin.Context) models.User {
 // GetLoginUserID ...
 func GetLoginUserID(c *gin.Context) int {
 	ru := models.NewUserRepository()
-	user := ru.GetLoginUser(sessions.Default(c).Get("UserID"))
+	user := ru.GetUserByInterfaceID(sessions.Default(c).Get("UserID"))
 	userID := int(user.ID)
 	if userID == 0 {
 		log.Println("cannot get GetLoginUserID")
-		// c.Redirect(http.StatusMovedPermanently, "/logout")
+		//c.Redirect(http.StatusMovedPermanently, "/logout")
 		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
 			"err": "cannot get GetLoginUserID",
 		})

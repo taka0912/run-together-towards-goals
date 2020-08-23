@@ -48,6 +48,13 @@ func (h *Handler) GetUser(c *gin.Context) {
 	user := r.GetAllInfo(id)
 	loginUser := GetLoginUser(c)
 
+	//fmt.Printf("id : ")
+	//spew.Dump(id)
+	//fmt.Printf("\n")
+	//fmt.Printf("user : ")
+	//spew.Dump(user)
+	//fmt.Printf("\n")
+
 	c.HTML(http.StatusOK, "user_view.html", gin.H{
 		"user":      user,
 		"genres":    rg.GetAll(),
@@ -73,7 +80,7 @@ func (h *Handler) EditUser(c *gin.Context) {
 
 	err := r.Edit(user)
 	if err != nil {
-		c.HTML(http.StatusOK, "user_edit.html", gin.H{
+		c.HTML(http.StatusOK, "user_view.html", gin.H{
 			"err": err,
 		})
 		return
