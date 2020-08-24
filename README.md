@@ -1,4 +1,4 @@
-# Run together towards the goal
+# Goalist
 
 https://run-together-towards-goals.herokuapp.com/
 
