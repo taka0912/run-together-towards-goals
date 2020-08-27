@@ -56,18 +56,19 @@ func (o *MonthlyPlan) Edit(monthlyPlan MonthlyPlan) {
 }
 
 // GetAll ...
-func (o *MonthlyPlan) GetAll() []MonthlyPlans {
+func (o *MonthlyPlan) GetAll(id int) []MonthlyPlans {
 	db := Open()
 	var monthlyPlans []MonthlyPlans
-	db.Table("monthly_plans").
+	db.Debug().Table("monthly_plans").
 		Select("monthly_plans.*, users.nickname, goals.goal_name").
 		Joins("inner JOIN users ON monthly_plans.user_id = users.id").
 		Joins("inner JOIN goals ON monthly_plans.goal_id = goals.id").
 		Where("monthly_plans.deleted_at is null").
 		Where("users.deleted_at is null").
 		Where("goals.deleted_at is null").
-		Where("goals.display_flag <> 0"). // 非表示設定の目標は表示させない
-		Order("monthly_plans.id").
+		// ログインユーザーの非表示設定目標は表示して、それ以外のユーザーの非表示目標は隠す
+		Where("(users.id = ?) or (users.id <> ? and goals.display_flag <> 0)", id, id).
+		Order("users.id, monthly_plans.id").
 		Find(&monthlyPlans)
 	db.Close()
 	return monthlyPlans

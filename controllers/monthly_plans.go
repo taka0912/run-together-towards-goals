@@ -11,11 +11,13 @@ import (
 
 // GetAllMonthlyPlans ...
 func (h *Handler) GetAllMonthlyPlans(c *gin.Context) {
+	loginUserID := GetLoginUserID(c)
+
 	r := models.NewMonthlyPlanRepository()
-	monthlyPlans := r.GetAll()
+	monthlyPlans := r.GetAll(loginUserID)
 
 	rg := models.NewGoalRepository()
-	goals := rg.GetByUserID(GetLoginUserID(c))
+	goals := rg.GetByUserID(loginUserID)
 
 	c.HTML(http.StatusOK, "monthly_plans.html", gin.H{
 		"monthlyPlans": monthlyPlans,
