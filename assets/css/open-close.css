@@ -1,0 +1,13 @@
+.open {
+    text-align: center;
+    /*width: 100%;*/
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+}
+#slideBox {
+    text-align: center;
+    display:none;
+    padding: 10px;
+    border: 1px solid #BFFFBF;
+}
