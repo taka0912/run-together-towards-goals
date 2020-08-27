@@ -244,6 +244,8 @@ func (h *Handler) AddGoal(c *gin.Context) {
 	genreID, _ := c.GetPostForm("genre_id")
 	r.GenreID, _ = strconv.Atoi(genreID)
 	r.GoalName, _ = c.GetPostForm("goal_name")
+	displayFlag, _ := c.GetPostForm("display_flag")
+	r.DisplayFlag, _ = strconv.Atoi(displayFlag)
 
 	r.Add(&r)
 	h.GetMyPage(c)
