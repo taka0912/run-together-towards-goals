@@ -66,7 +66,7 @@ func (o *MonthlyPlan) GetAll() []MonthlyPlans {
 		Where("monthly_plans.deleted_at is null").
 		Where("users.deleted_at is null").
 		Where("goals.deleted_at is null").
-		//Where("goals.display_flag <> 0"). // 非表示設定の目標は表示させない
+		Where("goals.display_flag <> 0"). // 非表示設定の目標は表示させない
 		Order("monthly_plans.id").
 		Find(&monthlyPlans)
 	db.Close()
