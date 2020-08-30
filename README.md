@@ -15,11 +15,11 @@ https://run-together-towards-goals.herokuapp.com/
 ## 🏃How to setup
 1. 
 
-    git clone https://github.com/hariNEzuMI928/run-together-towards-goals.git r2g
+    git clone https://github.com/hariNEzuMI928/run-together-towards-goals.git goalist
 
 2. 
 
-    cd r2g
+    cd goalist
 
 3. 
 
